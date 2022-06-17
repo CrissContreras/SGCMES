@@ -54,5 +54,8 @@ $route['404_override'] = 'error404';
 $route['translate_uri_dashes'] = FALSE;
 $route['validation'] = 'Form';
 
+
 $route['form'] = "login";
 $route['formPost']['post'] = "login/validar";
+
+$route["administracion"]["get"] = "administracion/index";

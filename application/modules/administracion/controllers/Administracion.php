@@ -37,4 +37,5 @@ class Administracion extends MY_Controller
 		$data = $this->administracionModel->listMenuSistema();
 		echo json_encode($data);
 	}
+	
 }

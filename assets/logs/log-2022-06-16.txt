@@ -1,0 +1,53 @@
+ERROR - 22:20:23 16-06-2022 --> Severity: error --> Exception: Unable to locate the model you have specified: CatalogoModel C:\xampp\htdocs\SGCMES\system\core\Loader.php 348
+ERROR - 22:21:34 16-06-2022 --> Severity: error --> Exception: Unable to locate the model you have specified: CatalogoModel C:\xampp\htdocs\SGCMES\system\core\Loader.php 348
+ERROR - 22:21:42 16-06-2022 --> Severity: error --> Exception: Unable to locate the model you have specified: CatalogoModel C:\xampp\htdocs\SGCMES\system\core\Loader.php 348
+ERROR - 22:54:32 16-06-2022 --> Severity: error --> Exception: Unable to locate the model you have specified: CatalogoModel C:\xampp\htdocs\SGCMES\system\core\Loader.php 348
+ERROR - 22:54:52 16-06-2022 --> Severity: error --> Exception: Unable to locate the model you have specified: CatalogoModel C:\xampp\htdocs\SGCMES\system\core\Loader.php 348
+ERROR - 22:55:08 16-06-2022 --> Severity: error --> Exception: Unable to locate the model you have specified: CatalogoModel C:\xampp\htdocs\SGCMES\system\core\Loader.php 348
+ERROR - 22:56:31 16-06-2022 --> Severity: error --> Exception: Unable to locate the model you have specified: CatalogoModel C:\xampp\htdocs\SGCMES\system\core\Loader.php 348
+ERROR - 22:57:20 16-06-2022 --> Query error: Unknown column 'are_nombre' in 'order clause' - Invalid query: SELECT * FROM `catalogo` WHERE 1 ORDER BY `are_nombre` 
+ERROR - 22:57:20 16-06-2022 --> Severity: error --> Exception: Call to a member function num_rows() on bool C:\xampp\htdocs\SGCMES\application\helpers\sistema_helper.php 24
+ERROR - 22:59:17 16-06-2022 --> Query error: Unknown column 'are_nombre' in 'order clause' - Invalid query: SELECT * FROM `catalogo` WHERE 1 ORDER BY `are_nombre` 
+ERROR - 22:59:17 16-06-2022 --> Severity: error --> Exception: Call to a member function num_rows() on bool C:\xampp\htdocs\SGCMES\application\modules\administracion\models\CatalogoModel.php 31
+ERROR - 23:01:09 16-06-2022 --> Query error: Unknown column 'are_nombre' in 'order clause' - Invalid query: SELECT * FROM `catalogo` WHERE 1 ORDER BY `are_nombre` 
+ERROR - 23:01:09 16-06-2022 --> Severity: error --> Exception: Call to a member function num_rows() on bool C:\xampp\htdocs\SGCMES\application\modules\administracion\models\CatalogoModel.php 31
+ERROR - 23:07:31 16-06-2022 --> Severity: Notice --> Undefined variable: USUARIO_LOG_ID C:\xampp\htdocs\SGCMES\application\modules\administracion\views\cabecera.php 72
+ERROR - 23:07:31 16-06-2022 --> Severity: Notice --> Undefined variable: USUARIO_LOGUEADO C:\xampp\htdocs\SGCMES\application\modules\administracion\views\cabecera.php 97
+ERROR - 23:07:31 16-06-2022 --> Severity: Notice --> Undefined variable: USUARIO_LOGUEADO C:\xampp\htdocs\SGCMES\application\modules\administracion\views\cabecera.php 98
+ERROR - 23:07:31 16-06-2022 --> Severity: Notice --> Undefined variable: USUARIO_LOG_ID C:\xampp\htdocs\SGCMES\application\modules\administracion\views\cabecera.php 108
+ERROR - 23:07:31 16-06-2022 --> Severity: Notice --> Undefined variable: contenido C:\xampp\htdocs\SGCMES\application\modules\administracion\views\cabecera.php 118
+ERROR - 23:07:31 16-06-2022 --> Severity: Notice --> Undefined variable: _ci_file C:\xampp\htdocs\SGCMES\application\third_party\MX\Loader.php 574
+ERROR - 23:19:20 16-06-2022 --> Severity: Notice --> Undefined variable: USUARIO_LOG_ID C:\xampp\htdocs\SGCMES\application\modules\administracion\views\cabecera.php 59
+ERROR - 23:19:20 16-06-2022 --> Severity: Notice --> Undefined variable: USUARIO_LOGUEADO C:\xampp\htdocs\SGCMES\application\modules\administracion\views\cabecera.php 84
+ERROR - 23:19:20 16-06-2022 --> Severity: Notice --> Undefined variable: USUARIO_LOGUEADO C:\xampp\htdocs\SGCMES\application\modules\administracion\views\cabecera.php 85
+ERROR - 23:19:20 16-06-2022 --> Severity: Notice --> Undefined variable: USUARIO_LOG_ID C:\xampp\htdocs\SGCMES\application\modules\administracion\views\cabecera.php 95
+ERROR - 23:19:20 16-06-2022 --> Severity: Notice --> Trying to access array offset on value of type null C:\xampp\htdocs\SGCMES\application\modules\administracion\models\AdministracionModel.php 13
+ERROR - 23:19:20 16-06-2022 --> Query error: Unknown column 'PERMISOS' in 'field list' - Invalid query: SELECT PERMISOS FROM ROL WHERE ID_ROL=""
+ERROR - 23:19:20 16-06-2022 --> Severity: error --> Exception: Call to a member function row() on bool C:\xampp\htdocs\SGCMES\application\modules\administracion\models\AdministracionModel.php 17
+ERROR - 23:19:25 16-06-2022 --> Severity: Notice --> Undefined variable: USUARIO_LOG_ID C:\xampp\htdocs\SGCMES\application\modules\administracion\views\cabecera.php 59
+ERROR - 23:19:25 16-06-2022 --> Severity: Notice --> Undefined variable: USUARIO_LOGUEADO C:\xampp\htdocs\SGCMES\application\modules\administracion\views\cabecera.php 84
+ERROR - 23:19:25 16-06-2022 --> Severity: Notice --> Undefined variable: USUARIO_LOGUEADO C:\xampp\htdocs\SGCMES\application\modules\administracion\views\cabecera.php 85
+ERROR - 23:19:25 16-06-2022 --> Severity: Notice --> Undefined variable: USUARIO_LOG_ID C:\xampp\htdocs\SGCMES\application\modules\administracion\views\cabecera.php 95
+ERROR - 23:19:26 16-06-2022 --> Severity: Notice --> Trying to access array offset on value of type null C:\xampp\htdocs\SGCMES\application\modules\administracion\models\AdministracionModel.php 13
+ERROR - 23:19:26 16-06-2022 --> Query error: Unknown column 'PERMISOS' in 'field list' - Invalid query: SELECT PERMISOS FROM ROL WHERE ID_ROL=""
+ERROR - 23:19:26 16-06-2022 --> Severity: error --> Exception: Call to a member function row() on bool C:\xampp\htdocs\SGCMES\application\modules\administracion\models\AdministracionModel.php 17
+ERROR - 23:19:42 16-06-2022 --> Severity: Notice --> Undefined variable: USUARIO_LOG_ID C:\xampp\htdocs\SGCMES\application\modules\administracion\views\cabecera.php 59
+ERROR - 23:19:42 16-06-2022 --> Severity: Notice --> Undefined variable: USUARIO_LOGUEADO C:\xampp\htdocs\SGCMES\application\modules\administracion\views\cabecera.php 84
+ERROR - 23:19:42 16-06-2022 --> Severity: Notice --> Undefined variable: USUARIO_LOGUEADO C:\xampp\htdocs\SGCMES\application\modules\administracion\views\cabecera.php 85
+ERROR - 23:19:42 16-06-2022 --> Severity: Notice --> Undefined variable: USUARIO_LOG_ID C:\xampp\htdocs\SGCMES\application\modules\administracion\views\cabecera.php 95
+ERROR - 23:19:42 16-06-2022 --> Severity: Notice --> Trying to access array offset on value of type null C:\xampp\htdocs\SGCMES\application\modules\administracion\models\AdministracionModel.php 13
+ERROR - 23:19:42 16-06-2022 --> Query error: Unknown column 'PERMISOS' in 'field list' - Invalid query: SELECT PERMISOS FROM ROL WHERE ID_ROL=""
+ERROR - 23:19:42 16-06-2022 --> Severity: error --> Exception: Call to a member function row() on bool C:\xampp\htdocs\SGCMES\application\modules\administracion\models\AdministracionModel.php 17
+ERROR - 23:20:55 16-06-2022 --> Severity: Notice --> Undefined variable: USUARIO_LOGUEADO C:\xampp\htdocs\SGCMES\application\modules\administracion\views\cabecera.php 84
+ERROR - 23:20:56 16-06-2022 --> Severity: Notice --> Trying to access array offset on value of type null C:\xampp\htdocs\SGCMES\application\modules\administracion\models\AdministracionModel.php 13
+ERROR - 23:20:56 16-06-2022 --> Query error: Unknown column 'PERMISOS' in 'field list' - Invalid query: SELECT PERMISOS FROM ROL WHERE ID_ROL=""
+ERROR - 23:20:56 16-06-2022 --> Severity: error --> Exception: Call to a member function row() on bool C:\xampp\htdocs\SGCMES\application\modules\administracion\models\AdministracionModel.php 17
+ERROR - 23:21:39 16-06-2022 --> Severity: Notice --> Undefined variable: USUARIO_LOGUEADO C:\xampp\htdocs\SGCMES\application\modules\administracion\views\cabecera.php 84
+ERROR - 23:21:39 16-06-2022 --> Severity: Notice --> Trying to access array offset on value of type null C:\xampp\htdocs\SGCMES\application\modules\administracion\models\AdministracionModel.php 13
+ERROR - 23:21:39 16-06-2022 --> Query error: Unknown column 'PERMISOS' in 'field list' - Invalid query: SELECT PERMISOS FROM ROL WHERE ID_ROL=""
+ERROR - 23:21:39 16-06-2022 --> Severity: error --> Exception: Call to a member function row() on bool C:\xampp\htdocs\SGCMES\application\modules\administracion\models\AdministracionModel.php 17
+ERROR - 23:22:41 16-06-2022 --> Severity: Notice --> Trying to access array offset on value of type null C:\xampp\htdocs\SGCMES\application\modules\administracion\models\AdministracionModel.php 13
+ERROR - 23:22:41 16-06-2022 --> Query error: Unknown column 'PERMISOS' in 'field list' - Invalid query: SELECT PERMISOS FROM ROL WHERE ID_ROL=""
+ERROR - 23:22:41 16-06-2022 --> Severity: error --> Exception: Call to a member function row() on bool C:\xampp\htdocs\SGCMES\application\modules\administracion\models\AdministracionModel.php 17
+ERROR - 23:39:08 16-06-2022 --> Severity: Notice --> Undefined variable: html C:\xampp\htdocs\SGCMES\application\modules\administracion\views\catalogoIndex.php 14
+ERROR - 23:39:08 16-06-2022 --> Severity: Notice --> Undefined variable: paginado C:\xampp\htdocs\SGCMES\application\modules\administracion\views\catalogoIndex.php 19

@@ -23,6 +23,7 @@ class RegistroModel extends CI_Model {
             'NOMBRE' => $this->input->post('nombre'),
             'APELLIDO' => $this->input->post('apellido'),
             'IDENTIFICACION' => $this->input->post('identificacion'),
+            'TIPO_IDENTIFICACION' => $this->input->post('tipo_identificacion'),
             'NOMBRE_USUARIO' => $this->input->post('nombre_usuario'),
             'CONTRASENA' => md5($this->input->post('contrasena')),
             'CORREO' => $this->input->post('correo'),

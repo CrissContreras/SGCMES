@@ -24,7 +24,7 @@ date_default_timezone_set('America/Guayaquil');
 |
 */
 $protocol = is_https() ? 'https://' : 'http://';
-$config['base_url'] = $protocol.$_SERVER['HTTP_HOST'].'/';
+$config['base_url'] = $protocol.$_SERVER['HTTP_HOST'].'/SGCMES';
 
 /*Google captcha*/
 $config['google_key'] = '6LcvHbMUAAAAAKh8eQfhKO9-V8sKSdSUHuuFYquQ';

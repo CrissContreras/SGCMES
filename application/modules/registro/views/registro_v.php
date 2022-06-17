@@ -95,6 +95,24 @@
                     <label>Apellidos</label>
                     <input type="text" class="form-control" id="apellido" name="apellido" required >
                 </div>
+                
+            </div><br>
+            <div class="row">
+                <div class="col">
+                    <label>Tipo Identificación</label><br>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                        <label class="form-check-label" for="inlineRadio1">Cédula</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                        <label class="form-check-label" for="inlineRadio2">Ruc</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
+                        <label class="form-check-label" for="inlineRadio3">Passaporte</label>
+                    </div>
+                </div>
                 <div class="col">
                     <label>Identificación</label>
                     <input type="text" maxlength="10" pattern="[0-9]{10}" class="form-control" id="identificacion" name="identificacion" placeholder="Ejemplo: 1718191615" required>
@@ -109,21 +127,20 @@
                     <label>Contraseña</label>
                     <input type="text" class="form-control" id="contrasena" name="contrasena" required>
                 </div>
+            </div><br>
+            <div class="row">
                 <div class="col">
                     <label>Correo electrónico</label>
                     <input type="email" class="form-control" id="correo" name="correo" required placeholder="Ejemplo: juan@mail.com">
                 </div>
-            </div><br>
-            <div class="row">
-                <div class="col-4">
+                <div class="col">
                     <label>Télefono</label>
                     <input type="text" class="form-control" pattern="[0-9]{9,10}" id="telefono" name="telefono" required placeholder="Ejemplo: 0987654321">
                 </div>
-                <div class="col-8">
+                <div class="col">
                     <label>Dirección</label>
                     <input type="text" class="form-control" id="direccion" name="direccion" required>
                 </div>
-                
             </div><br>
             <div class="row">
                 <div class="col">

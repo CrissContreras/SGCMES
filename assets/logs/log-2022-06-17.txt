@@ -1,0 +1,10 @@
+ERROR - 00:27:48 17-06-2022 --> Severity: Notice --> Undefined property: CI::$parser C:\xampp\htdocs\SGCMES\system\core\Model.php 73
+ERROR - 00:27:48 17-06-2022 --> Severity: error --> Exception: Call to a member function parse() on null C:\xampp\htdocs\SGCMES\application\modules\administracion\models\CatalogoModel.php 34
+ERROR - 00:31:15 17-06-2022 --> Severity: Notice --> Undefined variable: id C:\xampp\htdocs\SGCMES\application\modules\administracion\views\catalogoIndex_tpl.php 15
+ERROR - 00:31:41 17-06-2022 --> Severity: Notice --> Undefined variable: id C:\xampp\htdocs\SGCMES\application\modules\administracion\views\catalogoIndex_tpl.php 15
+ERROR - 00:33:00 17-06-2022 --> Severity: Notice --> Undefined variable: id C:\xampp\htdocs\SGCMES\application\modules\administracion\views\catalogoIndex_tpl.php 15
+ERROR - 00:36:54 17-06-2022 --> Severity: Notice --> Undefined variable: id C:\xampp\htdocs\SGCMES\application\modules\administracion\views\catalogoIndex_tpl.php 15
+ERROR - 00:39:10 17-06-2022 --> Severity: Notice --> Undefined variable: id C:\xampp\htdocs\SGCMES\application\modules\administracion\views\catalogoIndex_tpl.php 15
+ERROR - 00:39:31 17-06-2022 --> Severity: Notice --> Undefined variable: id C:\xampp\htdocs\SGCMES\application\modules\administracion\views\catalogoIndex_tpl.php 15
+ERROR - 00:51:06 17-06-2022 --> Query error: Duplicate entry '0' for key 'PRIMARY' - Invalid query: INSERT INTO `catalogo` (`NOMBRE`, `TIPO`) VALUES ('zfvzxc', 'G')
+ERROR - 00:59:33 17-06-2022 --> Severity: error --> Exception: Call to undefined method CatalogoModel::datos_mdl() C:\xampp\htdocs\SGCMES\application\modules\administracion\controllers\Catalogo.php 36

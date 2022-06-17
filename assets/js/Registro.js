@@ -55,3 +55,4 @@ $('#registro_nuevo_paciente').submit('click', function () {
 	});
 	return false;
 });
+
