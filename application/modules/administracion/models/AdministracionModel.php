@@ -143,4 +143,61 @@ class AdministracionModel extends CI_Model {
             return $result;
         //}
     }
+    //******Rol*****
+    public function showRol() {
+        $result = $this->db->query('SELECT ID_ROL, NOMBRE, DESCRIPCION FROM rol');
+        return $result->result();
+    }
+
+    public function saveRol() {
+        $rolExiste = $this->db->query('SELECT * FROM rol WHERE NOMBRE =' . '"' . $this->input->post('nombre') . '"  AND DESCRIPCION =' . '"' . $this->input->post('descripcion') . '"');
+        if ($rolExiste->num_rows() > 0) {
+            $result = 'Rol ya existe.';
+            return $result;
+        } else {
+            $data = array(
+                'NOMBRE' => $this->input->post('nombre'),
+                'DESCRIPCION' => $this->input->post('descripcion'),
+                'ESTADO' => 'A',
+            );
+            $result = $this->db->insert('rol', $data);
+            return $result;
+        }
+    }
+
+    public function updateRol() {
+        $id = $this->input->post('id');
+        $descripcion = $this->input->post('descripcion');
+        $nombre = $this->input->post('nombre');
+        $rolExiste = $this->db->query('SELECT * FROM rol WHERE NOMBRE =' . '"' . $this->input->post('nombre') . '"  AND DESCRIPCION =' . '"' . $this->input->post('descripcion') . '"');
+        if ($rolExiste->num_rows() > 1) {
+            $result = 'Rol ya existe.';
+            return $result;
+        } else {
+            $this->db->set('NOMBRE', $nombre);
+            $this->db->set('DESCRIPCION', $descripcion);
+            $this->db->where('ID_CATALOGO', $id);
+            $result = $this->db->update('rol');
+            return $result;
+        }
+    }
+
+    public function deleteRol() {
+        $id = $this->input->post('id');
+        $usuariosRol = $this->db->query('SELECT * FROM usuarios WHERE ID_ROL =' . '"' . $id."'");
+        if ($usuariosRol->num_rows() > 0) {
+            $result = 'No se puede eliminar, hay usuarios ligados a este rol.';
+            return $result;
+        } else {
+            $id = $this->input->post('id');
+            $this->db->where('ID_ROL', $id);
+            $result = $this->db->delete('rol');
+            return $result;
+        }
+    }
+
+    public function comboRol() {
+        $result = $this->db->query('SELECT ID_ROL, NOMBRE FROM rol');
+        return $result->result();
+    }
 }

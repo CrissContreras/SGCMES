@@ -1,24 +1,24 @@
 <div id="infoMessage"><?php echo $this->session->flashdata('message'); ?></div>
 
 <div class="table-responsive">
-        <button type="button" class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#addUserModal" data-whatever="@mdo"><span class="fa fa-plus"></span> Nuevo</button>
-        <table class="table header-border table-hover table-custom spacing5 text-center" style="width:100%" id="tableListUsuarios">
-            <thead>
-                <tr>
-                    <th><strong>Id</strong></th>
-                    <th><strong>Nombres</strong></th>
-                    <th><strong>Apellido</strong></th>
-                    <th><strong>Identificación</strong></th>
-                    <th><strong>Usuario</strong></th>
-                    <th><strong>Email</strong></th>
-                    <th><strong>Rol</strong></th>
-                    <th><strong>Estado</strong></th>
-                    <th><i class="fa fa-cog"></i></th>
-                </tr>
-            </thead>
-            <tbody id="listUsuarios">
-            </tbody>
-        </table>
+    <button type="button" class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#addUserModal" data-whatever="@mdo"><span class="fa fa-plus"></span> Nuevo</button>
+    <table class="table header-border table-hover table-custom spacing5 text-center" style="width:100%" id="tableListUsuarios">
+        <thead>
+            <tr>
+                <th><strong>Id</strong></th>
+                <th><strong>Nombres</strong></th>
+                <th><strong>Apellido</strong></th>
+                <th><strong>Identificación</strong></th>
+                <th><strong>Usuario</strong></th>
+                <th><strong>Email</strong></th>
+                <th><strong>Rol</strong></th>
+                <th><strong>Estado</strong></th>
+                <th><i class="fa fa-cog"></i></th>
+            </tr>
+        </thead>
+        <tbody id="listUsuarios">
+        </tbody>
+    </table>
 </div>
 
 <form id="saveUserForm" method="post">
@@ -32,46 +32,91 @@
                 <div class="modal-body">
                     <div class="form-group row">
                         <div class="col">
-                             Nombre y Apellido
-                            <input type="text" name="nombreUsuario" id="nombreUsuario" class="form-control" required>
+                            <label>Nombres</label>
+                            <input type="text" class="form-control" id="nombre" name="nombre" required>
                         </div>
                         <div class="col">
-                             Nick de Usuario
-                            <input type="text" onclick="generarNick()" name="nickUsuario" id="nickUsuario" class="form-control" required>
+                            <label>Apellidos</label>
+                            <input type="text" class="form-control" id="apellido" name="apellido" required>
                         </div>
                         <div class="col">
-                             Correo electrónico
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">@</span>
-                                </div>
-                                <input type="email" name="mailUsuario" id="mailUsuario" class="form-control" placeholder="ej: usuario@mail.com" required>
+                            <label>Tipo de identificación</label><br>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="tipoIdentificacion" id="tipoIdentificacion1" value="C" checked>
+                                <label class="form-check-label" for="tipoIdentificacion1">
+                                    Cédula
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="tipoIdentificacion" id="tipoIdentificacion2" value="R">
+                                <label class="form-check-label" for="tipoIdentificacion2">
+                                    Ruc
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="tipoIdentificacion" id="tipoIdentificacion3" value="P">
+                                <label class="form-check-label" for="tipoIdentificacion3">
+                                    Passaporte
+                                </label>
                             </div>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col">
-                             Estado
-                            <select name="estadoUsuario" id="estadoUsuario" class="form-control" required>
-                                <option value="">-Seleccione Estado-</option>
-                                <option value="1">Activo</option>
-                                <option value="0">Inactivo</option>
+                            <label>Identificación</label>
+                            <input type="text" maxlength="10" pattern="[0-9]{10}" class="form-control" id="identificacion" name="identificacion" placeholder="Ejemplo: 1718191615" required>
+                        </div>
+                        <div class="col">
+                            <label>Nombre de usuario</label>
+                            <input type="text" class="form-control" id="nombre_usuario" name="nombre_usuario" required>
+                        </div>
+                        <div class="col">
+                            <label>Contraseña</label>
+                            <input type="password" class="form-control" id="contrasena" name="contrasena" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label>Correo electrónico</label>
+                            <input type="email" class="form-control" id="correo" name="correo" required placeholder="Ejemplo: juan@mail.com">
+                        </div>
+                        <div class="col">
+                            <label>Télefono</label>
+                            <input type="text" class="form-control" pattern="[0-9]{9,10}" id="telefono" name="telefono" required placeholder="Ejemplo: 0987654321">
+                        </div>
+                        <div class="col">
+                            <label>Dirección</label>
+                            <input type="text" class="form-control" id="direccion" name="direccion" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label>Ciudad de residencia</label>
+                            <select class="form-control" id="ciudad_residencia" name="ciudad_residencia">
+                                <option selected value="Quito">Quito</option>
+                                <option value="Guayaquil">Guayaquil</option>
+                                <option value="Cuenca">Cuenca</option>
+                                <option value="Machala">Machala</option>
+                                <option value="Ambato">Ambato</option>
+                                <option value="Manta">Manta</option>
+                                <option value="Santo Domingo">Santo Domingo</option>
                             </select>
                         </div>
                         <div class="col">
-                             Rol
-                            <select name="rolUsuario" id="rolUsuario" class="form-control" required>
-
-                            </select>
+                            <label>Fecha de nacimiento</label>
+                            <input type="date" max="<?php echo date('Y-m-d'); ?>" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" required>
                         </div>
                         <div class="col">
-                             Contraseña
-                            <input type="text" name="passUsuario" id="passUsuario" class="form-control" required>
+                            <label>Género</label>
+                            <select class="form-control" id="genero" name="genero">
+                                <option selected value="M">Masculino</option>
+                                <option value="F">Femenino</option>
+                            </select>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button"  class="btn btn-info btn-sm" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-info btn-sm" data-dismiss="modal">Cancelar</button>
                     <button type="submit" class="btn btn-success btn-sm">Guardar</button>
                 </div>
             </div>
@@ -90,15 +135,15 @@
                 <div class="modal-body">
                     <div class="form-group row">
                         <div class="col">
-                             Nombre y Apellido
+                            Nombre y Apellido
                             <input type="text" name="shownombreUsuario" id="shownombreUsuario" class="form-control" disabled>
                         </div>
                         <div class="col">
-                             Nick de Usuario
+                            Nick de Usuario
                             <input type="text" name="shownickUsuario" id="shownickUsuario" class="form-control" disabled>
                         </div>
                         <div class="col">
-                             Correo electrónico
+                            Correo electrónico
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">@</span>
@@ -109,7 +154,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col">
-                             Estado
+                            Estado
                             <select name="showestadoUsuario" id="showestadoUsuario" class="form-control" disabled>
                                 <option value="">-Seleccione Estado-</option>
                                 <option value="1">Activo</option>
@@ -117,19 +162,19 @@
                             </select>
                         </div>
                         <div class="col">
-                             Rol
+                            Rol
                             <select name="showrolUsuario" id="showrolUsuario" class="form-control" disabled>
 
                             </select>
                         </div>
                         <div class="col">
-                             Contraseña
+                            Contraseña
                             <input type="text" name="showpassUsuario" id="showpassUsuario" class="form-control" placeholder="Contraseña" disabled>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button"  class="btn btn-info btn-sm" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-info btn-sm" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>
         </div>
@@ -159,15 +204,15 @@
                     </div>
                     <div class="form-group row">
                         <div class="col">
-                             Nombre y Apellido
+                            Nombre y Apellido
                             <input type="text" name="editnombreUsuario" id="editnombreUsuario" class="form-control" required>
                         </div>
                         <div class="col">
-                             Nick de Usuario
+                            Nick de Usuario
                             <input type="text" name="editnickUsuario" id="editnickUsuario" class="form-control" disabled>
                         </div>
                         <div class="col">
-                             Correo electrónico
+                            Correo electrónico
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">@</span>
@@ -178,7 +223,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col">
-                             Estado
+                            Estado
                             <select name="editestadoUsuario" id="editestadoUsuario" class="form-control" required>
                                 <option value="">-Seleccione Estado-</option>
                                 <option value="1">Activo</option>
@@ -186,13 +231,13 @@
                             </select>
                         </div>
                         <div class="col">
-                             Rol
+                            Rol
                             <select name="editrolUsuario" id="editrolUsuario" class="form-control" required>
 
                             </select>
                         </div>
                         <div class="col">
-                             Contraseña
+                            Contraseña
                             <input type="text" name="editpassUsuario" id="editpassUsuario" class="form-control">
                         </div>
                     </div>

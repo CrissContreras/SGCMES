@@ -7,7 +7,6 @@ class RegistroModel extends CI_Model {
     }
 
     public function registro_nuevo_paciente() {
-
         $identificacion = $this->db->query('SELECT * FROM USUARIO WHERE IDENTIFICACION =' . '"' . $this->input->post('identificacion') . '"');
         $nombre_usuario = $this->db->query('SELECT * FROM USUARIO WHERE NOMBRE_USUARIO=' . '"' . $this->input->post('nombre_usuario') . '"');
 
@@ -18,7 +17,7 @@ class RegistroModel extends CI_Model {
             $result = 'Nombre de usuario ' . $this->input->post('nombre_usuario') . ' ya existe.';
             return $result;
         } 
-
+         
         $data = array(
             'NOMBRE' => $this->input->post('nombre'),
             'APELLIDO' => $this->input->post('apellido'),
@@ -32,8 +31,7 @@ class RegistroModel extends CI_Model {
             'CIUDAD_RESIDENCIA' => $this->input->post('ciudad_residencia'),
             'FECHA_NACIMIENTO' => $this->input->post('fecha_nacimiento'),
             'GENERO' => $this->input->post('genero'),
-            'TIPO' => "P",
-            'ID_ROL' => 3,
+            'ID_ROL' => 3
         );
         $result = $this->db->insert('usuario', $data);
 

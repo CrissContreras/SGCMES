@@ -81,6 +81,41 @@ class Administracion extends MY_Controller
 		echo json_encode($data);
 	}
 
+	//Rol
+	function Rol(){
+		$data['contenido'] = 'administracion/rol_v';
+		$this->template->template($data);
+	}
+
+	public function showRol()
+	{
+		$data = $this->administracionModel->showRol();
+		echo json_encode($data);
+	}
+
+	public function updateRol()
+	{
+		$data = $this->administracionModel->updateRol();
+		echo json_encode($data);
+	}
+
+	public function saveRol()
+	{
+		$data = $this->administracionModel->saveRol();
+		echo json_encode($data);
+	}
+
+	public function deleteRol()
+	{
+		$data = $this->administracionModel->deleteRol();
+		echo json_encode($data);
+	}
+
+	public function comboRol()
+	{
+		$data = $this->administracionModel->comboRol();
+		echo json_encode($data);
+	}
 
 
 
