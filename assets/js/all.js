@@ -4524,7 +4524,7 @@ function listMenu() {
       var i;
       var html = '';
       for (i = 0; i < data.length; i++) {
-        html += '<li id="tab' + data[i].DIRECCION + '"><a href="..' + data[i].DIRECCION + '"><i class="' + data[i].ICONO + '"></i><span>' + data[i].NOMBRE + '</span></a></li>';
+        html += '<li id="tab' + data[i].MODULO + '"><a href="..' + data[i].MODULO + '"><i class="' + data[i].ICONO + '"></i><span>' + data[i].NOMBRE + '</span></a></li>';
       }
       $('#main-menu').html(html);
     }

@@ -1,11 +1,9 @@
 $(document).ready(function () {
-	//******************************USER**********************************
-	listGrupo();
 	listUsuarios();
-	listGrupoPermisos();
-	/*list User  */
+	
 	$(document).ready(function () {
 		$('#tituloPagina').text("Usuarios");
+
 		$('#tableListUsuarios, #tableListGrupos').DataTable({
 			"lengthChange": true,
 			"info": true,
@@ -38,16 +36,8 @@ $(document).ready(function () {
 		});
 	});
 });
-function cargarFoto(srcUrl) {
-	var imgCargar = new Image();
-	imgCargar.src = 'data:image/png;base64,' + srcUrl;
-	var c = document.getElementById("imgfoto");
-	var ctx = c.getContext("2d");
-	imgCargar.onload = function () {
-		ctx.drawImage(imgCargar, 0, 0, 210, 170);
-	}
-};
 //-----------Usuario----------------
+//List
 function listUsuarios() {
 	$.ajax({
 		type: 'ajax',
@@ -58,25 +48,30 @@ function listUsuarios() {
 			var html = '';
 			var i;
 			var st = '';
+			var ad = '';
 			if (data != true) {
 				for (i = 0; i < data.length; i++) {
-					if (data[i].USUA_ESTADO == 1) {
+					if (data[i].ESTADO == 'A') {
 						st = '<td><span class="badge badge-pill badge-success"><strong>Activo</strong></span></td>'
 					} else {
 						st = '<td><span class="badge badge-pill badge-danger"><strong>Inactivo</strong></span></td>'
 					}
-					html += '<tr id="' + data[i].ROL_ID + '">' +
-						'<td><img onerror="imgError(this);" src="data:image/png;base64,' + data[i].USUA_FOTO + '" style="width: 40px; height: 36px;" alt="Foto"/></td>' +
-						'<td>' + data[i].USUA_NOMBRE + '</td>' +
-						'<td>' + data[i].USUA_NICK + '</td>' +
-						'<td>' + data[i].USUA_MAIL + '</td>' +
-						'<td>' + data[i].ROL_NOMBRE + '</td>' +
-						'<td>' + data[i].USUA_FECHA_REG + '</td>' +
+					if (data[i].ID_USUARIO != 1) {
+						ad = '<a title="Editar" href="javascript:void(0);"  class="editUser" data-id="' + data[i].USUA_ID + '" data-foto="' + data[i].USUA_FOTO + '" data-nombre="' + data[i].USUA_NOMBRE + '" data-nick="' + data[i].USUA_NICK + '" data-mail="' + data[i].USUA_MAIL + '" data-estado="' + data[i].USUA_ESTADO + '" data-rol="' + data[i].ROL_ID + '" disabled><i class="fas fa-edit"></i></a>&nbsp' +
+						'<a title="Editar" href="javascript:void(0);"  class="editUser" data-id="' + data[i].USUA_ID + '" data-foto="' + data[i].USUA_FOTO + '" data-nombre="' + data[i].USUA_NOMBRE + '" data-nick="' + data[i].USUA_NICK + '" data-mail="' + data[i].USUA_MAIL + '" data-estado="' + data[i].USUA_ESTADO + '" data-rol="' + data[i].ROL_ID + '" disabled><i class="fas fa-edit"></i></a>&nbsp';
+					} 
+					html += '<tr>' +
+						'<td>' + data[i].ID_USUARIO + '</td>' +
+						'<td>' + data[i].NOMBRE + '</td>' +
+						'<td>' + data[i].APELLIDO + '</td>' +
+						'<td>' + data[i].IDENTIFICACION + '</td>' +
+						'<td>' + data[i].NOMBRE_USUARIO + '</td>' +
+						'<td>' + data[i].CORREO + '</td>' +
+						'<td>' + data[i].ID_ROL + '</td>' +
 						st +
 						'<td>' +
 						'<a title="Mostrar" href="javascript:void(0);" style="color: green;" class="showUser" data-foto="' + data[i].USUA_FOTO + '" data-nombre="' + data[i].USUA_NOMBRE + '" data-nick="' + data[i].USUA_NICK + '" data-mail="' + data[i].USUA_MAIL + '" data-estado="' + data[i].USUA_ESTADO + '" data-rol="' + data[i].ROL_ID + '"><i class="fas fa-eye"></i></a>&nbsp' +
-						'<a title="Editar" href="javascript:void(0);"  class="editUser" data-id="' + data[i].USUA_ID + '" data-foto="' + data[i].USUA_FOTO + '" data-nombre="' + data[i].USUA_NOMBRE + '" data-nick="' + data[i].USUA_NICK + '" data-mail="' + data[i].USUA_MAIL + '" data-estado="' + data[i].USUA_ESTADO + '" data-rol="' + data[i].ROL_ID + '"><i class="fas fa-edit"></i></a>&nbsp' +
-						'<a title="Eliminar" href="javascript:void(0);" style="color: red;" class="deleteUser" data-id="' + data[i].USUA_ID + '" data-nombre="' + data[i].USUA_NOMBRE + '" ><i class="fas fa-minus-square"></i></a>' +
+						ad +
 						'</td>' +
 						'</tr>';
 				}
@@ -87,7 +82,8 @@ function listUsuarios() {
 		}
 	});
 }
-/*save*/
+
+//Save
 $('#saveUserForm').submit('click', function () {
 	var nombre = $('#nombreUsuario').val().trim();
 	var nick = $('#nickUsuario').val().trim();
@@ -132,7 +128,7 @@ $('#saveUserForm').submit('click', function () {
 	return false;
 });
 
-/*show edit*/
+//Edit
 $('#listUsuarios').on('click', '.showUser', function () {
 	$('#showUserModal').modal('show');
 	$("#showimgfoto").attr('src', 'data:image/png;base64,' + $(this).data('foto'));
@@ -144,8 +140,6 @@ $('#listUsuarios').on('click', '.showUser', function () {
 	$("#showpassUsuario").val("**********");
 
 });
-
-/*Edit*/
 $('#listUsuarios').on('click', '.editUser', function () {
 	$('#editUserModal').modal('show');
 
@@ -247,7 +241,7 @@ $('#editUserForm').on('submit', function () {
 	}
 });
 
-// show delete user
+//Delete
 $('#listUsuarios').on('click', '.deleteUser', function () {
 	var userId = $(this).data('id');
 	var userNombre = $(this).data('nombre');
@@ -255,7 +249,6 @@ $('#listUsuarios').on('click', '.deleteUser', function () {
 	$('#deleteUserId').val(userId);
 	$('#deleteUserNombre').text(userNombre);
 });
-// delete user 
 $('#deleteUserForm').on('submit', function () {
 	var userId = $('#deleteUserId').val().trim();
 	$.ajax({
@@ -530,127 +523,3 @@ $('#deleteRolForm').on('submit', function () {
 });
 
 //OPCION
-function generarNick() {
-	var nombre = (($('#nombreUsuario').val()).trim()).toLowerCase();
-	var nick = document.getElementById('nickUsuario');
-	var nuevoNombre = '';
-
-	for (i = 0; i < nombre.length; i++) {
-		if (nombre.charAt(i) == ' ') {
-			nuevoNombre += nombre.charAt(i + 1);
-			i = nombre.length;
-		}
-		nuevoNombre += nombre.charAt(i);
-	}
-
-	nick.value = "1" + nuevoNombre;
-}
-
-$(function () {
-	$('#editfotoUsuario').change(function (e) {
-		addImage(e);
-	});
-
-	function addImage(e) {
-		var file = e.target.files[0],
-			imageType = /image.jpe/;
-
-		if (!file.type.match(imageType))
-			return;
-
-		var reader = new FileReader();
-		reader.onload = fileOnload;
-		reader.readAsDataURL(file);
-	}
-
-	function fileOnload(e) {
-		var result = e.target.result;
-		$('#editimgfoto').attr("src", result);
-	}
-});
-
-function cargarImgDefault() {
-	var image = new Image();
-	image.src = window.location.protocol + "//" + window.location.host + "/assets/images/0.jpg";
-	image.onload = function (ev) {
-		var canvas = document.getElementById('imgfoto');
-		var ctx = canvas.getContext('2d');
-		ctx.drawImage(image, 0, 0, 210, 170);
-	}
-	//alert(imgCargar.src);
-}
-
-let fileInput = document.getElementById('fotoUsuario');
-fileInput.addEventListener('change', function (ev) {
-	if (ev.target.files) {
-		let file = ev.target.files[0];
-		var reader = new FileReader();
-		reader.readAsDataURL(file);
-		reader.onloadend = function (e) {
-			var image = new Image();
-			image.src = e.target.result;
-			image.onload = function (ev) {
-				var canvas = document.getElementById('imgfoto');
-				var ctx = canvas.getContext('2d');
-				ctx.drawImage(image, 0, 0, 210, 170);
-			}
-		}
-	}
-});
-
-let fileInput2 = document.getElementById('editfotoUsuario');
-fileInput2.addEventListener('change', function (ev) {
-	if (ev.target.files) {
-		let file = ev.target.files[0];
-		var reader = new FileReader();
-		reader.readAsDataURL(file);
-		reader.onloadend = function (e) {
-			var image = new Image();
-			image.src = e.target.result;
-			image.onload = function (ev) {
-				var canvas = document.getElementById('editimgfoto');
-				var ctx = canvas.getContext('2d');
-				ctx.drawImage(image, 0, 0, 210, 170);
-			}
-		}
-	}
-});
-
-$(function () {
-
-	$(document).on('change', ':file', function () {
-		var input = $(this),
-			numFiles = input.get(0).files ? input.get(0).files.length : 1,
-			label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-		input.trigger('fileselect', [numFiles, label]);
-
-	});
-
-	$(document).ready(function () {
-		$(':file').on('fileselect', function (event, numFiles, label) {
-
-			var input = $(this).parents('.input-group').find(':text'),
-				log = numFiles > 1 ? numFiles + ' archivos' : label;
-
-			if (input.length) {
-				input.val(log);
-			} else {
-				if (log)
-					toastr.warning(log);
-			}
-
-		});
-	});
-
-});
-$(document).ready(
-	function checked_all() {
-		$('#chckVall').change(function () {
-			var checkboxes = $(".chck1");
-			if ($(this).is(':checked')) {
-				checkboxes.prop('checked', true);
-			} else {
-				checkboxes.prop('checked', false);
-			}
-		});
-	});

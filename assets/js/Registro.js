@@ -17,6 +17,9 @@ $('#registro_nuevo_paciente').submit('click', function () {
 	var ciudad_residencia = $('#ciudad_residencia').val();
 	var fecha_nacimiento = $('#fecha_nacimiento').val().trim();
 	var genero = $('#genero').val();
+	var tipo_identificacion = $('input[name=tipoIdentificacion]:checked', '#registro_nuevo_paciente').val();
+
+	alert(tipo_identificacion);
 
 	$.ajax({
 		type: "POST",
@@ -34,6 +37,7 @@ $('#registro_nuevo_paciente').submit('click', function () {
 			ciudad_residencia: ciudad_residencia,
 			fecha_nacimiento: fecha_nacimiento,
 			genero: genero,
+			tipo_identificacion: tipo_identificacion,
 		},
 		success: function (data) {
 			if (data == true) {

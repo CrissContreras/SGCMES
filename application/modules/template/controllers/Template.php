@@ -16,17 +16,9 @@ class Template extends MX_Controller
     {
         if ($this->session->userdata('logged_in')) {
             $session_data = $this->session->userdata('logged_in');
-            /*$sistema = $this->templateModel->sistema();
-
-            foreach ($sistema as $row) { 
-                $data['TEMA'] = $row->GEN_TEMA;
-                $data['COLOR'] = $row->GEN_COLOR;
-                $data['MENU'] = $row->GEN_LATERAL;
-                $data['TIME_SISTEMA'] = $row->GEN_TIME_SESION;
-            }*/
 
             $data['USUARIO_LOG_ID'] = $session_data['ID_USUARIO'];
-            $data['USUARIO_LOGUEADO'] = $session_data['NOMBRE_USUARIO'];
+            $data['USUARIO_LOGUEADO'] = $session_data['NOMBRE'];
             $this->load->view('template/tamplate_v', $data);
             
         } else {

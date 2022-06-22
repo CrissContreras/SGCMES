@@ -18,9 +18,9 @@ class Login extends MY_Controller {
             if ($this->rol == 1) {
                 redirect('administracion/Principal');
             } else if ($this->rol == 2){
-                redirect('administracion/AgendaCitas');
+                redirect('medico/AgendaCitas');
             }else if ($this->rol == 3){
-                redirect('administracion/AgendarCita');
+                redirect('paciente/AgendarCita');
             }
         }
     }
@@ -36,11 +36,11 @@ class Login extends MY_Controller {
         if ($result) {
             $sess_array = array();
             foreach ($result as $row) {
-                if ($row->ESTADO == 0) {
+                if ($row->ESTADO == 'I') {
                     $this->form_validation->set_message('validar', 'Usuario deshabilitado, por favor comuníquese con nosotros.');
                     return false;
                 } else {
-                    $sess_array = $arrayName = array('ID_USUARIO' => $row->ID_USUARIO, 'NOMBRE_USUARIO' => $row->NOMBRE_USUARIO, 'ID_ROL' => $row->ID_ROL);
+                    $sess_array = $arrayName = array('ID_USUARIO' => $row->ID_USUARIO, 'NOMBRE' => $row->NOMBRE .' '.$row->APELLIDO, 'ID_ROL' => $row->ID_ROL);
                     $this->session->set_userdata('logged_in', $sess_array);
                     $this->rol = $row->ID_ROL;
                     return true;

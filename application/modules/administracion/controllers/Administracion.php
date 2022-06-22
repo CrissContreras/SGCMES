@@ -20,6 +20,80 @@ class Administracion extends MY_Controller
 		$this->template->template($data);
     }
 
+	//Usuarios
+	function Usuarios(){
+		$data['contenido'] = 'administracion/usuarios_v';
+		$this->template->template($data);
+	}
+
+	public function showUsuario()
+	{
+		$data = $this->administracionModel->showUsuario();
+		echo json_encode($data);
+	}
+
+	public function updateUsusario()
+	{
+		$data = $this->administracionModel->updateUsusario();
+		echo json_encode($data);
+	}
+
+	public function saveUsuario()
+	{
+		$data = $this->administracionModel->saveUsuario();
+		echo json_encode($data);
+	}
+
+	public function deleteUsuario()
+	{
+		$data = $this->administracionModel->deleteUsuario();
+		echo json_encode($data);
+	}
+
+
+    //Catalogo
+	function Catalogo(){
+		$data['contenido'] = 'administracion/catalogo_v';
+		$this->template->template($data);
+	}
+
+	public function showCatalogo()
+	{
+		$data = $this->administracionModel->showCatalogo();
+		echo json_encode($data);
+	}
+
+	public function updateCatalogo()
+	{
+		$data = $this->administracionModel->updateCatalogo();
+		echo json_encode($data);
+	}
+
+	public function saveCatalogo()
+	{
+		$data = $this->administracionModel->saveCatalogo();
+		echo json_encode($data);
+	}
+
+	public function deleteCatalogo()
+	{
+		$data = $this->administracionModel->deleteCatalogo();
+		echo json_encode($data);
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public function AgendarCita()
     {
         $data['contenido'] = 'administracion/agendarCita_v';
