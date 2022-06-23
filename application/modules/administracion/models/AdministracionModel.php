@@ -22,58 +22,69 @@ class AdministracionModel extends CI_Model {
 
     public function saveUsuario() {
 
-        $mailExiste = $this->db->query('SELECT * FROM USUARIOS WHERE USUA_MAIL=' . '"' . $this->input->post('mail') . '"');
-        $nickExiste = $this->db->query('SELECT * FROM USUARIOS WHERE USUA_NICK=' . '"' . $this->input->post('nick') . '"');
-        if ($nickExiste->num_rows() > 0 && $mailExiste->num_rows() > 0) {
-            $result = 'Usuario con el Correo electrónico ' . $this->input->post('mail') . ' y el Nick ' . $this->input->post('nick') . ' ya existe.';
+        $mailExiste = $this->db->query('SELECT * FROM usuario WHERE CORREO=' . '"' . $this->input->post('correo') . '"');
+        $nickExiste = $this->db->query('SELECT * FROM usuario WHERE NOMBRE_USUARIO=' . '"' . $this->input->post('nombre_usuario') . '"');
+        $identificacionExiste = $this->db->query('SELECT * FROM usuario WHERE IDENTIFICACION=' . '"' . $this->input->post('identificacion') . '"');
+        if ($nickExiste->num_rows() > 0 && $mailExiste->num_rows() > 0 && $identificacionExiste->num_rows() > 0) {
+            $result = 'Usuario con el Correo electrónico ' . $this->input->post('correo') . ' y el Usuario ' . $this->input->post('nombre_usuario') . ' y el Identificación ' . $this->input->post('identificacion') . ' ya existe.';
             return $result;
         } else if ($mailExiste->num_rows() > 0) {
-            $result = 'Usuario con el Correo electrónico ' . $this->input->post('mail') . ' ya existe.';
+            $result = 'Usuario con el Correo electrónico ' . $this->input->post('correo') . ' ya existe.';
             return $result;
         } else if ($nickExiste->num_rows() > 0) {
-            $result = 'Usuario con el Nick ' . $this->input->post('nick') . ' ya existe.';
+            $result = 'Usuario con el nombre de usuario ' . $this->input->post('nombre_usuario') . ' ya existe.';
+            return $result;
+        } else if ($identificacionExiste->num_rows() > 0) {
+            $result = 'Usuario con la identificación' . $this->input->post('identificacion') . ' ya existe.';
             return $result;
         }
         $data = array(
-            'USUA_NOMBRE' => $this->input->post('nombre'),
-            'USUA_MAIL' => $this->input->post('mail'),
-            'USUA_NICK' => $this->input->post('nick'),
-            'USUA_PASS' => md5($this->input->post('pass')),
-            'USUA_FECHA_REG' => date('Y-m-d'),
-            'USUA_FOTO' => $this->input->post('foto'),
-            'USUA_ESTADO' => $this->input->post('estado'),
-            'ROL_ID' => $this->input->post('rol'),
+            'NOMBRE' => $this->input->post('nombre'),
+            'APELLIDO' => $this->input->post('apellido'),
+            'TIPO_IDENTIFICACION' => $this->input->post('tipo_identificacion'),
+            'IDENTIFICACION' => $this->input->post('identificacion'),
+            'NOMBRE_USUARIO' => $this->input->post('nombre_usuario'),
+            'CONTRASENA' => md5($this->input->post('contrasena')),
+            'CORREO' => $this->input->post('correo'),
+            'TELEFONO' => $this->input->post('telefono'),
+            'DIRECCION' => $this->input->post('direccion'),
+            'CIUDAD_RESIDENCIA' => $this->input->post('ciudad_residencia'),
+            'FECHA_NACIMIENTO' => $this->input->post('fecha_nacimiento'),
+            'GENERO' => $this->input->post('genero'),
+            'ID_ROL' => $this->input->post('id_rol'),
+            'ESTADO' => 'A',
         );
-        $result = $this->db->insert('USUARIOS', $data);
+        $result = $this->db->insert('usuario', $data);
         return $result;
     }
 
     public function updateUsusario() {
-        $this->form_validation->set_rules('mail', 'Mail', 'edit_unique[USUARIOS.USUA_MAIL.USUA_ID.' . $this->input->post('id') . ']');
-        if ($this->form_validation->run() == false) {
+        $mailExiste = $this->db->query('SELECT * FROM usuario WHERE CORREO=' . '"' . $this->input->post('correo') . '" AND ID_USUARIO <>' . '"' . $this->input->post('id') . '"');
+        if ($mailExiste->num_rows() > 0) {
             return 'El correo electrónico ' . $this->input->post('mail') . ' pertenece a otro usuario.';
         } else {
+            $this->db->set('NOMBRE', $this->input->post('nombre'));
+            $this->db->set('APELLIDO', $this->input->post('apellido'));
+            $this->db->set('TIPO_IDENTIFICACION', $this->input->post('tipo_identificacion'));
+            $this->db->set('IDENTIFICACION', $this->input->post('identificacion'));
+            $this->db->set('NOMBRE_USUARIO', $this->input->post('nombre_usuario'));
+            $this->db->set('CORREO', $this->input->post('correo'));
+            $this->db->set('TELEFONO', $this->input->post('telefono'));
+            $this->db->set('DIRECCION', $this->input->post('direccion'));
+            $this->db->set('CIUDAD_RESIDENCIA', $this->input->post('ciudad_residencia'));
+            $this->db->set('FECHA_NACIMIENTO', $this->input->post('fecha_nacimiento'));
+            $this->db->set('GENERO', $this->input->post('genero'));
+            $this->db->set('ID_ROL', $this->input->post('id_rol'));
+            $contrasena = $this->input->post('contrasena');
             $id = $this->input->post('id');
-            $foto = $this->input->post('foto');
-            $nombre = $this->input->post('nombre');
-            $mail = $this->input->post('mail');
-            $estado = $this->input->post('estado');
-            $rol = $this->input->post('rol');
-            $pass = $this->input->post('pass');
-
-            $this->db->set('USUA_NOMBRE', $nombre);
-            $this->db->set('USUA_MAIL', $mail);
-            $this->db->set('USUA_ESTADO', $estado);
-            $this->db->set('USUA_FOTO', $foto);
-            $this->db->set('ROL_ID', $rol);
-            if ($pass != "") {
-                $this->db->set('USUA_PASS', md5($pass));
-                $this->db->where('USUA_ID', $id);
-                $result = $this->db->update('USUARIOS');
+            if ($contrasena != "") {
+                $this->db->set('CONTRASENA', md5($contrasena));
+                $this->db->where('ID_USUARIO', $id);
+                $result = $this->db->update('usuario');
                 return $result;
             } else {
-                $this->db->where('USUA_ID', $id);
-                $result = $this->db->update('USUARIOS');
+                $this->db->where('ID_USUARIO', $id);
+                $result = $this->db->update('usuario');
                 return $result;
             }
         }

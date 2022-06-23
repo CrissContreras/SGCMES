@@ -64,7 +64,7 @@
                     <div class="form-group row">
                         <div class="col">
                             <label>Identificación</label>
-                            <input type="text" maxlength="10" pattern="[0-9]{10}" class="form-control" id="identificacion" name="identificacion" placeholder="Ejemplo: 1718191615" required>
+                            <input type="text" maxlength="10" class="form-control" id="identificacion" name="identificacion" placeholder="Ejemplo: 1718191615" required>
                         </div>
                         <div class="col">
                             <label>Nombre de usuario</label>
@@ -111,6 +111,13 @@
                             <select class="form-control" id="genero" name="genero">
                                 <option selected value="M">Masculino</option>
                                 <option value="F">Femenino</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label>Rol</label>
+                            <select class="form-control" id="id_Rol" name="id_Rol">
                             </select>
                         </div>
                     </div>
@@ -190,55 +197,96 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group row d-flex justify-content-center">
-                        <div class="col-5 ">
-                            <div class="input-group">
-                                <label class="input-group-btn">
-                                    <span class="btn btn-primary">
-                                        Elegir foto&hellip;<input accept=".jpg" type="file" id="editfotoUsuario" name="editfotoUsuario" style="display: none;">
-                                    </span>
+                <div class="form-group row">
+                        <div class="col">
+                            <label>Nombres</label>
+                            <input type="text" class="form-control" id="editnombre" name="editnombre" required>
+                        </div>
+                        <div class="col">
+                            <label>Apellidos</label>
+                            <input type="text" class="form-control" id="editapellido" name="editapellido" required>
+                        </div>
+                        <div class="col">
+                            <label>Tipo de identificación</label><br>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="edittipo_identificacion" id="edittipo_identificacion" value="C" checked>
+                                <label class="form-check-label" for="edittipo_identificacion">
+                                    Cédula
                                 </label>
-                                <input type="text" class="form-control" readonly>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="edittipo_identificacion" id="edittipo_identificacion2" value="R">
+                                <label class="form-check-label" for="edittipo_identificacion2">
+                                    Ruc
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="edittipo_identificacion" id="edittipo_identificacion3" value="P">
+                                <label class="form-check-label" for="edittipo_identificacion3">
+                                    Passaporte
+                                </label>
                             </div>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col">
-                            Nombre y Apellido
-                            <input type="text" name="editnombreUsuario" id="editnombreUsuario" class="form-control" required>
+                            <label>Identificación</label>
+                            <input type="text" maxlength="10" class="form-control" id="editidentificacion" name="editidentificacion" placeholder="Ejemplo: 1718191615" required>
                         </div>
                         <div class="col">
-                            Nick de Usuario
-                            <input type="text" name="editnickUsuario" id="editnickUsuario" class="form-control" disabled>
+                            <label>Nombre de usuario</label>
+                            <input type="text" class="form-control" id="editnombre_usuario" name="editnombre_usuario" required>
                         </div>
                         <div class="col">
-                            Correo electrónico
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">@</span>
-                                </div>
-                                <input type="email" name="editmailUsuario" id="editmailUsuario" class="form-control" placeholder="ej: usuario@mail.com" required>
-                            </div>
+                            <label>Contraseña</label>
+                            <input type="password" class="form-control" id="editcontrasena" name="editcontrasena">
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col">
-                            Estado
-                            <select name="editestadoUsuario" id="editestadoUsuario" class="form-control" required>
-                                <option value="">-Seleccione Estado-</option>
-                                <option value="1">Activo</option>
-                                <option value="0">Inactivo</option>
+                            <label>Correo electrónico</label>
+                            <input type="email" class="form-control" id="editcorreo" name="editcorreo" required placeholder="Ejemplo: juan@mail.com">
+                        </div>
+                        <div class="col">
+                            <label>Télefono</label>
+                            <input type="text" class="form-control" pattern="[0-9]{9,10}" id="edittelefono" name="edittelefono" required placeholder="Ejemplo: 0987654321">
+                        </div>
+                        <div class="col">
+                            <label>Dirección</label>
+                            <input type="text" class="form-control" id="editdireccion" name="editdireccion" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label>Ciudad de residencia</label>
+                            <select class="form-control" id="editciudad_residencia" name="editciudad_residencia">
+                                <option selected value="Quito">Quito</option>
+                                <option value="Guayaquil">Guayaquil</option>
+                                <option value="Cuenca">Cuenca</option>
+                                <option value="Machala">Machala</option>
+                                <option value="Ambato">Ambato</option>
+                                <option value="Manta">Manta</option>
+                                <option value="Santo Domingo">Santo Domingo</option>
                             </select>
                         </div>
                         <div class="col">
-                            Rol
-                            <select name="editrolUsuario" id="editrolUsuario" class="form-control" required>
-
-                            </select>
+                            <label>Fecha de nacimiento</label>
+                            <input type="date" max="<?php echo date('Y-m-d'); ?>" class="form-control" id="editfecha_nacimiento" name="editfecha_nacimiento" required>
                         </div>
                         <div class="col">
-                            Contraseña
-                            <input type="text" name="editpassUsuario" id="editpassUsuario" class="form-control">
+                            <label>Género</label>
+                            <select class="form-control" id="editgenero" name="editgenero">
+                                <option selected value="M">Masculino</option>
+                                <option value="F">Femenino</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label>Rol</label>
+                            <select class="form-control" id="editid_rol" name="editid_rol">
+                                <option selected value="">Selecccionar</option>
+                            </select>
                         </div>
                     </div>
                 </div>

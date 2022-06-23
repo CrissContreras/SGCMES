@@ -1,6 +1,6 @@
 $(document).ready(function () {
 	listUsuarios();
-	
+	comboRol();
 	$(document).ready(function () {
 		$('#tituloPagina').text("Usuarios");
 
@@ -57,9 +57,9 @@ function listUsuarios() {
 						st = '<td><span class="badge badge-pill badge-danger"><strong>Inactivo</strong></span></td>'
 					}
 					if (data[i].ID_USUARIO != 1) {
-						ad = '<a title="Editar" href="javascript:void(0);"  class="editUser" data-id="' + data[i].USUA_ID + '" data-foto="' + data[i].USUA_FOTO + '" data-nombre="' + data[i].USUA_NOMBRE + '" data-nick="' + data[i].USUA_NICK + '" data-mail="' + data[i].USUA_MAIL + '" data-estado="' + data[i].USUA_ESTADO + '" data-rol="' + data[i].ROL_ID + '" disabled><i class="fas fa-edit"></i></a>&nbsp' +
-						'<a title="Editar" href="javascript:void(0);"  class="editUser" data-id="' + data[i].USUA_ID + '" data-foto="' + data[i].USUA_FOTO + '" data-nombre="' + data[i].USUA_NOMBRE + '" data-nick="' + data[i].USUA_NICK + '" data-mail="' + data[i].USUA_MAIL + '" data-estado="' + data[i].USUA_ESTADO + '" data-rol="' + data[i].ROL_ID + '" disabled><i class="fas fa-edit"></i></a>&nbsp';
-					} 
+						ad = '<a title="Editar" href="javascript:void(0);"  class="editUser" data-id="' + data[i].ID_USUARIO + '" data-nombre="' + data[i].NOMBRE + '" data-apellido="' + data[i].APELLIDO + '" data-tipo_identificacion="' + data[i].TIPO_IDENTIFICACION + '" data-identificacion="' + data[i].IDENTIFICACION + '" data-nombre_usuario="' + data[i].NOMBRE_USUARIO + '" data-correo="' + data[i].CORREO + '" data-telefono="' + data[i].TELEFONO + '" data-direccion="' + data[i].DIRECCION + '" data-ciudad_residencia="' + data[i].CIUDAD_RESIDENCIA + '" data-fecha_nacimiento="' + data[i].FECHA_NACIMIENTO + '" data-genero="' + data[i].GENERO + '" data-id_rol="' + data[i].ID_ROL + '" ><i class="fas fa-edit"></i></a>&nbsp' +
+							'<a title="Eliminar" href="javascript:void(0);" style="color: red;" class="deleteUser" data-id="' + data[i].USUA_ID + '" data-nombre="' + data[i].USUA_NOMBRE + '" ><i class="fas fa-minus-square"></i></a>';
+					}
 					html += '<tr>' +
 						'<td>' + data[i].ID_USUARIO + '</td>' +
 						'<td>' + data[i].NOMBRE + '</td>' +
@@ -83,43 +83,81 @@ function listUsuarios() {
 	});
 }
 
+
+
+function comboRol() {
+	$.ajax({
+		type: 'ajax',
+		url: 'administracion/comboRol',
+		async: false,
+		dataType: 'json',
+		success: function (data) {
+			var html = '';
+			if (data != true) {
+				for (i = 0; i < data.length; i++) {
+					html += '<option value="' + data[i].ID_ROL + '">' + data[i].NOMBRE + '</option>';
+				}
+			} else {
+				toastr.warning(data);
+			}
+			$('#editid_rol, #id_Rol').html(html);
+		}
+	});
+}
 //Save
 $('#saveUserForm').submit('click', function () {
-	var nombre = $('#nombreUsuario').val().trim();
-	var nick = $('#nickUsuario').val().trim();
-	var mail = $('#mailUsuario').val().trim();
-	var estado = $('#estadoUsuario').val().trim();
-	var rol = $('#rolUsuario').val().trim();
-	var pass = $('#passUsuario').val().trim();
-	var userimg64 = (document.getElementById("imgfoto").toDataURL()).replace(/^data:image\/(png|jpg|jpeg);base64,/, "");
-
+	var $nombre = $('#nombre').val().trim();
+	var $apellido = $('#apellido').val().trim();
+	var $tipo_identificacion = $('input[name=tipoIdentificacion]:checked', '#saveUserForm').val();
+	var $identificacion = $('#identificacion').val().trim();
+	var $nombre_usuario = $('#nombre_usuario').val().trim();
+	var $contrasena = $('#contrasena').val().trim();
+	var $correo = $('#correo').val().trim();
+	var $telefono = $('#telefono').val().trim();
+	var $direccion = $('#direccion').val().trim();
+	var $ciudad_residencia = $('#ciudad_residencia').val().trim();
+	var $fecha_nacimiento = $('#fecha_nacimiento').val().trim();
+	var $genero = $('#genero').val().trim();
+	var $id_rol = $('#id_Rol').val().trim();
 	$.ajax({
 		type: "POST",
 		url: "administracion/saveUsuario",
 		dataType: "JSON",
 		data: {
-			nombre: nombre,
-			nick: nick,
-			mail: mail,
-			estado: estado,
-			rol: rol,
-			pass: pass,
-			foto: userimg64
+			nombre: $nombre,
+			apellido: $apellido,
+			tipo_identificacion: $tipo_identificacion,
+			identificacion: $identificacion,
+			nombre_usuario: $nombre_usuario,
+			contrasena: $contrasena,
+			correo: $correo,
+			telefono: $telefono,
+			direccion: $direccion,
+			ciudad_residencia: $ciudad_residencia,
+			fecha_nacimiento: $fecha_nacimiento,
+			genero: $genero,
+			id_rol: $id_rol			
 		},
 		success: function (data) {
 			if (data == true) {
-				$("#nombreUsuario").val("");
-				$('#nickUsuario').val("");
-				$('#mailUsuario').val("");
-				$('#estadoUsuario').val("");
-				$('#rolUsuario').val("");
-				$('#passUsuario').val("");
-				$('#fotoUsuario').val("");
+				$('#nombre').val(""),
+					$('#apellido').val(""),
+					$('#tipo_identificacion').val(""),
+					$('#identificacion').val(""),
+					$('#nombre_usuario').val(""),
+					$('#contrasena').val(""),
+					$('#correo').val(""),
+					$('#telefono').val(""),
+					$('#direccion').val(""),
+					$('#ciudad_residencia').val(""),
+					$('#fecha_nacimiento').val(""),
+					$('#genero').val(""),
+					$('#id_rol').val("")
 
 				toastr.success('Datos de usuario guardado.');
 				$('#addUserModal').modal('hide');
-				listUsuarios();
-				listGrupo();
+				//listUsuarios();
+				//listGrupo();
 			} else {
 				toastr.warning(data);
 			}
@@ -131,69 +169,66 @@ $('#saveUserForm').submit('click', function () {
 //Edit
 $('#listUsuarios').on('click', '.showUser', function () {
 	$('#showUserModal').modal('show');
-	$("#showimgfoto").attr('src', 'data:image/png;base64,' + $(this).data('foto'));
-	$("#shownombreUsuario").val($(this).data('nombre'));
-	$("#shownickUsuario").val($(this).data('nick'));
-	$("#showmailUsuario").val($(this).data('mail'));
-	$("#showrolUsuario").val($(this).data('rol'));
-	$("#showestadoUsuario").val($(this).data('estado'));
-	$("#showpassUsuario").val("**********");
 
 });
 $('#listUsuarios').on('click', '.editUser', function () {
 	$('#editUserModal').modal('show');
 
-	var canvas = document.getElementById("editimgfoto");
-	var ctx = canvas.getContext("2d");
-	var image = new Image();
-	image.onload = function () {
-		ctx.drawImage(image, 0, 0);
-	};
-	image.src = 'data:image/png;base64,' + $(this).data('foto');
-
 	$("#editIdUsuario").val($(this).data('id'));
-	$("#editnombreUsuario").val($(this).data('nombre'));
-	$("#editnickUsuario").val($(this).data('nick'));
-	$("#editmailUsuario").val($(this).data('mail'));
-	$("#editrolUsuario").val($(this).data('rol'));
-	$("#editestadoUsuario").val($(this).data('estado'));
-	$("#editpassUsuario").val("");
+	$("#editnombre").val($(this).data('nombre'));
+	$('#editapellido').val($(this).data('apellido')),
+		$('#edittipo_identificacion').val($(this).data('tipo_identificacion')),
+		$('#editidentificacion').val($(this).data('identificacion')),
+		$('#editnombre_usuario').val($(this).data('nombre_usuario')),
+		$('#editcontrasena').val(""),
+		$('#editcorreo').val($(this).data('correo')),
+		$('#edittelefono').val($(this).data('telefono')),
+		$('#editdireccion').val($(this).data('direccion')),
+		$('#editciudad_residencia').val($(this).data('ciudad_residencia')),
+		$('#editfecha_nacimiento').val($(this).data('fecha_nacimiento')),
+		$('#editgenero').val($(this).data('genero')),
+		$('#editid_rol').val($(this).data('id_rol'))
+
 
 });
 $('#editUserForm').on('submit', function () {
 
-	var foto = (document.getElementById("editimgfoto").toDataURL()).replace(/^data:image\/(png|jpg|jpeg);base64,/, "");
-	var id = $("#editIdUsuario").val().trim();
-	var nombre = $("#editnombreUsuario").val().trim();
-	var nick = $("#editnickUsuario").val().trim();
-	var mail = $("#editmailUsuario").val().trim();
-	var rol = $("#editrolUsuario").val().trim();
-	var estado = $("#editestadoUsuario").val().trim();
-	var pass = $("#editpassUsuario").val().trim();
-
-	if ($("#editpassUsuario").val() != "") {
+	if ($("#editcontrasena").val() != "") {
 		$.ajax({
 			type: "POST",
 			url: "administracion/updateUsusario",
 			dataType: "JSON",
 			data: {
-				id: id,
-				nombre: nombre,
-				nick: nick,
-				mail: mail,
-				estado: estado,
-				rol: rol,
-				pass: pass,
-				foto: foto
+				id: $('#editIdUsuario').val().trim(),
+				nombre: $('#editnombre').val().trim(),
+				apellido: $('#editapellido').val().trim(),
+				tipo_identificacion:  $('input[name=edittipo_identificacion]:checked', '#editUserForm').val(),
+				identificacion: $('#editidentificacion').val().trim(),
+				nombre_usuario: $('#editnombre_usuario').val().trim(),
+				contrasena: $('#editcontrasena').val().trim(),
+				correo: $('#editcorreo').val().trim(),
+				telefono: $('#edittelefono').val().trim(),
+				direccion: $('#editdireccion').val().trim(),
+				ciudad_residencia: $('#editciudad_residencia').val().trim(),
+				fecha_nacimiento: $('#editfecha_nacimiento').val().trim(),
+				genero: $('#editgenero').val().trim(),
+				id_rol: $('#editid_rol').val().trim()
 			},
 			success: function (data) {
-				$("#nombreUsuario").val("");
-				$('#nickUsuario').val("");
-				$('#mailUsuario').val("");
-				$('#estadoUsuario').val("");
-				$('#rolUsuario').val("");
-				$('#passUsuario').val("");
-				$('#fotoUsuario').val("");
+				$('#editnombre').val(""),
+					$('#editapellido').val(""),
+					$('#edittipo_identificacion').val(""),
+					$('#editidentificacion').val(""),
+					$('#editnombre_usuario').val(""),
+					$('#editcontrasena').val(""),
+					$('#editcorreo').val(""),
+					$('#edittelefono').val(""),
+					$('#editdireccion').val(""),
+					$('#editciudad_residencia').val(""),
+					$('#editfecha_nacimiento').val(""),
+					$('#editgenero').val(""),
+					$('#editid_rol').val("")
+
 				if (data == true) {
 					toastr.success('Datos de usuario actualizado.');
 					$('#editUserModal').modal('hide');
@@ -211,27 +246,38 @@ $('#editUserForm').on('submit', function () {
 			url: "administracion/updateUsusario",
 			dataType: "JSON",
 			data: {
-				id: id,
-				nombre: nombre,
-				nick: nick,
-				mail: mail,
-				estado: estado,
-				rol: rol,
-				foto: foto
+				id: $('#editIdUsuario').val().trim(),
+				nombre: $('#editnombre').val().trim(),
+				apellido: $('#editapellido').val().trim(),
+				tipo_identificacion: $('#edittipo_identificacion').val().trim(),
+				identificacion: $('#editidentificacion').val().trim(),
+				nombre_usuario: $('#editnombre_usuario').val().trim(),
+				correo: $('#editcorreo').val().trim(),
+				telefono: $('#edittelefono').val().trim(),
+				direccion: $('#editdireccion').val().trim(),
+				ciudad_residencia: $('#editciudad_residencia').val().trim(),
+				fecha_nacimiento: $('#editfecha_nacimiento').val().trim(),
+				genero: $('#editgenero').val().trim(),
+				id_rol: $('#editid_rol').val().trim()
 			},
 			success: function (data) {
-				$("#nombreUsuario").val("");
-				$('#nickUsuario').val("");
-				$('#mailUsuario').val("");
-				$('#estadoUsuario').val("");
-				$('#rolUsuario').val("");
-				$('#passUsuario').val("");
-				$('#fotoUsuario').val("");
+				$('#editnombre').val(""),
+					$('#editapellido').val(""),
+					$('#edittipo_identificacion').val(""),
+					$('#editidentificacion').val(""),
+					$('#editnombre_usuario').val(""),
+					$('#editcontrasena').val(""),
+					$('#editcorreo').val(""),
+					$('#edittelefono').val(""),
+					$('#editdireccion').val(""),
+					$('#editciudad_residencia').val(""),
+					$('#editfecha_nacimiento').val(""),
+					$('#editgenero').val(""),
+					$('#editid_rol').val("")
 				if (data == true) {
 					toastr.success('Datos de usuario actualizado.');
 					$('#editUserModal').modal('hide');
 					listUsuarios();
-					listGrupo();
 				} else {
 					toastr.warning(data);
 				}
@@ -307,33 +353,6 @@ function listGrupo() {
 	});
 }
 
-function listGrupoPermisos() {
-	$.ajax({
-		type: 'ajax',
-		url: 'administracion/showGrupoPermisos',
-		async: false,
-		dataType: 'json',
-		success: function (data) {
-			var html = '';
-			if (data != true) {
-				for (i = 0; i < data.length; i++) {
-					html += '<tr>' +
-						'<td class="text-left">' + data[i].URL_NOMBRE + '</td>' +
-						'<td><input type="checkbox" value="' + data[i].URL_ID + '" class="chck1"></td>' +
-						'</tr>';
-				}
-				html += '<tr>' +
-					'<td class="text-left">TODOS</td>' +
-					'<td><input type="checkbox" value="1" id="chckVall" class="chck1"></td>' +
-					'</tr>';
-			} else {
-				toastr.warning(data);
-			}
-			$('#listGrupoPermiso').html(html);
-			//$('#listGrupoPermisoEdit').html(html);
-		}
-	});
-}
 
 /*save*/
 $('#saveGrupoForm').submit('click', function () {

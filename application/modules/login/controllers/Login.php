@@ -15,13 +15,14 @@ class Login extends MY_Controller {
         if ($this->form_validation->run($this) == false) {
             $this->load->view('login/login_v');
         } else {
-            if ($this->rol == 1) {
+            redirect('administracion/Principal');
+            /*if ($this->rol == 1) {
                 redirect('administracion/Principal');
             } else if ($this->rol == 2){
                 redirect('medico/AgendaCitas');
             }else if ($this->rol == 3){
                 redirect('paciente/AgendarCita');
-            }
+            }*/
         }
     }
 
