@@ -1,6 +1,7 @@
 $(document).ready(function () {
 	listUsuarios();
 	comboRol();
+	comboEspecialidad();
 	$(document).ready(function () {
 		$('#tituloPagina').text("Usuarios");
 
@@ -57,7 +58,7 @@ function listUsuarios() {
 						st = '<td><span class="badge badge-pill badge-danger"><strong>Inactivo</strong></span></td>'
 					}
 					if (data[i].ID_USUARIO != 1) {
-						ad = '<a title="Editar" href="javascript:void(0);"  class="editUser" data-id="' + data[i].ID_USUARIO + '" data-nombre="' + data[i].NOMBRE + '" data-apellido="' + data[i].APELLIDO + '" data-tipo_identificacion="' + data[i].TIPO_IDENTIFICACION + '" data-identificacion="' + data[i].IDENTIFICACION + '" data-nombre_usuario="' + data[i].NOMBRE_USUARIO + '" data-correo="' + data[i].CORREO + '" data-telefono="' + data[i].TELEFONO + '" data-direccion="' + data[i].DIRECCION + '" data-ciudad_residencia="' + data[i].CIUDAD_RESIDENCIA + '" data-fecha_nacimiento="' + data[i].FECHA_NACIMIENTO + '" data-genero="' + data[i].GENERO + '" data-id_rol="' + data[i].ID_ROL + '" ><i class="fas fa-edit"></i></a>&nbsp' +
+						ad = '<a title="Editar" href="javascript:void(0);"  class="editUser" data-id="' + data[i].ID_USUARIO + '" data-nombre="' + data[i].NOMBRE + '" data-apellido="' + data[i].APELLIDO + '" data-tipo_identificacion="' + data[i].TIPO_IDENTIFICACION + '" data-identificacion="' + data[i].IDENTIFICACION + '" data-nombre_usuario="' + data[i].NOMBRE_USUARIO + '" data-correo="' + data[i].CORREO + '" data-telefono="' + data[i].TELEFONO + '" data-direccion="' + data[i].DIRECCION + '" data-ciudad_residencia="' + data[i].CIUDAD_RESIDENCIA + '" data-fecha_nacimiento="' + data[i].FECHA_NACIMIENTO + '" data-genero="' + data[i].GENERO + '" data-id_rol="' + data[i].ID_ROL + '" data-id_especialidad="' + data[i].ID_ESPECIALIDAD + '" ><i class="fas fa-edit"></i></a>&nbsp' +
 							'<a title="Eliminar" href="javascript:void(0);" style="color: red;" class="deleteUser" data-id="' + data[i].USUA_ID + '" data-nombre="' + data[i].USUA_NOMBRE + '" ><i class="fas fa-minus-square"></i></a>';
 					}
 					html += '<tr>' +
@@ -104,6 +105,57 @@ function comboRol() {
 		}
 	});
 }
+
+function comboEspecialidad() {
+	$.ajax({
+		type: 'ajax',
+		url: 'administracion/comboEspecialidad',
+		async: false,
+		dataType: 'json',
+		success: function (data) {
+			var html = '';
+			if (data != true) {
+				for (i = 0; i < data.length; i++) {
+					html += '<option value="' + data[i].ID_ESPECIALIDAD + '">' + data[i].NOMBRE + '</option>';
+				}
+			} else {
+				toastr.warning(data);
+			}
+			$('#editid_especialidad, #id_especialidad').html(html);
+		}
+	});
+}
+var $id_roleditprin = $("#editid_rol").val();
+if ($id_roleditprin == '2') {
+	$("#divEditEspecialidad").show();
+} else {
+	$('#divEditEspecialidad').hide();
+}
+var $id_rolprin = $("#id_rol").val();
+if ($id_rolprin == '2') {
+	$('#divEspecialidad').show();
+} else {
+	$('#divEspecialidad').hide();
+}
+function fn_validarRol(deque) {
+	if (deque == 'm') {
+		var $id_roledit = $("#editid_rol option:selected").val();
+		if ($id_roledit == '2') {
+			$("#divEditEspecialidad").show();
+		} else {
+			$('#divEditEspecialidad').hide();
+		}
+	}
+	if (deque == 'n') {
+		var $id_rol = $("#id_rol option:selected").val();
+		if ($id_rol == '2') {
+			$('#divEspecialidad').show();
+		} else {
+			$('#divEspecialidad').hide();
+		}
+	}
+
+}
 //Save
 $('#saveUserForm').submit('click', function () {
 	var $nombre = $('#nombre').val().trim();
@@ -136,7 +188,7 @@ $('#saveUserForm').submit('click', function () {
 			ciudad_residencia: $ciudad_residencia,
 			fecha_nacimiento: $fecha_nacimiento,
 			genero: $genero,
-			id_rol: $id_rol			
+			id_rol: $id_rol
 		},
 		success: function (data) {
 			if (data == true) {
@@ -156,8 +208,7 @@ $('#saveUserForm').submit('click', function () {
 
 				toastr.success('Datos de usuario guardado.');
 				$('#addUserModal').modal('hide');
-				//listUsuarios();
-				//listGrupo();
+				window.location.href = $('#baseUrl').val();
 			} else {
 				toastr.warning(data);
 			}
@@ -166,7 +217,7 @@ $('#saveUserForm').submit('click', function () {
 	return false;
 });
 
-//Edit
+//crear
 $('#listUsuarios').on('click', '.showUser', function () {
 	$('#showUserModal').modal('show');
 
@@ -176,18 +227,28 @@ $('#listUsuarios').on('click', '.editUser', function () {
 
 	$("#editIdUsuario").val($(this).data('id'));
 	$("#editnombre").val($(this).data('nombre'));
-	$('#editapellido').val($(this).data('apellido')),
-		$('#edittipo_identificacion').val($(this).data('tipo_identificacion')),
-		$('#editidentificacion').val($(this).data('identificacion')),
-		$('#editnombre_usuario').val($(this).data('nombre_usuario')),
-		$('#editcontrasena').val(""),
-		$('#editcorreo').val($(this).data('correo')),
-		$('#edittelefono').val($(this).data('telefono')),
-		$('#editdireccion').val($(this).data('direccion')),
-		$('#editciudad_residencia').val($(this).data('ciudad_residencia')),
-		$('#editfecha_nacimiento').val($(this).data('fecha_nacimiento')),
-		$('#editgenero').val($(this).data('genero')),
-		$('#editid_rol').val($(this).data('id_rol'))
+	$('#editapellido').val($(this).data('apellido'));
+	$('#edittipo_identificacion').val($(this).data('tipo_identificacion'));
+	$('#editidentificacion').val($(this).data('identificacion'));
+	$('#editnombre_usuario').val($(this).data('nombre_usuario'));
+	$('#editcontrasena').val("");
+	$('#editcorreo').val($(this).data('correo'));
+	$('#edittelefono').val($(this).data('telefono'));
+	$('#editdireccion').val($(this).data('direccion'));
+	$('#editciudad_residencia').val($(this).data('ciudad_residencia'));
+	$('#editfecha_nacimiento').val($(this).data('fecha_nacimiento'));
+	$('#editgenero').val($(this).data('genero'));
+	$('#editid_rol').val($(this).data('id_rol'));
+	var str = $(this).data('id_especialidad');
+	if (str.toString().length == 1) { var substr = str.toString(); } else { var substr = str.split(','); }
+	$('#editid_especialidad option').each(function (index) {
+		for (var i = 0; i < substr.length; i++) {
+			if (substr[i] == $(this).val()) {
+				$(this).attr('selected', 'selected');
+			}
+		}
+	});
+	fn_validarRol('m');
 
 
 });
@@ -202,7 +263,7 @@ $('#editUserForm').on('submit', function () {
 				id: $('#editIdUsuario').val().trim(),
 				nombre: $('#editnombre').val().trim(),
 				apellido: $('#editapellido').val().trim(),
-				tipo_identificacion:  $('input[name=edittipo_identificacion]:checked', '#editUserForm').val(),
+				tipo_identificacion: $('input[name=edittipo_identificacion]:checked', '#editUserForm').val(),
 				identificacion: $('#editidentificacion').val().trim(),
 				nombre_usuario: $('#editnombre_usuario').val().trim(),
 				contrasena: $('#editcontrasena').val().trim(),
@@ -212,7 +273,8 @@ $('#editUserForm').on('submit', function () {
 				ciudad_residencia: $('#editciudad_residencia').val().trim(),
 				fecha_nacimiento: $('#editfecha_nacimiento').val().trim(),
 				genero: $('#editgenero').val().trim(),
-				id_rol: $('#editid_rol').val().trim()
+				id_rol: $('#editid_rol').val().trim(),
+				id_especialidad: $('#editid_especialidad').val().trim()
 			},
 			success: function (data) {
 				$('#editnombre').val(""),
@@ -227,13 +289,13 @@ $('#editUserForm').on('submit', function () {
 					$('#editciudad_residencia').val(""),
 					$('#editfecha_nacimiento').val(""),
 					$('#editgenero').val(""),
-					$('#editid_rol').val("")
+					$('#editid_rol').val(""),
+					$('#editid_especialidad').val("")
 
 				if (data == true) {
 					toastr.success('Datos de usuario actualizado.');
 					$('#editUserModal').modal('hide');
-					listUsuarios();
-					listGrupo();
+					window.location.href = $('#baseUrl').val();
 				} else {
 					toastr.warning(data);
 				}
@@ -249,7 +311,7 @@ $('#editUserForm').on('submit', function () {
 				id: $('#editIdUsuario').val().trim(),
 				nombre: $('#editnombre').val().trim(),
 				apellido: $('#editapellido').val().trim(),
-				tipo_identificacion: $('#edittipo_identificacion').val().trim(),
+				tipo_identificacion: $('input[name=edittipo_identificacion]:checked', '#editUserForm').val(),
 				identificacion: $('#editidentificacion').val().trim(),
 				nombre_usuario: $('#editnombre_usuario').val().trim(),
 				correo: $('#editcorreo').val().trim(),
@@ -258,7 +320,8 @@ $('#editUserForm').on('submit', function () {
 				ciudad_residencia: $('#editciudad_residencia').val().trim(),
 				fecha_nacimiento: $('#editfecha_nacimiento').val().trim(),
 				genero: $('#editgenero').val().trim(),
-				id_rol: $('#editid_rol').val().trim()
+				id_rol: $('#editid_rol').val().trim(),
+				id_especialidad: $('#editid_especialidad').val()
 			},
 			success: function (data) {
 				$('#editnombre').val(""),
@@ -273,11 +336,12 @@ $('#editUserForm').on('submit', function () {
 					$('#editciudad_residencia').val(""),
 					$('#editfecha_nacimiento').val(""),
 					$('#editgenero').val(""),
-					$('#editid_rol').val("")
+					$('#editid_rol').val(""),
+					$('#editid_especialidad').val("")
 				if (data == true) {
 					toastr.success('Datos de usuario actualizado.');
-					$('#editUserModal').modal('hide');
-					listUsuarios();
+					$('#editUserModal').modal('hide'); baseUrl
+					window.location.href = $('#baseUrl').val();
 				} else {
 					toastr.warning(data);
 				}

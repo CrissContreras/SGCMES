@@ -16,8 +16,22 @@ class AdministracionModel extends CI_Model {
 
     //*****Usuarios*****
     public function showUsuario() {
-        $result = $this->db->query('SELECT * FROM usuario');
-        return $result->result();
+        $query = $this->db->query('SELECT * FROM usuario');
+        $lisDatos = $query->result();
+        foreach ($lisDatos as $row) {
+            $lisEspecialidades = array();
+            $query1 = $this->db->query("SELECT ID_ESPECIALIDAD FROM rel_medico_especialidad where ID_USUARIO = $row->ID_USUARIO");
+            foreach ($query1->result() as $row1) {
+                $lisEspecialidades[] = $row1->ID_ESPECIALIDAD;
+            }
+            if (count($lisEspecialidades) > 0) {
+                $especilidades = implode(",", $lisEspecialidades);
+                $row->ID_ESPECIALIDAD = $especilidades;
+            } else {
+                $row->ID_ESPECIALIDAD = "";
+            }
+        }
+        return $lisDatos;
     }
 
     public function saveUsuario() {
@@ -55,6 +69,20 @@ class AdministracionModel extends CI_Model {
             'ESTADO' => 'A',
         );
         $result = $this->db->insert('usuario', $data);
+        $id = $this->db->insert_id();
+        $this->db->where('ID_USUARIO', $id);
+        $result = $this->db->delete('rel_medico_especialidad');
+        $listEspecialidad = $this->input->post('id_especialidad');
+        if (count($listEspecialidad) > 0) {
+            foreach ($listEspecialidad as $esp) {
+                $datae = array(
+                    'ID_USUARIO' => $id,
+                    'ID_ESPECIALIDAD' => $esp,
+                    'ESTADO' => 'A',
+                );
+                $result = $this->db->insert('rel_medico_especialidad', $datae);
+            }
+        }
         return $result;
     }
 
@@ -81,12 +109,24 @@ class AdministracionModel extends CI_Model {
                 $this->db->set('CONTRASENA', md5($contrasena));
                 $this->db->where('ID_USUARIO', $id);
                 $result = $this->db->update('usuario');
-                return $result;
             } else {
                 $this->db->where('ID_USUARIO', $id);
                 $result = $this->db->update('usuario');
-                return $result;
             }
+            $this->db->where('ID_USUARIO', $id);
+            $result = $this->db->delete('rel_medico_especialidad');
+            $listEspecialidad = $this->input->post('id_especialidad');
+            if (count($listEspecialidad) > 0) {
+                foreach ($listEspecialidad as $esp) {
+                    $datae = array(
+                        'ID_USUARIO' => $id,
+                        'ID_ESPECIALIDAD' => $esp,
+                        'ESTADO' => 'A',
+                    );
+                    $result = $this->db->insert('rel_medico_especialidad', $datae);
+                }
+            }
+            return $result;
         }
     }
 
@@ -97,9 +137,9 @@ class AdministracionModel extends CI_Model {
             $result = 'No se puede eliminar, hay sites ligados a este usuario.';
             return $result;
         } else {
-            $id = $this->input->post('id');
-            $this->db->where('USUA_ID', $id);
-            $result = $this->db->delete('USUARIOS');
+            $this->db->set('ESTADO', 'I');
+            $this->db->where('ID_USUARIO', $id);
+            $result = $this->db->delete('usuarios');
             return $result;
         }
     }
@@ -148,15 +188,16 @@ class AdministracionModel extends CI_Model {
             $result = 'No se puede eliminar, hay sites ligados a este usuario.';
             return $result;
         } else {*/
-            $id = $this->input->post('id');
-            $this->db->where('ID_CATALOGO', $id);
-            $result = $this->db->delete('catalogo');
-            return $result;
+        $id = $this->input->post('id');
+        $this->db->set('ESTADO', 'I');
+        $this->db->where('ID_CATALOGO', $id);
+        $result = $this->db->update('catalogo');
+        return $result;
         //}
     }
     //******Rol*****
     public function showRol() {
-        $result = $this->db->query('SELECT ID_ROL, NOMBRE, DESCRIPCION FROM rol');
+        $result = $this->db->query("SELECT ID_ROL, NOMBRE, DESCRIPCION FROM rol' WHERE ESTADO = 'A'");
         return $result->result();
     }
 
@@ -195,20 +236,80 @@ class AdministracionModel extends CI_Model {
 
     public function deleteRol() {
         $id = $this->input->post('id');
-        $usuariosRol = $this->db->query('SELECT * FROM usuarios WHERE ID_ROL =' . '"' . $id."'");
+        $usuariosRol = $this->db->query('SELECT * FROM usuarios WHERE ID_ROL =' . '"' . $id . "'");
         if ($usuariosRol->num_rows() > 0) {
             $result = 'No se puede eliminar, hay usuarios ligados a este rol.';
             return $result;
         } else {
-            $id = $this->input->post('id');
+            $this->db->set('ESTADO', 'I');
             $this->db->where('ID_ROL', $id);
-            $result = $this->db->delete('rol');
+            $result = $this->db->update('rol');
             return $result;
         }
     }
 
     public function comboRol() {
-        $result = $this->db->query('SELECT ID_ROL, NOMBRE FROM rol');
+        $result = $this->db->query("SELECT ID_ROL, NOMBRE FROM rol WHERE ESTADO = 'A'");
+        return $result->result();
+    }
+
+    //******ESPECIALIDAD*****
+    public function showEspecialidad() {
+        $result = $this->db->query("SELECT ID_ESPECIALIDAD , NOMBRE, DESCRIPCION FROM especialidad WHERE ESTADO = 'A'");
+        return $result->result();
+    }
+
+    public function saveEspecialidad() {
+        $especialidadExiste = $this->db->query('SELECT * FROM especialidad WHERE NOMBRE =' . '"' . $this->input->post('nombre') . '"  AND DESCRIPCION =' . '"' . $this->input->post('descripcion') . '"');
+        if ($especialidadExiste->num_rows() > 0) {
+            $result = 'La especialidad ya existe.';
+            return $result;
+        } else {
+            $data = array(
+                'NOMBRE' => $this->input->post('nombre'),
+                'DESCRIPCION' => $this->input->post('descripcion'),
+                'ESTADO' => 'A',
+            );
+            $result = $this->db->insert('especialidad', $data);
+            return $result;
+        }
+    }
+
+    public function updateEspecialidad() {
+        $id = $this->input->post('id');
+        $descripcion = $this->input->post('descripcion');
+        $nombre = $this->input->post('nombre');
+        $especialidadExiste = $this->db->query('SELECT * FROM especialidad WHERE NOMBRE =' . '"' . $this->input->post('nombre') . '"  AND DESCRIPCION =' . '"' . $this->input->post('descripcion') . '"');
+        if ($especialidadExiste->num_rows() > 1) {
+            $result = 'Especialidad ya existe.';
+            return $result;
+        } else {
+            $this->db->set('NOMBRE', $nombre);
+            $this->db->set('DESCRIPCION', $descripcion);
+            $this->db->where('ID_ESPECIALIDAD', $id);
+            $result = $this->db->update('especialidad');
+            return $result;
+        }
+    }
+
+    public function deleteEspecialidad() {
+        $id = $this->input->post('id');
+        $usuariosEspecialidad = $this->db->query('SELECT * FROM rel_medico_especialidad WHERE ID_ESPECIALIDAD =' . '"' . $id . "'");
+        if ($usuariosEspecialidad) {
+            if ($usuariosEspecialidad->num_rows() > 0) {
+                $result = 'No se puede eliminar, hay medicos ligados a esta Especialidad.';
+                return $result;
+            }
+        } else {
+            $this->db->set('ESTADO', 'I');
+            $this->db->where('ID_ESPECIALIDAD', $id);
+            $result = $this->db->update('especialidad');
+            return $result;
+        }
+    }
+
+    public function comboEspecialidad() {
+        $result = $this->db->query('SELECT ID_ESPECIALIDAD, NOMBRE FROM especialidad');
         return $result->result();
     }
 }

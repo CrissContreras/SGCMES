@@ -117,6 +117,41 @@ class Administracion extends MY_Controller
 		echo json_encode($data);
 	}
 
+	//Especialidad
+	function Especialidad(){
+		$data['contenido'] = 'administracion/especialidad_v';
+		$this->template->template($data);
+	}
+
+	public function showEspecialidad()
+	{
+		$data = $this->administracionModel->showEspecialidad();
+		echo json_encode($data);
+	}
+
+	public function updateEspecialidad()
+	{
+		$data = $this->administracionModel->updateEspecialidad();
+		echo json_encode($data);
+	}
+
+	public function saveEspecialidad()
+	{
+		$data = $this->administracionModel->saveEspecialidad();
+		echo json_encode($data);
+	}
+
+	public function deleteEspecialidad()
+	{
+		$data = $this->administracionModel->deleteEspecialidad();
+		echo json_encode($data);
+	}
+
+	public function comboEspecialidad()
+	{
+		$data = $this->administracionModel->comboEspecialidad();
+		echo json_encode($data);
+	}
 
 
 

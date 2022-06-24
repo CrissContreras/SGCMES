@@ -1,5 +1,5 @@
 <div id="infoMessage"><?php echo $this->session->flashdata('message'); ?></div>
-
+<input type="text" name="baseUrl" id="baseUrl" value="<?php echo base_url() . 'administracion/Usuarios' ?>">
 <div class="table-responsive">
     <button type="button" class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#addUserModal" data-whatever="@mdo"><span class="fa fa-plus"></span> Nuevo</button>
     <table class="table header-border table-hover table-custom spacing5 text-center" style="width:100%" id="tableListUsuarios">
@@ -117,7 +117,15 @@
                     <div class="form-group row">
                         <div class="col">
                             <label>Rol</label>
-                            <select class="form-control" id="id_Rol" name="id_Rol">
+                            <select class="form-control" id="id_Rol" name="id_Rol" onchange="fn_validarRol('n')">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row" id="divEspecialidad">
+                        <div class="col">
+                            <label>Especialidad</label>
+                            <select class="form-control" id="id_especialidad" name="id_especialidad" multiple>
+                                <option selected value="">Selecccionar</option>
                             </select>
                         </div>
                     </div>
@@ -197,7 +205,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
-                <div class="form-group row">
+                    <div class="form-group row">
                         <div class="col">
                             <label>Nombres</label>
                             <input type="text" class="form-control" id="editnombre" name="editnombre" required>
@@ -284,9 +292,17 @@
                     <div class="form-group row">
                         <div class="col">
                             <label>Rol</label>
-                            <select class="form-control" id="editid_rol" name="editid_rol">
-                                <option selected value="">Selecccionar</option>
+                            <select class="form-control" id="editid_rol" name="editid_rol" onchange="fn_validarRol('m')">
                             </select>
+                        </div>
+                    </div>
+                    <div id="divEditEspecialidad">
+                        <div class="form-group row" id="divEditEspecialidad">
+                            <div class="col">
+                                <label>Especialidad</label>
+                                <select class="form-control" id="editid_especialidad" name="editid_especialidad" multiple>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
