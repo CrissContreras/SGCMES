@@ -2,40 +2,43 @@ $(document).ready(function () {
 	listUsuarios();
 	comboRol();
 	comboEspecialidad();
-	$(document).ready(function () {
-		$('#tituloPagina').text("Usuarios");
 
-		$('#tableListUsuarios, #tableListGrupos').DataTable({
-			"lengthChange": true,
-			"info": true,
-			"paging": true,
-			"processing": true,
-			"language": {
-				"sProcessing": "Procesando...",
-				"sLengthMenu": "Mostrar _MENU_ registros",
-				"sZeroRecords": "No se encontraron resultados",
-				"sEmptyTable": "Ningún dato disponible en esta tabla",
-				"sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-				"sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-				"sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-				"sInfoPostFix": "",
-				"sSearch": "Buscar:",
-				"sUrl": "",
-				"sInfoThousands": ",",
-				"sLoadingRecords": "Cargando...",
-				"oPaginate": {
-					"sFirst": "Primero",
-					"sLast": "Último",
-					"sNext": "Siguiente",
-					"sPrevious": "Anterior"
-				},
-				"oAria": {
-					"sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-					"sSortDescending": ": Activar para ordenar la columna de manera descendente"
-				}
+	$('#tituloPagina').text("Usuarios");
+
+	$('#tableListUsuarios, #tableListGrupos').DataTable({
+		"lengthChange": true,
+		"info": true,
+		"paging": true,
+		"processing": true,
+		"language": {
+			"sProcessing": "Procesando...",
+			"sLengthMenu": "Mostrar _MENU_ registros",
+			"sZeroRecords": "No se encontraron resultados",
+			"sEmptyTable": "Ningún dato disponible en esta tabla",
+			"sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+			"sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+			"sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+			"sInfoPostFix": "",
+			"sSearch": "Buscar:",
+			"sUrl": "",
+			"sInfoThousands": ",",
+			"sLoadingRecords": "Cargando...",
+			"oPaginate": {
+				"sFirst": "Primero",
+				"sLast": "Último",
+				"sNext": "Siguiente",
+				"sPrevious": "Anterior"
+			},
+			"oAria": {
+				"sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+				"sSortDescending": ": Activar para ordenar la columna de manera descendente"
 			}
-		});
+		}
 	});
+	$("#editUserModal").on("hidden.bs.modal", function () {
+		window.location.href = $('#baseUrl').val();
+	});
+
 });
 //-----------Usuario----------------
 //List
@@ -131,12 +134,6 @@ if ($id_roleditprin == '2') {
 } else {
 	$('#divEditEspecialidad').hide();
 }
-var $id_rolprin = $("#id_rol").val();
-if ($id_rolprin == '2') {
-	$('#divEspecialidad').show();
-} else {
-	$('#divEspecialidad').hide();
-}
 function fn_validarRol(deque) {
 	if (deque == 'm') {
 		var $id_roledit = $("#editid_rol option:selected").val();
@@ -147,7 +144,7 @@ function fn_validarRol(deque) {
 		}
 	}
 	if (deque == 'n') {
-		var $id_rol = $("#id_rol option:selected").val();
+		var $id_rol = $("#id_Rol option:selected").val();
 		if ($id_rol == '2') {
 			$('#divEspecialidad').show();
 		} else {
@@ -222,9 +219,10 @@ $('#listUsuarios').on('click', '.showUser', function () {
 	$('#showUserModal').modal('show');
 
 });
+
+
 $('#listUsuarios').on('click', '.editUser', function () {
 	$('#editUserModal').modal('show');
-
 	$("#editIdUsuario").val($(this).data('id'));
 	$("#editnombre").val($(this).data('nombre'));
 	$('#editapellido').val($(this).data('apellido'));
@@ -253,7 +251,6 @@ $('#listUsuarios').on('click', '.editUser', function () {
 
 });
 $('#editUserForm').on('submit', function () {
-
 	if ($("#editcontrasena").val() != "") {
 		$.ajax({
 			type: "POST",
@@ -340,7 +337,7 @@ $('#editUserForm').on('submit', function () {
 					$('#editid_especialidad').val("")
 				if (data == true) {
 					toastr.success('Datos de usuario actualizado.');
-					$('#editUserModal').modal('hide'); baseUrl
+					$('#editUserModal').modal('hide');
 					window.location.href = $('#baseUrl').val();
 				} else {
 					toastr.warning(data);

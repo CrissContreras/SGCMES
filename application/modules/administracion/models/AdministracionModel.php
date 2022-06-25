@@ -312,4 +312,70 @@ class AdministracionModel extends CI_Model {
         $result = $this->db->query('SELECT ID_ESPECIALIDAD, NOMBRE FROM especialidad');
         return $result->result();
     }
+
+    //******Horario*****
+    public function showHorario() {
+        $result = $this->db->query("SELECT ID_HORARIO , FECHAHORA, DESCRIPCION FROM horario WHERE ESTADO = 'A'");
+        return $result->result();
+    }
+
+    public function saveHorario() {
+        $horarioExiste = $this->db->query('SELECT * FROM horario WHERE FECHAHORA =' . '"' . $this->input->post('fechahora') . '"  AND DESCRIPCION =' . '"' . $this->input->post('descripcion') . '"');
+        if ($horarioExiste->num_rows() > 0) {
+            $result = 'El horario ya existe.';
+            return $result;
+        } else {
+            $data = array(
+                'FECHAHORA' => $this->input->post('fechahora'),
+                'DESCRIPCION' => $this->input->post('descripcion'),
+                'ESTADO' => 'A',
+            );
+            $result = $this->db->insert('horario', $data);
+            return $result;
+        }
+    }
+
+    public function updateHorario() {
+        $id = $this->input->post('id');
+        $fechahora = $this->input->post('fechahora');
+        $descripcion = $this->input->post('descripcion');
+        $horarioExiste = $this->db->query('SELECT * FROM horario WHERE FECHAHORA =' . '"' . $this->input->post('fehachora') . '"  AND DESCRIPCION =' . '"' . $this->input->post('descripcion') . '"');
+        if ($horarioExiste->num_rows() > 1) {
+            $result = 'Especialidad ya existe.';
+            return $result;
+        } else {
+            $this->db->set('FECHAHORA', $fechahora);
+            $this->db->set('DESCRIPCION', $descripcion);
+            $this->db->where('ID_HORARIO', $id);
+            $result = $this->db->update('horario');
+            return $result;
+        }
+    }
+
+    public function deleteHorario() {
+        $id = $this->input->post('id');
+        $horarioMedico = $this->db->query('SELECT * FROM rel_horario_medico WHERE ID_HORARIO =' . '"' . $id . "'");
+        if ($horarioMedico) {
+            if ($horarioMedico->num_rows() > 0) {
+                $result = 'No se puede eliminar, hay medicos ligados a este horario.';
+                return $result;
+            }
+        }
+        $horarioCitaMedica = $this->db->query('SELECT * FROM cita_medica WHERE ID_HORARIO =' . '"' . $id . "'");
+        if ($horarioCitaMedica) {
+            if ($horarioCitaMedica->num_rows() > 0) {
+                $result = 'No se puede eliminar, hay citas medicas ligadas a este horario.';
+                return $result;
+            }
+        }
+
+        $this->db->where('ID_HORARIO', $id);
+        $result = $this->db->delete('horario');
+        return $result;
+    }
+
+    public function comboHorario() {
+        $result = $this->db->query('SELECT ID_HORARIO, FECHAHORA FROM horario');
+        return $result->result();
+    }
 }

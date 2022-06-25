@@ -1,9 +1,9 @@
 $(document).ready(function () {
-	listEspecialidad();
+	listHorario();
 	$(document).ready(function () {
-		$('#tituloPagina').text("Especialidad");
+		$('#tituloPagina').text("Horario");
 
-		$('#tablelistEspecialidad').DataTable({
+		$('#tablelistHorario').DataTable({
 			"lengthChange": true,
 			"info": true,
 			"paging": true,
@@ -36,10 +36,10 @@ $(document).ready(function () {
 	});
 });
 //List
-function listEspecialidad() {
+function listHorario() {
 	$.ajax({
 		type: 'ajax',
-		url: 'administracion/showEspecialidad',
+		url: 'administracion/showHorario',
 		async: false,
 		dataType: 'json',
 		success: function (data) {
@@ -47,44 +47,43 @@ function listEspecialidad() {
 			if (data != true) {
 				for (var i = 0; i < data.length; i++) {
 					html += '<tr>' +
-						'<td>' + data[i].ID_ESPECIALIDAD + '</td>' +
-						'<td>' + data[i].NOMBRE + '</td>' +
+						'<td>' + data[i].ID_HORARIO + '</td>' +
+						'<td>' + data[i].FECHAHORA + '</td>' +
 						'<td>' + data[i].DESCRIPCION + '</td>' +
 						'<td>' +
-						'<a title="Editar" href="javascript:void(0);"  class="editEspecialidad" data-id="' + data[i].ID_ESPECIALIDAD + '" data-nombre="' + data[i].NOMBRE + '" data-descripcion="' + data[i].DESCRIPCION + '" ><i class="fas fa-edit"></i></a>&nbsp' +
-						'<a title="Eliminar" href="javascript:void(0);" style="color: red;" class="deleteEspecialidad" data-id="' + data[i].ID_ESPECIALIDAD + '" data-nombre="' + data[i].NOMBRE + '" ><i class="fas fa-minus-square"></i></a>' +
+						'<a title="Editar" href="javascript:void(0);"  class="editHorario" data-id="' + data[i].ID_HORARIO + '" data-fechahora="' + data[i].FECHAHORA + '" data-descripcion="' + data[i].DESCRIPCION + '" ><i class="fas fa-edit"></i></a>&nbsp' +
+						'<a title="Eliminar" href="javascript:void(0);" style="color: red;" class="deleteHorario" data-id="' + data[i].ID_HORARIO + '" data-fechahora="' + data[i].FECHAHORA + '" ><i class="fas fa-minus-square"></i></a>' +
 						'</td>' +
 						'</tr>';
 				}
 			} else {
 				toastr.warning(data);
 			}
-			$('#listEspecialidad').html(html);
+			$('#listHorario').html(html);
 		}
 	});
 }
 //Save 
-$('#saveEspecialidadForm').submit('click', function () {
-	var nombre = $('#nombre').val().trim();
+$('#saveHorarioForm').submit('click', function () {
+	var fechahora = $('#fechahora').val().trim();
 	var descripcion = $('#descripcion').val().trim();
 	$.ajax({
 		type: "POST",
-		url: "administracion/saveEspecialidad",
+		url: "administracion/saveHorario",
 		dataType: "JSON",
 		data: {
-			nombre: nombre,
+			fechahora: fechahora,
 			descripcion: descripcion
 		},
 		success: function (data) {
-			alert("aqui");
 			if (data == true) {
 				$("#id").val("");
-				$('#nombre').val("");
+				$('#fechahora').val("");
 				$('#descripcion').val("");
 
-				toastr.success('Datos de la especialidad guardado.');
-				$('#addEspecialidadModal').modal('hide');
-				listEspecialidad();
+				toastr.success('Datos del horario guardado.');
+				$('#addHorarioModal').modal('hide');
+				listHorario();
 			} else {
 				toastr.warning(data);
 			}
@@ -94,37 +93,38 @@ $('#saveEspecialidadForm').submit('click', function () {
 });
 
 //Edit
-$('#listEspecialidad').on('click', '.editEspecialidad', function () {
-	$('#editEspecialidadModal').modal('show');
+$('#listHorario').on('click', '.editHorario', function () {
+	$('#editHorarioModal').modal('show');
 
-	$("#editIdEspecialidad").val($(this).data('id'));
-	$("#editNombre").val($(this).data('nombre'));
+	$("#editIdHorario").val($(this).data('id'));
+	//$("#editfechahora").val($(this).data('fechahora'));
+	$("#editfechahora").val($(this).data('23/06/2022 23:00'));
 	$("#editDescripcion").val($(this).data('descripcion'));
 
 });
-$('#editEspecialidadForm').on('submit', function () {
+$('#editHorarioForm').on('submit', function () {
 
-	var id = $("#editIdEspecialidad").val().trim();
-	var nombre = $("#editNombre").val().trim();
+	var id = $("#editIdHorario").val().trim();
+	var fechahora = $("#editfechahora").val().trim();
 	var descripcion = $("#editDescripcion").val().trim();
 
 	$.ajax({
 		type: "POST",
-		url: "administracion/updateEspecialidad",
+		url: "administracion/updateHorario",
 		dataType: "JSON",
 		data: {
 			id: id,
-			nombre: nombre,
+			fechahora: fechahora,
 			descripcion: descripcion
 		},
 		success: function (data) {
-			$("#editIdEspecialidad").val("");
-			$('#editNombre').val("");
+			$("#editIdHorario").val("");
+			$('#editfechahora').val("");
 			$('#editDescripcion').val("");
 			if (data == true) {
-				toastr.success('Datos de la Especilidad actualizado.');
-				$('#editEspecialidadModal').modal('hide');
-				listEspecialidad();
+				toastr.success('Datos del horario actualizado.');
+				$('#editHorarioModal').modal('hide');
+				listHorario();
 			} else {
 				toastr.warning(data);
 			}
@@ -134,26 +134,26 @@ $('#editEspecialidadForm').on('submit', function () {
 });
 
 //Delete
-$('#listEspecialidad').on('click', '.deleteEspecialidad', function () {
+$('#listHorario').on('click', '.deleteHorario', function () {
 	var id = $(this).data('id');
-	var nombre = $(this).data('nombre');
-	$('#deleteEspecialidadModal').modal('show');
-	$('#deleteEspecialidadId').val(id);
-	$('#deleteEspecialidadNombre').text(nombre);
+	var fechahora = $(this).data('fechahora');
+	$('#deleteHorarioModal').modal('show');
+	$('#deleteHorarioId').val(id);
+	$('#deleteHorarioNombre').text(nombre);
 });
-$('#deleteEspecialidadForm').on('submit', function () {
-	var id = $('#deleteEspecialidadId').val();
+$('#deleteHorarioForm').on('submit', function () {
+	var id = $('#deleteHorarioId').val();
 	$.ajax({
 		type: "POST",
-		url: "administracion/deleteEspecialidad",
+		url: "administracion/deleteHorario",
 		dataType: "JSON",
 		data: { id: id },
 		success: function (data) {
 			if (data == true) {
-				$('#deleteEspecialidadId').val("");
-				$('#deleteEspecialidadModal').modal('hide');
-				listEspecialidad();
-				toastr.success('Especialidad eliminado.');
+				$('#deleteHorarioId').val("");
+				$('#deleteHorarioModal').modal('hide');
+				listHorario();
+				toastr.success('Horario eliminado.');
 			} else {
 				toastr.warning(data);
 			}

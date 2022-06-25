@@ -153,6 +153,42 @@ class Administracion extends MY_Controller
 		echo json_encode($data);
 	}
 
+	//Horario
+	function Horario(){
+		$data['contenido'] = 'administracion/horario_v';
+		$this->template->template($data);
+	}
+
+	public function showHorario()
+	{
+		$data = $this->administracionModel->showHorario();
+		echo json_encode($data);
+	}
+
+	public function updateHorario()
+	{
+		$data = $this->administracionModel->updateHorario();
+		echo json_encode($data);
+	}
+
+	public function saveHorario()
+	{
+		$data = $this->administracionModel->saveHorario();
+		echo json_encode($data);
+	}
+
+	public function deleteHorario()
+	{
+		$data = $this->administracionModel->deleteHorario();
+		echo json_encode($data);
+	}
+
+	public function comboHorario()
+	{
+		$data = $this->administracionModel->comboHorario();
+		echo json_encode($data);
+	}
+
 
 
 
