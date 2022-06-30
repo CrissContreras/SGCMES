@@ -15,6 +15,7 @@
 
     <link rel="stylesheet" href="<?php echo base_url() . 'assets/vendor/c3/c3.min.css' ?>" />
     <link rel="stylesheet" href="<?php echo base_url() . 'assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.min.css' ?>" />
+    <link rel="stylesheet" href="<?php echo base_url() . 'assets/vendor/bootstrap-datepicker/css/bootstrap-datetimepicker.css' ?>" />
     <link rel="stylesheet" href="<?php echo base_url() . 'assets/vendor/bootstrap-colorpicker/css/bootstrap-colorpicker.css' ?>" />
     <link rel="stylesheet" href="<?php echo base_url() . 'assets/vendor/bootstrap-tagsinput/bootstrap-tagsinput.css' ?>" />
     <link rel="stylesheet" href="<?php echo base_url() . 'assets/vendor/jvectormap/jquery-jvectormap-2.0.3.css' ?>">
@@ -146,6 +147,7 @@
 
     <script type="text/javascript" src="<?php echo base_url() . 'assets/js/xlsx.full.min.js' ?>"></script>
     <script type="text/javascript" src="<?php echo base_url() . 'assets/js/FileSaver.js' ?>"></script>
+    <script type="text/javascript" src="<?php echo base_url() . 'assets/js/bootstrap-datetimepicker.js' ?>"></script>
 
 </body>
 

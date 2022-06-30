@@ -2,6 +2,7 @@ $(document).ready(function () {
 	listUsuarios();
 	comboRol();
 	comboEspecialidad();
+	comboHorarioMedico();
 
 	$('#tituloPagina').text("Usuarios");
 	$('#divEspecialidad').hide(true);
@@ -59,6 +60,9 @@ function listUsuarios() {
 					if (data[i].ID_USUARIO != 1) {
 						ad = '<a title="Editar" href="javascript:void(0);"  class="editUser" data-id="' + data[i].ID_USUARIO + '" data-nombre="' + data[i].NOMBRE + '" data-apellido="' + data[i].APELLIDO + '" data-tipo_identificacion="' + data[i].TIPO_IDENTIFICACION + '" data-identificacion="' + data[i].IDENTIFICACION + '" data-nombre_usuario="' + data[i].NOMBRE_USUARIO + '" data-correo="' + data[i].CORREO + '" data-telefono="' + data[i].TELEFONO + '" data-direccion="' + data[i].DIRECCION + '" data-ciudad_residencia="' + data[i].CIUDAD_RESIDENCIA + '" data-fecha_nacimiento="' + data[i].FECHA_NACIMIENTO + '" data-genero="' + data[i].GENERO + '" data-id_rol="' + data[i].ID_ROL + '" data-id_especialidad="' + data[i].ID_ESPECIALIDAD + '" ><i class="fas fa-edit"></i></a>&nbsp' +
 							'<a title="Eliminar" href="javascript:void(0);" style="color: red;" class="deleteUser" data-id="' + data[i].ID_USUARIO + '" data-nombre="' + data[i].NOMBRE +' '+data[i].APELLIDO +'" ><i class="fas fa-minus-square"></i></a>';
+						if(data[i].ID_ROL == 2){
+						    ad += '&nbsp<a title="Horarios" href="javascript:void(0);"  class="editrel_horario_medico" data-id="' + data[i].ID_USUARIO + '" data-nombre="' + data[i].NOMBRE + '" data-apellido="' + data[i].APELLIDO + '" data-horario_medico="' + data[i].ID_HORARIO_MEDICO +'"><i class="fas fa-edit"></i></a>&nbsp';	
+						}	
 					}
 					if (data[i].ESTADO == 'A') {
 						st = '<td><span class="badge badge-pill badge-success"><strong>Activo</strong></span></td>'
@@ -127,6 +131,25 @@ function comboEspecialidad() {
 				toastr.warning(data);
 			}
 			$('#editid_especialidad, #id_especialidad').html(html);
+		}
+	});
+}
+function comboHorarioMedico() {
+	$.ajax({
+		type: 'ajax',
+		url: 'administracion/comboHorario',
+		async: false,
+		dataType: 'json',
+		success: function (data) {
+			var html = '';
+			if (data != true) {
+				for (i = 0; i < data.length; i++) {
+					html += '<option value="' + data[i].ID_HORARIO + '">' + data[i].FECHAHORA + '</option>';
+				}
+			} else {
+				toastr.warning(data);
+			}
+			$('#editrel_horario_medico').html(html);
 		}
 	});
 }
@@ -210,8 +233,8 @@ $('#saveUserForm').submit('click', function () {
 
 				toastr.success('Datos de usuario guardado.');
 				$('#addUserModal').modal('hide');
-				//window.location.href = $('#baseUrl').val();
-				listUsuarios();
+				window.location.href = $('#baseUrl').val();
+				//listUsuarios();
 			} else {
 				toastr.warning(data);
 			}
@@ -384,6 +407,49 @@ $('#deleteUserForm').on('submit', function () {
 	return false;
 });
 
+//horario del medico
+$('#listUsuarios').on('click', '.editrel_horario_medico', function () {
+	$('#editrel_horario_medicoModal').modal('show');
+	$("#IdUsuarioHorario").val($(this).data('id'));
+	$("#nombremedico").val($(this).data('nombre'));
+	$('#apellidomedico').val($(this).data('apellido')); 
+	var str = $(this).data('horario_medico');
+	alert(str);
+	if (str.toString().length == 1) { var substr = str.toString(); } else { var substr = str.split(','); }
+	$('#editrel_horario_medico option').each(function (index) {
+		for (var i = 0; i < substr.length; i++) {
+			if (substr[i] == $(this).val()) {
+				$(this).attr('selected', 'selected');
+			}
+		}
+	});
 
+});
 
-//OPCION
+$('#saverel_horario_medicoForm').submit('click', function () {
+	var $id_usuario = $('#IdUsuarioHorario').val();
+	var $id_horario = $('#editrel_horario_medico').val();
+	$.ajax({
+		type: "POST",
+		url: "administracion/saveHorarioUsuario",
+		dataType: "JSON",
+		data: {
+			id_usuario: $id_usuario,
+			id_horario: $id_horario
+		},
+		success: function (data) {
+			if (data == true) {
+				$('#IdUsuarioHorario').val(""),
+				$('#editrel_horario_medico').val(""),
+				
+				toastr.success('Datos del horario de médico guardados.');
+				$('#editrel_horario_medicoModal').modal('hide');
+				window.location.href = $('#baseUrl').val();
+				//listUsuarios();
+			} else {
+				toastr.warning(data);
+			}
+		}
+	});
+	return false;
+});

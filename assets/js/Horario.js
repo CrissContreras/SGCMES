@@ -1,7 +1,7 @@
 $(document).ready(function () {
 	listHorario();
 	$(function () {
-		$('#fechahora').datepicker({
+		$('#fechahora').datetimepicker({
 			daysOfWeekDisabled: [0, 6]
 		});
 	});

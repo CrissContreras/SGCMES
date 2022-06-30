@@ -125,7 +125,7 @@
                         <div class="col">
                             <label>Especialidad</label>
                             <select class="form-control" id="id_especialidad" name="id_especialidad" multiple>
-                                
+
                             </select>
                         </div>
                     </div>
@@ -335,6 +335,42 @@
             </div>
         </div>
     </div>
+</form>
+
+<form id="saverel_horario_medicoForm" method="post">
+    <div class="modal fade" id="editrel_horario_medicoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog  modal-lg " role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel">Horario del Médico</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <div class="col">
+                            <label>Nombres</label>
+                            <input type="text" class="form-control" id="nombremedico" name="nombremedico" required>
+                        </div>
+                        <div class="col">
+                            <label>Apellidos</label>
+                            <input type="text" class="form-control" id="apellidomedico" name="apellidomedico" required>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col">
+                                <label>Horario</label>
+                                <select class="form-control" id="editrel_horario_medico" name="editrel_horario_medico" multiple>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" name="IdUsuarioHorario" id="IdUsuarioHorario" class="form-control">
+                        <button type="button" class="btn btn-info btn-sm" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success btn-sm">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 </form>
 
 <script type="text/javascript" src="<?php echo base_url() . 'assets/js/Usuarios.js' ?>"></script>

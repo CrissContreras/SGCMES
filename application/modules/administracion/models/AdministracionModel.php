@@ -30,6 +30,17 @@ class AdministracionModel extends CI_Model {
             } else {
                 $row->ID_ESPECIALIDAD = "";
             }
+            $listHorarioMedico = array();
+            $query2 = $this->db->query("SELECT ID_HORARIO FROM rel_horario_medico where ID_USUARIO_MEDICO = $row->ID_USUARIO");
+            foreach ($query2->result() as $row2) {
+                $listHorarioMedico[] = $row2->ID_HORARIO;
+            }
+            if (count($listHorarioMedico) > 0) {
+                $horarios = implode(",", $listHorarioMedico);
+                $row->ID_HORARIO_MEDICO = $horarios;
+            } else {
+                $row->ID_HORARIO_MEDICO = "";
+            }
         }
         return $lisDatos;
     }
@@ -373,4 +384,25 @@ class AdministracionModel extends CI_Model {
         $result = $this->db->query('SELECT ID_HORARIO, FECHAHORA FROM horario');
         return $result->result();
     }
+
+    public function saveHorarioUsuario() {
+        //si el horario ya existe en una cita medica para el medico ya no se puede borrar
+        $id_usuario = $this->input->post('id_usuario');
+        $listHorario = $this->input->post('id_horario');
+        $this->db->where('ID_USUARIO_MEDICO', $id_usuario);
+        $this->db->delete('rel_horario_medico');
+        if ($listHorario != null) {
+            foreach ($listHorario as $hor) {
+                $datae = array(
+                    'ID_USUARIO_MEDICO' => $id_usuario,
+                    'ID_HORARIO' => $hor
+                    
+                );
+                $result = $this->db->insert('rel_horario_medico', $datae);
+            }
+        }
+        
+        return $result;
+    }
+
 }

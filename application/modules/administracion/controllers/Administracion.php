@@ -189,6 +189,11 @@ class Administracion extends MY_Controller
 		echo json_encode($data);
 	}
 
+	public function saveHorarioUsuario()
+	{
+		$data = $this->administracionModel->saveHorarioUsuario();
+		echo json_encode($data);
+	}
 
 
 
