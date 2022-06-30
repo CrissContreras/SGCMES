@@ -1,5 +1,11 @@
 $(document).ready(function () {
 	listHorario();
+	$(function () {
+		$('#fechahora').datepicker({
+			daysOfWeekDisabled: [0, 6]
+		});
+	});
+	
 	$(document).ready(function () {
 		$('#tituloPagina').text("Horario");
 
@@ -94,12 +100,20 @@ $('#saveHorarioForm').submit('click', function () {
 
 //Edit
 $('#listHorario').on('click', '.editHorario', function () {
-	$('#editHorarioModal').modal('show');
+    
+	/*$('#fechahora').datetimepicker({
+		stepping: 30,
+        enabledHours: [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
+	});*/
+	var fecha = new Date($(this).data('fechahora'));
+	fecha.setMinutes(fecha.getMinutes() - fecha.getTimezoneOffset());
+	document.getElementById('editfechahora').value = fecha.toISOString().slice(0,16);
 
+	$('#editHorarioModal').modal('show');
 	$("#editIdHorario").val($(this).data('id'));
-	//$("#editfechahora").val($(this).data('fechahora'));
-	$("#editfechahora").val($(this).data('23/06/2022 23:00'));
 	$("#editDescripcion").val($(this).data('descripcion'));
+	
+	//console.log(aaa);
 
 });
 $('#editHorarioForm').on('submit', function () {

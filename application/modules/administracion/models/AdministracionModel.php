@@ -16,7 +16,7 @@ class AdministracionModel extends CI_Model {
 
     //*****Usuarios*****
     public function showUsuario() {
-        $query = $this->db->query('SELECT * FROM usuario');
+        $query = $this->db->query('SELECT u.*, r.NOMBRE ROL_NOMBRE FROM usuario u JOIN rol r on u.ID_ROL=r.ID_ROL;');
         $lisDatos = $query->result();
         foreach ($lisDatos as $row) {
             $lisEspecialidades = array();
@@ -35,7 +35,8 @@ class AdministracionModel extends CI_Model {
     }
 
     public function saveUsuario() {
-
+        //log_message('error', '>>>Error');
+        
         $mailExiste = $this->db->query('SELECT * FROM usuario WHERE CORREO=' . '"' . $this->input->post('correo') . '"');
         $nickExiste = $this->db->query('SELECT * FROM usuario WHERE NOMBRE_USUARIO=' . '"' . $this->input->post('nombre_usuario') . '"');
         $identificacionExiste = $this->db->query('SELECT * FROM usuario WHERE IDENTIFICACION=' . '"' . $this->input->post('identificacion') . '"');
@@ -73,7 +74,7 @@ class AdministracionModel extends CI_Model {
         $this->db->where('ID_USUARIO', $id);
         $result = $this->db->delete('rel_medico_especialidad');
         $listEspecialidad = $this->input->post('id_especialidad');
-        if (count($listEspecialidad) > 0) {
+        if ($listEspecialidad != null) {
             foreach ($listEspecialidad as $esp) {
                 $datae = array(
                     'ID_USUARIO' => $id,
@@ -116,7 +117,7 @@ class AdministracionModel extends CI_Model {
             $this->db->where('ID_USUARIO', $id);
             $result = $this->db->delete('rel_medico_especialidad');
             $listEspecialidad = $this->input->post('id_especialidad');
-            if (count($listEspecialidad) > 0) {
+            if ($listEspecialidad != null) {
                 foreach ($listEspecialidad as $esp) {
                     $datae = array(
                         'ID_USUARIO' => $id,
@@ -132,16 +133,10 @@ class AdministracionModel extends CI_Model {
 
     public function deleteUsuario() {
         $id = $this->input->post('id');
-        $usuariosRol = $this->db->query('SELECT * FROM SITES WHERE SITE_SUPERVISOR=' . '"' . $id . '" OR SITE_ADMINISTRADOR=' . '"' . $id . '"');
-        if ($usuariosRol->num_rows() > 0) {
-            $result = 'No se puede eliminar, hay sites ligados a este usuario.';
-            return $result;
-        } else {
-            $this->db->set('ESTADO', 'I');
-            $this->db->where('ID_USUARIO', $id);
-            $result = $this->db->delete('usuarios');
-            return $result;
-        }
+        $this->db->set('ESTADO', 'I');
+        $this->db->where('ID_USUARIO', $id);
+        $result = $this->db->update('usuario');
+        return $result;
     }
 
     //******Catalogo*****

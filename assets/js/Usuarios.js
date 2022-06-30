@@ -4,6 +4,7 @@ $(document).ready(function () {
 	comboEspecialidad();
 
 	$('#tituloPagina').text("Usuarios");
+	$('#divEspecialidad').hide(true);
 
 	$('#tableListUsuarios, #tableListGrupos').DataTable({
 		"lengthChange": true,
@@ -55,14 +56,15 @@ function listUsuarios() {
 			var ad = '';
 			if (data != true) {
 				for (i = 0; i < data.length; i++) {
+					if (data[i].ID_USUARIO != 1) {
+						ad = '<a title="Editar" href="javascript:void(0);"  class="editUser" data-id="' + data[i].ID_USUARIO + '" data-nombre="' + data[i].NOMBRE + '" data-apellido="' + data[i].APELLIDO + '" data-tipo_identificacion="' + data[i].TIPO_IDENTIFICACION + '" data-identificacion="' + data[i].IDENTIFICACION + '" data-nombre_usuario="' + data[i].NOMBRE_USUARIO + '" data-correo="' + data[i].CORREO + '" data-telefono="' + data[i].TELEFONO + '" data-direccion="' + data[i].DIRECCION + '" data-ciudad_residencia="' + data[i].CIUDAD_RESIDENCIA + '" data-fecha_nacimiento="' + data[i].FECHA_NACIMIENTO + '" data-genero="' + data[i].GENERO + '" data-id_rol="' + data[i].ID_ROL + '" data-id_especialidad="' + data[i].ID_ESPECIALIDAD + '" ><i class="fas fa-edit"></i></a>&nbsp' +
+							'<a title="Eliminar" href="javascript:void(0);" style="color: red;" class="deleteUser" data-id="' + data[i].ID_USUARIO + '" data-nombre="' + data[i].NOMBRE +' '+data[i].APELLIDO +'" ><i class="fas fa-minus-square"></i></a>';
+					}
 					if (data[i].ESTADO == 'A') {
 						st = '<td><span class="badge badge-pill badge-success"><strong>Activo</strong></span></td>'
 					} else {
-						st = '<td><span class="badge badge-pill badge-danger"><strong>Inactivo</strong></span></td>'
-					}
-					if (data[i].ID_USUARIO != 1) {
-						ad = '<a title="Editar" href="javascript:void(0);"  class="editUser" data-id="' + data[i].ID_USUARIO + '" data-nombre="' + data[i].NOMBRE + '" data-apellido="' + data[i].APELLIDO + '" data-tipo_identificacion="' + data[i].TIPO_IDENTIFICACION + '" data-identificacion="' + data[i].IDENTIFICACION + '" data-nombre_usuario="' + data[i].NOMBRE_USUARIO + '" data-correo="' + data[i].CORREO + '" data-telefono="' + data[i].TELEFONO + '" data-direccion="' + data[i].DIRECCION + '" data-ciudad_residencia="' + data[i].CIUDAD_RESIDENCIA + '" data-fecha_nacimiento="' + data[i].FECHA_NACIMIENTO + '" data-genero="' + data[i].GENERO + '" data-id_rol="' + data[i].ID_ROL + '" data-id_especialidad="' + data[i].ID_ESPECIALIDAD + '" ><i class="fas fa-edit"></i></a>&nbsp' +
-							'<a title="Eliminar" href="javascript:void(0);" style="color: red;" class="deleteUser" data-id="' + data[i].USUA_ID + '" data-nombre="' + data[i].USUA_NOMBRE + '" ><i class="fas fa-minus-square"></i></a>';
+						st = '<td><span class="badge badge-pill badge-danger"><strong>Inactivo</strong></span></td>';
+						ad = '';
 					}
 					html += '<tr>' +
 						'<td>' + data[i].ID_USUARIO + '</td>' +
@@ -71,7 +73,7 @@ function listUsuarios() {
 						'<td>' + data[i].IDENTIFICACION + '</td>' +
 						'<td>' + data[i].NOMBRE_USUARIO + '</td>' +
 						'<td>' + data[i].CORREO + '</td>' +
-						'<td>' + data[i].ID_ROL + '</td>' +
+						'<td>' + data[i].ROL_NOMBRE + '</td>' +
 						st +
 						'<td>' +
 						'<a title="Mostrar" href="javascript:void(0);" style="color: green;" class="showUser" data-foto="' + data[i].USUA_FOTO + '" data-nombre="' + data[i].USUA_NOMBRE + '" data-nick="' + data[i].USUA_NICK + '" data-mail="' + data[i].USUA_MAIL + '" data-estado="' + data[i].USUA_ESTADO + '" data-rol="' + data[i].ROL_ID + '"><i class="fas fa-eye"></i></a>&nbsp' +
@@ -168,6 +170,7 @@ $('#saveUserForm').submit('click', function () {
 	var $fecha_nacimiento = $('#fecha_nacimiento').val().trim();
 	var $genero = $('#genero').val().trim();
 	var $id_rol = $('#id_Rol').val().trim();
+	var $id_especialidad = $('#id_especialidad').val();
 	$.ajax({
 		type: "POST",
 		url: "administracion/saveUsuario",
@@ -185,7 +188,8 @@ $('#saveUserForm').submit('click', function () {
 			ciudad_residencia: $ciudad_residencia,
 			fecha_nacimiento: $fecha_nacimiento,
 			genero: $genero,
-			id_rol: $id_rol
+			id_rol: $id_rol,
+			id_especialidad: $id_especialidad
 		},
 		success: function (data) {
 			if (data == true) {
@@ -201,11 +205,13 @@ $('#saveUserForm').submit('click', function () {
 					$('#ciudad_residencia').val(""),
 					$('#fecha_nacimiento').val(""),
 					$('#genero').val(""),
-					$('#id_rol').val("")
+					$('#id_rol').val(""),
+					$('#id_especialidad').val("")
 
 				toastr.success('Datos de usuario guardado.');
 				$('#addUserModal').modal('hide');
-				window.location.href = $('#baseUrl').val();
+				//window.location.href = $('#baseUrl').val();
+				listUsuarios();
 			} else {
 				toastr.warning(data);
 			}
@@ -369,7 +375,6 @@ $('#deleteUserForm').on('submit', function () {
 				$('#deleteUserId').val("");
 				$('#deleteUserModal').modal('hide');
 				listUsuarios();
-				listGrupo();
 				toastr.success('Datos de usuario eliminado con exito.');
 			} else {
 				toastr.warning(data);
@@ -379,227 +384,6 @@ $('#deleteUserForm').on('submit', function () {
 	return false;
 });
 
-//--------------------Rol----------------------
-function listGrupo() {
-	$.ajax({
-		type: 'ajax',
-		url: 'administracion/showGrupo',
-		async: false,
-		dataType: 'json',
-		success: function (data) {
-			var html = '';
-			var html2 = '<option value="">-Seleccione Rol-</option>';
-			var i;
-			if (data != true) {
-				for (i = 0; i < data.length; i++) {
-					html += '<tr id="' + data[i].ROL_ID + '">' +
-						'<td>' + data[i].ROL_NOMBRE + '</td>' +
-						'<td>' + data[i].NUM_USUARIOS + '</td>' +
-						'<td>' +
-						'<a title="Mostrar" href="javascript:void(0);" style="color: green;" class="showRol" data-id="' + data[i].ROL_ID + '" data-nombre="' + data[i].ROL_NOMBRE + '"><i class="fas fa-eye"></i></a>&nbsp' +
-						'<a title="Editar" href="javascript:void(0);" class="editRol" data-id="' + data[i].ROL_ID + '" data-nombre="' + data[i].ROL_NOMBRE + '" ><i class="fas fa-edit"></i></a>&nbsp' +
-						'<a title="Eliminar" href="javascript:void(0);" style="color: red;" class="deleteRol" data-id="' + data[i].ROL_ID + '" data-nombre="' + data[i].ROL_NOMBRE + '" ><i class="fas fa-minus-square"></i></a>' +
-						'</td>' +
-						'</tr>';
 
-					html2 += '<option value="' + data[i].ROL_ID + '">' + data[i].ROL_NOMBRE + '</option>';
-
-				}
-			} else {
-				toastr.warning(data);
-			}
-			$('#rolUsuario, #showrolUsuario, #editrolUsuario').html(html2);
-			$('#listGrupo').html(html);
-		}
-	});
-}
-
-
-/*save*/
-$('#saveGrupoForm').submit('click', function () {
-	var filas = $("#listGrupoPermiso").find("tr");
-	var urls = "";
-
-	for (i = 0; i < filas.length; i++) {
-		if (i + 1 != filas.length) {
-			var celdas = $(filas[i]).find("td");
-			permisoChk = $($(celdas[1]).children("input")[0]).prop('checked');
-			linkId = $($(celdas[1]).children("input")[0]).val();
-			if (permisoChk == true) {
-				urls += linkId + ",";
-			}
-		}
-	}
-
-	var nombre = $('#nombreRol').val().trim();
-	$.ajax({
-		type: "POST",
-		url: "administracion/saveGrupoPermisos",
-		dataType: "JSON",
-		data: {
-			nombre: nombre,
-			urls: urls
-		},
-		success: function (data) {
-			if (data == true) {
-				$("#nombreRol").val("");
-
-				toastr.success('Datos de rol guardado.');
-				$('#addGrupoModal').modal('hide');
-				listUsuarios();
-				listGrupo();
-			} else {
-				toastr.warning(data);
-			}
-		}
-	});
-	return false;
-});
-
-/*show*/
-$('#listGrupo').on('click', '.showRol', function () {
-	$('#showGrupoModal').modal('show');
-	$("#nombreRolShow").val($(this).data('nombre'));
-
-	var id = $(this).data('id');
-
-	$.ajax({
-		type: 'POST',
-		url: 'administracion/showGrupoPermisosShow',
-		async: false,
-		dataType: 'json',
-		data: {
-			id: id
-		},
-		success: function (data) {
-			var html = '';
-			if (data != true) {
-				for (i = 0; i < data.length; i++) {
-					if (data[i].URL_ACT == 0) {
-						act = '<td><input type="checkbox" value="' + data[i].URL_ID + '" class="chck1" disabled></td>'
-					} else { act = '<td><input type="checkbox" value="' + data[i].URL_ID + '" class="chck1" checked disabled></td>' }
-					html += '<tr>' +
-						'<td class="text-left">' + data[i].URL_NOMBRE + '</td>' +
-						act +
-						'</tr>';
-
-				}
-			} else {
-				toastr.warning(data);
-			}
-			$('#listGrupoPermisoShow').html(html);
-		}
-	});
-
-});
-
-/*edit*/
-$('#listGrupo').on('click', '.editRol', function () {
-	$('#editGrupoModal').modal('show');
-	$("#nombreRolEdit").val($(this).data('nombre'));
-	$("#editRolId").val($(this).data('id'));
-
-	var id = $(this).data('id');
-
-	$.ajax({
-		type: 'POST',
-		url: 'administracion/showGrupoPermisosShow',
-		async: false,
-		dataType: 'json',
-		data: {
-			id: id
-		},
-		success: function (data) {
-			var html = '';
-			if (data != true) {
-				for (i = 0; i < data.length; i++) {
-					if (data[i].URL_ACT == 0) {
-						act = '<td><input type="checkbox" value="' + data[i].URL_ID + '" class="chck1" ></td>'
-					} else { act = '<td><input type="checkbox" value="' + data[i].URL_ID + '" class="chck1" checked ></td>' }
-					html += '<tr>' +
-						'<td class="text-left">' + data[i].URL_NOMBRE + '</td>' +
-						act +
-						'</tr>';
-				}
-			} else {
-				toastr.warning(data);
-			}
-			$('#listGrupoPermisoEdit').html(html);
-		}
-	});
-
-});
-$('#editGrupoForm').submit('click', function () {
-	var filas = $("#listGrupoPermisoEdit").find("tr");
-	var urls = "";
-
-	for (i = 0; i < filas.length; i++) {
-		var celdas = $(filas[i]).find("td");
-		permisoChk = $($(celdas[1]).children("input")[0]).prop('checked');
-		linkId = $($(celdas[1]).children("input")[0]).val();
-		if (permisoChk == true) {
-			urls += linkId + ",";
-		}
-	}
-
-	var nombre = $('#nombreRolEdit').val().trim();
-	var id = $('#editRolId').val();
-
-	$.ajax({
-		type: "POST",
-		url: "administracion/editGrupoPermisos",
-		dataType: "JSON",
-		data: {
-			nombre: nombre,
-			id: id,
-			urls: urls
-		},
-		success: function (data) {
-			if (data == true) {
-				$("#nombreRolEdit").val("");
-
-				toastr.success('Datos de rol actualizado.');
-				$('#editGrupoModal').modal('hide');
-				listUsuarios();
-				listGrupo();
-				listMenu();
-			} else {
-				toastr.warning(data);
-			}
-		}
-	});
-	return false;
-});
-// show delete rol
-$('#listGrupo').on('click', '.deleteRol', function () {
-	$('#deleteRolModal').modal('show');
-	$('#deleteRolId').val($(this).data('id'));
-	$('#deleteRolNombre').text($(this).data('nombre'));
-});
-// delete rol 
-$('#deleteRolForm').on('submit', function () {
-
-	var id = $('#deleteRolId').val();
-
-	$.ajax({
-		type: "POST",
-		url: "administracion/deleteRol",
-		dataType: "JSON",
-		data: { id: id },
-		success: function (data) {
-			if (data == true) {
-				$('#deleteRolId').val("");
-				$('#deleteRolNombre').val("");
-				$('#deleteRolModal').modal('hide');
-				listUsuarios();
-				listGrupo();
-				toastr.success('Datos de rol eliminado con exito.');
-			} else {
-				toastr.warning(data);
-			}
-		}
-	});
-	return false;
-});
 
 //OPCION
