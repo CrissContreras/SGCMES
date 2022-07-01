@@ -7,7 +7,7 @@ $(document).ready(function () {
 	$('#tituloPagina').text("Usuarios");
 	$('#divEspecialidad').hide(true);
 
-	$('#tableListUsuarios, #tableListGrupos').DataTable({
+	$('#tableListUsuarios').DataTable({
 		"lengthChange": true,
 		"info": true,
 		"paging": true,
@@ -38,6 +38,10 @@ $(document).ready(function () {
 		}
 	});
 	$("#editUserModal").on("hidden.bs.modal", function () {
+		window.location.href = $('#baseUrl').val();
+	});
+
+	$("#editrel_horario_medicoModal").on("hidden.bs.modal", function () {
 		window.location.href = $('#baseUrl').val();
 	});
 
