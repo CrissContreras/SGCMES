@@ -227,12 +227,24 @@ class Administracion extends MY_Controller
 		echo json_encode($data);
 	}
 	
+	public function comboPaciente()
+	{
+		$data = $this->administracionModel->comboPaciente();
+		echo json_encode($data);
+	}
+	public function comboMedico()
+	{
+		$data = $this->administracionModel->comboMedico();
+		echo json_encode($data);
+	}
+    public function comboHorarioCita()
+	{
+		$data = $this->administracionModel->comboHorarioCita();
+		echo json_encode($data);
+	}
+
 	
 
-
-
-
-    
 	public function listMenuSistema()
 	{
 		$data = $this->administracionModel->listMenuSistema();

@@ -1,8 +1,8 @@
 $(document).ready(function () {
 	listCitaMedica();
+	comboPaciente();
 	
 	
-	comboRol();
 	comboEspecialidad();
 	comboHorarioMedico();
 
@@ -95,22 +95,22 @@ function listCitaMedica() {
 
 
 
-function comboRol() {
+function comboPaciente() {
 	$.ajax({
 		type: 'ajax',
-		url: 'administracion/comboRol',
+		url: 'administracion/comboPaciente',
 		async: false,
 		dataType: 'json',
 		success: function (data) {
 			var html = '';
 			if (data != true) {
 				for (i = 0; i < data.length; i++) {
-					html += '<option value="' + data[i].ID_ROL + '">' + data[i].NOMBRE + '</option>';
+					html += '<option value="' + data[i].ID_USUARIO_PACIENTE + '">' + data[i].NOMBRE + '</option>';
 				}
 			} else {
 				toastr.warning(data);
 			}
-			$('#editid_rol, #id_Rol').html(html);
+			$('#id_paciente, #editid_paciente').html(html);
 		}
 	});
 }
@@ -131,6 +131,59 @@ function comboEspecialidad() {
 				toastr.warning(data);
 			}
 			$('#editid_especialidad, #id_especialidad').html(html);
+		}
+	});
+}
+
+function comboMedico() {
+	var id_especialidad = $('#id_especialidad').val();
+	$.ajax({
+		type: "POST",
+		url: 'administracion/comboMedico',
+		async: false,
+		dataType: 'json',
+		data:{"id_especialidad":id_especialidad},
+		success: function (data) {
+			var html = '';
+			if (data != true) {
+				if(data.length > 0){
+					for (i = 0; i < data.length; i++) {
+						html += '<option value="' + data[i].ID_USUARIO + '">' + data[i].NOMBRE + '</option>';
+					}
+				}else{
+					html += '<option value="" > Sin Medicos para la especialidad</option>';
+				}
+				
+			} else {
+				toastr.warning(data);
+			}
+			$('#editid_medico, #id_medico').html(html);
+		}
+	});
+}
+function comboHorario() {
+	var id_medico = $('#id_medico').val();
+	$.ajax({
+		type: "POST",
+		url: 'administracion/comboHorarioCita',
+		async: false,
+		dataType: 'json',
+		data:{"id_medico":id_medico},
+		success: function (data) {
+			var html = '';
+			if (data != true) {
+				if(data.length > 0){
+					for (i = 0; i < data.length; i++) {
+						html += '<option value="' + data[i].ID_HORARIO+ '">' + data[i].FECHAHORA + '</option>';
+					}
+				}else{
+					html += '<option value="" > Sin hoarios para el médico</option>';
+				}
+				
+			} else {
+				toastr.warning(data);
+			}
+			$('#editid_horario, #id_horario').html(html);
 		}
 	});
 }

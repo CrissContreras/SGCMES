@@ -36,17 +36,17 @@
                         </div>
                         <div class="col">
                             <label>Especialidad</label>
-                            <select class="form-control" id="id_especialidad" name="id_especialidad">
+                            <select class="form-control" id="id_especialidad" name="id_especialidad" onchange="comboMedico()">
                             </select>
                         </div>
                         <div class="col">
                             <label>Médico</label>
-                            <select class="form-control" id="id_medico" name="id_medico">
+                            <select class="form-control" id="id_medico" name="id_medico" onchange="comboHorario()" required>
                             </select>
                         </div>
                         <div class="col">
                             <label>Horario</label>
-                            <select class="form-control" id="id_horario" name="id_horario">
+                            <select class="form-control" id="id_horario" name="id_horario" required>
                             </select>
                         </div>
                     </div>
@@ -77,12 +77,12 @@
                         </div>
                         <div class="col">
                             <label>Especialidad</label>
-                            <select class="form-control" id="editid_especialidad" name="editid_especialidad">
+                            <select class="form-control" id="editid_especialidad" name="editid_especialidad" onchange="comboMedico()">
                             </select>
                         </div>
                         <div class="col">
                             <label>Médico</label>
-                            <select class="form-control" id="editid_medico" name="editid_medico">
+                            <select class="form-control" id="editid_medico" name="editid_medico" required>
                             </select>
                         </div>
                         <div class="col">
