@@ -72,8 +72,15 @@ function listHorario() {
 //Save 
 $('#saveHorarioForm').submit('click', function () {
 	var fechahora = $('#fechahora').val().trim();
+	var hora_inicio = $('#hora_inicio').val().trim();
+	var hora_fin = $('#hora_fin').val().trim();
 	var descripcion = $('#descripcion').val().trim();
-	$.ajax({
+
+	alert(hora_fin + ' - ' +hora_inicio);
+
+
+
+	/*$.ajax({
 		type: "POST",
 		url: "administracion/saveHorario",
 		dataType: "JSON",
@@ -95,16 +102,16 @@ $('#saveHorarioForm').submit('click', function () {
 			}
 		}
 	});
-	return false;
+	return false;*/
 });
 
 //Edit
 $('#listHorario').on('click', '.editHorario', function () {
     
-	/*$('#fechahora').datetimepicker({
+	$('#fechahora').datetimepicker({
 		stepping: 30,
-        enabledHours: [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
-	});*/
+    //    enabledHours: [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
+	});
 	var fecha = new Date($(this).data('fechahora'));
 	fecha.setMinutes(fecha.getMinutes() - fecha.getTimezoneOffset());
 	document.getElementById('editfechahora').value = fecha.toISOString().slice(0,16);
@@ -174,4 +181,38 @@ $('#deleteHorarioForm').on('submit', function () {
 		}
 	});
 	return false;
+});
+
+
+$(document).ready(function() {
+	function startChange() {
+		var startTime = start.value();
+
+		if (startTime) {
+			startTime = new Date(startTime);
+
+			end.max(startTime);
+
+			startTime.setMinutes(startTime.getMinutes() + this.options.interval);
+
+			end.min(startTime);
+			end.value(startTime);
+		}
+	}
+
+	//init start timepicker
+	var start = $("#hora_inicio").kendoTimePicker({
+		change: startChange
+	}).data("kendoTimePicker");
+
+	//init end timepicker
+	var end = $("#hora_fin").kendoTimePicker().data("kendoTimePicker");
+
+	//define min/max range
+	start.min("8:00 AM");
+	start.max("6:00 PM");
+
+	//define min/max range
+	end.min("8:00 AM<");
+	end.max("6:00 PM");
 });

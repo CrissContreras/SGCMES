@@ -20,6 +20,7 @@
     <div class="modal fade" id="addHorarioModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog " role="document">
             <div class="modal-content">
+                
                 <div class="modal-header">
                     <h4 class="modal-title" id="exampleModalLabel">Nuevo Horario</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -28,17 +29,19 @@
                     <div class="form-group row">
                         <div class="col">
                             Fecha y Hora
-                            <input type="datetime-local" name="fechahora" id="fechahora" class="form-control" required>
+                            <input type="date" name="fechahora" id="fechahora" value="<?php echo date("Y-m-d"); ?>" class="form-control"  required>
                         </div>
                     </div><br>
-                    <div class="form-group">
-                        <div class='input-group date' id='datetimepicker1'>
-                            <input type='text' class="form-control" />
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
+                    <div class="form-group row">
+                        <div class="col">
+                            Hora Inicio
+                            <input  id="hora_inicio" value="8:00 AM" />
                         </div>
-                    </div>
+                        <div class="col">
+                            Hora Fin
+                            <input id="hora_fin" value="6:00 PM" />
+                        </div>
+                    </div><br>
                     <div class="form-group row">
                         <div class="col">
                             Descripcion

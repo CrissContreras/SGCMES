@@ -45,6 +45,10 @@ $(document).ready(function () {
 		window.location.href = $('#baseUrl').val();
 	});
 
+	$("#showUserModal").on("hidden.bs.modal", function () {
+		window.location.href = $('#baseUrl').val();
+	});
+
 });
 //-----------Usuario----------------
 //List
@@ -65,7 +69,7 @@ function listUsuarios() {
 						ad = '<a title="Editar" href="javascript:void(0);"  class="editUser" data-id="' + data[i].ID_USUARIO + '" data-nombre="' + data[i].NOMBRE + '" data-apellido="' + data[i].APELLIDO + '" data-tipo_identificacion="' + data[i].TIPO_IDENTIFICACION + '" data-identificacion="' + data[i].IDENTIFICACION + '" data-nombre_usuario="' + data[i].NOMBRE_USUARIO + '" data-correo="' + data[i].CORREO + '" data-telefono="' + data[i].TELEFONO + '" data-direccion="' + data[i].DIRECCION + '" data-ciudad_residencia="' + data[i].CIUDAD_RESIDENCIA + '" data-fecha_nacimiento="' + data[i].FECHA_NACIMIENTO + '" data-genero="' + data[i].GENERO + '" data-id_rol="' + data[i].ID_ROL + '" data-id_especialidad="' + data[i].ID_ESPECIALIDAD + '" ><i class="fas fa-edit"></i></a>&nbsp' +
 							'<a title="Eliminar" href="javascript:void(0);" style="color: red;" class="deleteUser" data-id="' + data[i].ID_USUARIO + '" data-nombre="' + data[i].NOMBRE +' '+data[i].APELLIDO +'" ><i class="fas fa-minus-square"></i></a>';
 						if(data[i].ID_ROL == 2){
-						    ad += '&nbsp<a title="Horarios" href="javascript:void(0);"  class="editrel_horario_medico" data-id="' + data[i].ID_USUARIO + '" data-nombre="' + data[i].NOMBRE + '" data-apellido="' + data[i].APELLIDO + '" data-horario_medico="' + data[i].ID_HORARIO_MEDICO +'"><i class="fas fa-edit"></i></a>&nbsp';	
+						    ad += '&nbsp<a title="Horarios" href="javascript:void(0);"  class="editrel_horario_medico" data-id="' + data[i].ID_USUARIO + '" data-nombre="' + data[i].NOMBRE + '" data-apellido="' + data[i].APELLIDO + '" data-horario_medico="' + data[i].ID_HORARIO_MEDICO +'"><i class="fas fa-clock"></i></a>&nbsp';	
 						}	
 					}
 					if (data[i].ESTADO == 'A') {
@@ -84,7 +88,7 @@ function listUsuarios() {
 						'<td>' + data[i].ROL_NOMBRE + '</td>' +
 						st +
 						'<td>' +
-						'<a title="Mostrar" href="javascript:void(0);" style="color: green;" class="showUser" data-foto="' + data[i].USUA_FOTO + '" data-nombre="' + data[i].USUA_NOMBRE + '" data-nick="' + data[i].USUA_NICK + '" data-mail="' + data[i].USUA_MAIL + '" data-estado="' + data[i].USUA_ESTADO + '" data-rol="' + data[i].ROL_ID + '"><i class="fas fa-eye"></i></a>&nbsp' +
+						'<a title="Mostrar" href="javascript:void(0);"  style="color: green;" class="showUser" data-id="' + data[i].ID_USUARIO + '" data-nombre="' + data[i].NOMBRE + '" data-apellido="' + data[i].APELLIDO + '" data-tipo_identificacion="' + data[i].TIPO_IDENTIFICACION + '" data-identificacion="' + data[i].IDENTIFICACION + '" data-nombre_usuario="' + data[i].NOMBRE_USUARIO + '" data-correo="' + data[i].CORREO + '" data-telefono="' + data[i].TELEFONO + '" data-direccion="' + data[i].DIRECCION + '" data-ciudad_residencia="' + data[i].CIUDAD_RESIDENCIA + '" data-fecha_nacimiento="' + data[i].FECHA_NACIMIENTO + '" data-genero="' + data[i].GENERO + '" data-id_rol="' + data[i].ID_ROL + '" data-id_especialidad="' + data[i].ID_ESPECIALIDAD + '" ><i class="fas fa-eye"></i></a>&nbsp' +
 						ad +
 						'</td>' +
 						'</tr>';
@@ -114,7 +118,7 @@ function comboRol() {
 			} else {
 				toastr.warning(data);
 			}
-			$('#editid_rol, #id_Rol').html(html);
+			$('#editid_rol, #showid_rol, #id_Rol').html(html);
 		}
 	});
 }
@@ -134,7 +138,7 @@ function comboEspecialidad() {
 			} else {
 				toastr.warning(data);
 			}
-			$('#editid_especialidad, #id_especialidad').html(html);
+			$('#editid_especialidad, #showid_especialidad, #id_especialidad').html(html);
 		}
 	});
 }
@@ -158,6 +162,14 @@ function comboHorarioMedico() {
 	});
 }
 var $id_roleditprin = $("#editid_rol").val();
+var $id_rolshowprin = $("#showid_rol").val();
+
+if ($id_rolshowprin == '2') {
+	$("#divShowEspecialidad").show();
+} else {
+	$('#divShowEspecialidad').hide();
+}
+
 if ($id_roleditprin == '2') {
 	$("#divEditEspecialidad").show();
 } else {
@@ -166,10 +178,16 @@ if ($id_roleditprin == '2') {
 function fn_validarRol(deque) {
 	if (deque == 'm') {
 		var $id_roledit = $("#editid_rol option:selected").val();
+		var $id_rolshow = $("#showid_rol option:selected").val();
 		if ($id_roledit == '2') {
 			$("#divEditEspecialidad").show();
 		} else {
 			$('#divEditEspecialidad').hide();
+		}
+		if ($id_rolshow == '2') {
+			$("#divShowEspecialidad").show();
+		} else {
+			$('#divShowEspecialidad').hide();
 		}
 	}
 	if (deque == 'n') {
@@ -247,10 +265,32 @@ $('#saveUserForm').submit('click', function () {
 	return false;
 });
 
-//crear
 $('#listUsuarios').on('click', '.showUser', function () {
 	$('#showUserModal').modal('show');
-
+	$("#showIdUsuario").val($(this).data('id'));
+	$("#shownombre").val($(this).data('nombre'));
+	$('#showapellido').val($(this).data('apellido'));
+	$('#showtipo_identificacion').val($(this).data('tipo_identificacion'));
+	$('#showidentificacion').val($(this).data('identificacion'));
+	$('#shownombre_usuario').val($(this).data('nombre_usuario'));
+	$('#showcontrasena').val("*********");
+	$('#showcorreo').val($(this).data('correo'));
+	$('#showtelefono').val($(this).data('telefono'));
+	$('#showdireccion').val($(this).data('direccion'));
+	$('#showciudad_residencia').val($(this).data('ciudad_residencia'));
+	$('#showfecha_nacimiento').val($(this).data('fecha_nacimiento'));
+	$('#showgenero').val($(this).data('genero'));
+	$('#showid_rol').val($(this).data('id_rol'));
+	var str = $(this).data('id_especialidad');
+	if (str.toString().length == 1) { var substr = str.toString(); } else { var substr = str.split(','); }
+	$('#showid_especialidad option').each(function (index) {
+		for (var i = 0; i < substr.length; i++) {
+			if (substr[i] == $(this).val()) {
+				$(this).attr('selected', 'selected');
+			}
+		}
+	});
+	fn_validarRol('m');
 });
 
 

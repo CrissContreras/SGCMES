@@ -7,6 +7,10 @@
 <head>
     <title>App</title>
 
+
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2022.2.621/styles/kendo.common.min.css" />
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2022.2.621/styles/kendo.blueopal.min.css" />
+    
     <!-- VENDOR CSS -->
     <link rel="stylesheet" href="<?php echo base_url() . 'assets/css/bootstrap.min.css' ?>">
     <link rel="stylesheet" href="<?php echo base_url() . 'assets/vendor/font-awesome/css/font-awesome.min.css' ?>">
@@ -147,7 +151,8 @@
 
     <script type="text/javascript" src="<?php echo base_url() . 'assets/js/xlsx.full.min.js' ?>"></script>
     <script type="text/javascript" src="<?php echo base_url() . 'assets/js/FileSaver.js' ?>"></script>
-    <script type="text/javascript" src="<?php echo base_url() . 'assets/js/bootstrap-datetimepicker.js' ?>"></script>
+    
+    <script src="https://kendo.cdn.telerik.com/2022.2.621/js/kendo.all.min.js"></script>
 
 </body>
 

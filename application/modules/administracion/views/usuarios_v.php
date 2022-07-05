@@ -144,47 +144,108 @@
         <div class="modal-dialog  modal-lg " role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">Datos del Usuario</h4>
+                    <h4 class="modal-title" id="exampleModalLabel">Datos Usuario</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group row">
                         <div class="col">
-                            Nombre y Apellido
-                            <input type="text" name="shownombreUsuario" id="shownombreUsuario" class="form-control" disabled>
+                            <label>Nombres</label>
+                            <input type="text" class="form-control" id="shownombre" name="shownombre" required>
                         </div>
                         <div class="col">
-                            Nick de Usuario
-                            <input type="text" name="shownickUsuario" id="shownickUsuario" class="form-control" disabled>
+                            <label>Apellidos</label>
+                            <input type="text" class="form-control" id="showapellido" name="showapellido" required>
                         </div>
                         <div class="col">
-                            Correo electrónico
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">@</span>
-                                </div>
-                                <input type="email" name="showmailUsuario" id="showmailUsuario" class="form-control" placeholder="ej: usuario@mail.com" disabled>
+                            <label>Tipo de identificación</label><br>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="showtipo_identificacion" id="showtipo_identificacion" value="C" checked>
+                                <label class="form-check-label" for="showtipo_identificacion">
+                                    Cédula
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="showtipo_identificacion" id="showtipo_identificacion2" value="R">
+                                <label class="form-check-label" for="showtipo_identificacion2">
+                                    Ruc
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="showtipo_identificacion" id="showtipo_identificacion3" value="P">
+                                <label class="form-check-label" for="showtipo_identificacion3">
+                                    Passaporte
+                                </label>
                             </div>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col">
-                            Estado
-                            <select name="showestadoUsuario" id="showestadoUsuario" class="form-control" disabled>
-                                <option value="">-Seleccione Estado-</option>
-                                <option value="1">Activo</option>
-                                <option value="0">Inactivo</option>
+                            <label>Identificación</label>
+                            <input type="text" maxlength="10" class="form-control" id="showidentificacion" name="showidentificacion" placeholder="Ejemplo: 1718191615" required>
+                        </div>
+                        <div class="col">
+                            <label>Nombre de usuario</label>
+                            <input type="text" class="form-control" id="shownombre_usuario" name="shownombre_usuario" required>
+                        </div>
+                        <div class="col">
+                            <label>Contraseña</label>
+                            <input type="password" class="form-control" id="showcontrasena" name="showcontrasena">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label>Correo electrónico</label>
+                            <input type="email" class="form-control" id="showcorreo" name="showcorreo" required placeholder="Ejemplo: juan@mail.com">
+                        </div>
+                        <div class="col">
+                            <label>Télefono</label>
+                            <input type="text" class="form-control" pattern="[0-9]{9,10}" id="showtelefono" name="showtelefono" required placeholder="Ejemplo: 0987654321">
+                        </div>
+                        <div class="col">
+                            <label>Dirección</label>
+                            <input type="text" class="form-control" id="showdireccion" name="showdireccion" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label>Ciudad de residencia</label>
+                            <select class="form-control" id="showciudad_residencia" name="showciudad_residencia">
+                                <option selected value="Quito">Quito</option>
+                                <option value="Guayaquil">Guayaquil</option>
+                                <option value="Cuenca">Cuenca</option>
+                                <option value="Machala">Machala</option>
+                                <option value="Ambato">Ambato</option>
+                                <option value="Manta">Manta</option>
+                                <option value="Santo Domingo">Santo Domingo</option>
                             </select>
                         </div>
                         <div class="col">
-                            Rol
-                            <select name="showrolUsuario" id="showrolUsuario" class="form-control" disabled>
-
-                            </select>
+                            <label>Fecha de nacimiento</label>
+                            <input type="date" max="<?php echo date('Y-m-d'); ?>" class="form-control" id="showfecha_nacimiento" name="showfecha_nacimiento" required>
                         </div>
                         <div class="col">
-                            Contraseña
-                            <input type="text" name="showpassUsuario" id="showpassUsuario" class="form-control" placeholder="Contraseña" disabled>
+                            <label>Género</label>
+                            <select class="form-control" id="showgenero" name="showgenero">
+                                <option selected value="M">Masculino</option>
+                                <option value="F">Femenino</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label>Rol</label>
+                            <select class="form-control" id="showid_rol" name="showid_rol" onchange="fn_validarRol('m')">
+                            </select>
+                        </div>
+                    </div>
+                    <div id="divShowEspecialidad">
+                        <div class="form-group row" id="divShowEspecialidad">
+                            <div class="col">
+                                <label>Especialidad</label>
+                                <select class="form-control" id="showid_especialidad" name="showid_especialidad" multiple>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
