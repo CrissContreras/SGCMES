@@ -52,7 +52,7 @@ function listEspecialidad() {
 						'<td>' + data[i].DESCRIPCION + '</td>' +
 						'<td>' +
 						'<a title="Editar" href="javascript:void(0);"  class="editEspecialidad" data-id="' + data[i].ID_ESPECIALIDAD + '" data-nombre="' + data[i].NOMBRE + '" data-descripcion="' + data[i].DESCRIPCION + '" ><i class="fas fa-edit"></i></a>&nbsp' +
-						'<a title="Eliminar" href="javascript:void(0);" style="color: red;" class="deleteEspecialidad" data-id="' + data[i].ID_ESPECIALIDAD + '" data-nombre="' + data[i].NOMBRE + '" ><i class="fas fa-minus-square"></i></a>' +
+						//'<a title="Eliminar" href="javascript:void(0);" style="color: red;" class="deleteEspecialidad" data-id="' + data[i].ID_ESPECIALIDAD + '" data-nombre="' + data[i].NOMBRE + '" ><i class="fas fa-minus-square"></i></a>' +
 						'</td>' +
 						'</tr>';
 				}

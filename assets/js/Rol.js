@@ -49,10 +49,10 @@ function listRol() {
 					html += '<tr>' +
 						'<td>' + data[i].ID_ROL + '</td>' +
 						'<td>' + data[i].NOMBRE + '</td>' +
-						'<td>' + data[i].DESCRIPCION + '</td>' +
+						//'<td>' + data[i].DESCRIPCION + '</td>' +
 						'<td>' +
-						'<a title="Editar" href="javascript:void(0);"  class="editCatalogo" data-id="' + data[i].ID_ROL + '" data-nombre="' + data[i].NOMBRE + '" data-descripcion="' + data[i].DESCRIPCION + '" ><i class="fas fa-edit"></i></a>&nbsp' +
-						'<a title="Eliminar" href="javascript:void(0);" style="color: red;" class="deleteCatalogo" data-id="' + data[i].ID_ROL + '" data-nombre="' + data[i].NOMBRE + '" ><i class="fas fa-minus-square"></i></a>' +
+						'<a title="Editar" href="javascript:void(0);"  class="editRol" data-id="' + data[i].ID_ROL + '" data-nombre="' + data[i].NOMBRE + '" data-descripcion="' + data[i].DESCRIPCION + '" ><i class="fas fa-edit"></i></a>&nbsp' +
+						//'<a title="Eliminar" href="javascript:void(0);" style="color: red;" class="deleteCatalogo" data-id="' + data[i].ID_ROL + '" data-nombre="' + data[i].NOMBRE + '" ><i class="fas fa-minus-square"></i></a>' +
 						'</td>' +
 						'</tr>';
 				}
@@ -66,7 +66,7 @@ function listRol() {
 //Save
 $('#saveRolForm').submit('click', function () {
 	var nombre = $('#nombre').val().trim();
-	var descripcion = $('#descripcion').val().trim();
+	var descripcion = 10;
 
 	$.ajax({
 		type: "POST",
@@ -106,7 +106,7 @@ $('#editRolForm').on('submit', function () {
 
 	var id = $("#showId").val().trim();
 	var nombre = $("#showNombre").val().trim();
-	var descripcion = $("#showDescripcion").val().trim();
+	var descripcion = $("#showDescripcion").val();
 
 	$.ajax({
 		type: "POST",

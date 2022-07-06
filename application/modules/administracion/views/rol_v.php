@@ -7,7 +7,7 @@
             <tr>
                 <th><strong>Id</strong></th>
                 <th><strong>Nombre</strong></th>
-                <th><strong>Descripcion</strong></th>
+                <!--<th><strong>Página</strong></th>-->
                 <th><i class="fa fa-cog"></i></th>
             </tr>
         </thead>
@@ -31,12 +31,12 @@
                             <input type="text" name="nombre" id="nombre" class="form-control" required>
                         </div>
                     </div><br>
-                    <div class="form-group row">
+                    <!--<div class="form-group row">
                         <div class="col">
                             Descripcion
                             <input type="text" name="descripcion" id="descripcion" class="form-control" required>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-info btn-sm" data-dismiss="modal">Cancelar</button>
@@ -52,7 +52,7 @@
         <div class="modal-dialog " role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">Editar Catálogo</h4>
+                    <h4 class="modal-title" id="exampleModalLabel">Editar Rol</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
@@ -62,12 +62,12 @@
                             <input type="text" name="showNombre" id="showNombre" class="form-control" required>
                         </div>
                     </div><br>
-                    <div class="form-group row">
+                    <!--<div class="form-group row">
                         <div class="col">
                             Descripcion
                             <input type="text" name="showDescripcion" id="showDescripcion" class="form-control" required>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
                 <div class="modal-footer">
                     <input type="hidden" name="showId" id="showId" class="form-control">
@@ -79,7 +79,7 @@
     </div>
 </form>
 
-<form id="deleteRolForm" method="post">
+ <!--<form id="deleteRolForm" method="post">
     <div class="modal fade" id="deleteRolModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -98,6 +98,6 @@
             </div>
         </div>
     </div>
-</form>
+</form>-->
 
 <script type="text/javascript" src="<?php echo base_url() . 'assets/js/Rol.js' ?>"></script>

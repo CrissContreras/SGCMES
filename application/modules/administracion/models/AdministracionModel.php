@@ -203,12 +203,13 @@ class AdministracionModel extends CI_Model {
     }
     //******Rol*****
     public function showRol() {
-        $result = $this->db->query("SELECT ID_ROL, NOMBRE, DESCRIPCION FROM rol' WHERE ESTADO = 'A'");
+        $result = $this->db->query("SELECT ID_ROL, NOMBRE, DESCRIPCION FROM rol WHERE ESTADO = 'A' AND ID_ROL != 1");
         return $result->result();
     }
 
     public function saveRol() {
-        $rolExiste = $this->db->query('SELECT * FROM rol WHERE NOMBRE =' . '"' . $this->input->post('nombre') . '"  AND DESCRIPCION =' . '"' . $this->input->post('descripcion') . '"');
+        //$rolExiste = $this->db->query('SELECT * FROM rol WHERE NOMBRE =' . '"' . $this->input->post('nombre') . '"  AND DESCRIPCION =' . '"' . $this->input->post('descripcion') . '"');
+        $rolExiste = $this->db->query('SELECT * FROM rol WHERE NOMBRE =' . '"' . $this->input->post('nombre') . '" ');
         if ($rolExiste->num_rows() > 0) {
             $result = 'Rol ya existe.';
             return $result;
@@ -234,7 +235,7 @@ class AdministracionModel extends CI_Model {
         } else {
             $this->db->set('NOMBRE', $nombre);
             $this->db->set('DESCRIPCION', $descripcion);
-            $this->db->where('ID_CATALOGO', $id);
+            $this->db->where('ID_ROL', $id);
             $result = $this->db->update('rol');
             return $result;
         }
