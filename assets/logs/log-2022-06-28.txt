@@ -1,2 +1,0 @@
-ERROR - 21:49:59 28-06-2022 --> Severity: Warning --> count(): Parameter must be an array or an object that implements Countable C:\xampp\htdocs\application\modules\administracion\models\AdministracionModel.php 77
-ERROR - 21:50:21 28-06-2022 --> Severity: Warning --> count(): Parameter must be an array or an object that implements Countable C:\xampp\htdocs\application\modules\administracion\models\AdministracionModel.php 77

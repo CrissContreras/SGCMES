@@ -1,8 +1,0 @@
-ERROR - 00:00:03 22-06-2022 --> 404 Page Not Found: ../modules/administracion/controllers/Administracion/Rol
-ERROR - 00:06:47 22-06-2022 --> 404 Page Not Found: ../modules/administracion/controllers/Administracion/Rol
-ERROR - 00:07:21 22-06-2022 --> 404 Page Not Found: ../modules/administracion/controllers/Administracion/Rol
-ERROR - 00:08:04 22-06-2022 --> 404 Page Not Found: ../modules/administracion/controllers/Administracion/Rol
-ERROR - 00:08:21 22-06-2022 --> 404 Page Not Found: ../modules/administracion/controllers/Administracion/Rol
-ERROR - 00:08:44 22-06-2022 --> 404 Page Not Found: ../modules/administracion/controllers/Administracion/Especialidad
-ERROR - 23:45:10 22-06-2022 --> 404 Page Not Found: ../modules/administracion/controllers/Administracion/showGrupo
-ERROR - 23:51:05 22-06-2022 --> 404 Page Not Found: ../modules/administracion/controllers/Administracion/showGrupo

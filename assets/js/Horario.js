@@ -5,7 +5,7 @@ $(document).ready(function () {
 			daysOfWeekDisabled: [0, 6]
 		});
 	});
-	
+
 	$(document).ready(function () {
 		$('#tituloPagina').text("Horario");
 
@@ -76,17 +76,30 @@ $('#saveHorarioForm').submit('click', function () {
 	var hora_fin = $('#hora_fin').val().trim();
 	var descripcion = $('#descripcion').val().trim();
 
-	alert(hora_fin + ' - ' +hora_inicio);
+	/*var fechaInicio = new Date(fechahora + " " + hora_inicio);
+	var fechaFin = new Date(fechahora + " " + hora_fin);
+	fechaInicio.setMinutes(fechaInicio.getMinutes() + 30);
+		alert(fechaInicio);
 
 
 
-	/*$.ajax({
+	for(var i=0; i < 50; i++ ){
+		if(fechaInicio.setMinutes(fechaInicio.getMinutes() + 30) != fechaFin.setMinutes(fechaFin.getMinutes())){
+			console.log(fechaInicio);
+		}else{i=55}
+	}*/
+
+
+
+	$.ajax({
 		type: "POST",
 		url: "administracion/saveHorario",
 		dataType: "JSON",
 		data: {
 			fechahora: fechahora,
-			descripcion: descripcion
+			descripcion: descripcion,
+			hora_inicio: hora_inicio,
+			hora_fin: hora_fin
 		},
 		success: function (data) {
 			if (data == true) {
@@ -102,24 +115,24 @@ $('#saveHorarioForm').submit('click', function () {
 			}
 		}
 	});
-	return false;*/
+	return false;
 });
 
 //Edit
 $('#listHorario').on('click', '.editHorario', function () {
-    
+
 	$('#fechahora').datetimepicker({
 		stepping: 30,
-    //    enabledHours: [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
+		//    enabledHours: [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
 	});
 	var fecha = new Date($(this).data('fechahora'));
 	fecha.setMinutes(fecha.getMinutes() - fecha.getTimezoneOffset());
-	document.getElementById('editfechahora').value = fecha.toISOString().slice(0,16);
+	document.getElementById('editfechahora').value = fecha.toISOString().slice(0, 16);
 
 	$('#editHorarioModal').modal('show');
 	$("#editIdHorario").val($(this).data('id'));
 	$("#editDescripcion").val($(this).data('descripcion'));
-	
+
 	//console.log(aaa);
 
 });
@@ -184,7 +197,7 @@ $('#deleteHorarioForm').on('submit', function () {
 });
 
 
-$(document).ready(function() {
+$(document).ready(function () {
 	function startChange() {
 		var startTime = start.value();
 
@@ -202,17 +215,20 @@ $(document).ready(function() {
 
 	//init start timepicker
 	var start = $("#hora_inicio").kendoTimePicker({
-		change: startChange
+		change: startChange,
+		format: "HH:mm"
 	}).data("kendoTimePicker");
 
 	//init end timepicker
-	var end = $("#hora_fin").kendoTimePicker().data("kendoTimePicker");
+	var end = $("#hora_fin").kendoTimePicker({
+			format: "HH:mm"
+	}).data("kendoTimePicker");
 
 	//define min/max range
-	start.min("8:00 AM");
-	start.max("6:00 PM");
+	start.min("08:00");
+	start.max("18:00");
 
 	//define min/max range
-	end.min("8:00 AM<");
-	end.max("6:00 PM");
+	end.min("08:00");
+	end.max("18:00");
 });

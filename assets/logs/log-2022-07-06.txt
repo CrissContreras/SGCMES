@@ -1,0 +1,10 @@
+ERROR - 22:56:57 06-07-2022 --> Severity: Notice --> Undefined index: USUA_ID C:\xampp\htdocs\application\modules\template\models\TemplateModel.php 46
+ERROR - 22:56:57 06-07-2022 --> Query error: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 - Invalid query: SELECT * FROM USUARIO U JOIN ROL R ON U.ROL_ID = R.ROL_ID WHERE U.USUA_ID = 
+ERROR - 22:56:57 06-07-2022 --> Severity: error --> Exception: Call to a member function result() on bool C:\xampp\htdocs\application\modules\template\models\TemplateModel.php 49
+ERROR - 23:57:49 06-07-2022 --> Severity: Notice --> A non well formed numeric value encountered C:\xampp\htdocs\application\modules\administracion\models\AdministracionModel.php 331
+ERROR - 23:57:49 06-07-2022 --> Severity: Warning --> A non-numeric value encountered C:\xampp\htdocs\application\modules\administracion\models\AdministracionModel.php 331
+ERROR - 23:57:49 06-07-2022 --> Severity: Notice --> A non well formed numeric value encountered C:\xampp\htdocs\application\modules\administracion\models\AdministracionModel.php 331
+ERROR - 23:57:49 06-07-2022 --> Severity: Notice --> A non well formed numeric value encountered C:\xampp\htdocs\application\modules\administracion\models\AdministracionModel.php 332
+ERROR - 23:57:49 06-07-2022 --> Severity: Warning --> A non-numeric value encountered C:\xampp\htdocs\application\modules\administracion\models\AdministracionModel.php 332
+ERROR - 23:57:49 06-07-2022 --> Severity: Notice --> A non well formed numeric value encountered C:\xampp\htdocs\application\modules\administracion\models\AdministracionModel.php 332
+ERROR - 23:59:28 06-07-2022 --> Severity: error --> Exception: Object of class CI_Input could not be converted to string C:\xampp\htdocs\application\modules\administracion\models\AdministracionModel.php 331

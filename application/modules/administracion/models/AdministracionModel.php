@@ -47,7 +47,7 @@ class AdministracionModel extends CI_Model {
 
     public function saveUsuario() {
         //log_message('error', '>>>Error');
-        
+
         $mailExiste = $this->db->query('SELECT * FROM usuario WHERE CORREO=' . '"' . $this->input->post('correo') . '"');
         $nickExiste = $this->db->query('SELECT * FROM usuario WHERE NOMBRE_USUARIO=' . '"' . $this->input->post('nombre_usuario') . '"');
         $identificacionExiste = $this->db->query('SELECT * FROM usuario WHERE IDENTIFICACION=' . '"' . $this->input->post('identificacion') . '"');
@@ -316,7 +316,7 @@ class AdministracionModel extends CI_Model {
     }
 
     public function comboEspecialidad() {
-        $result = $this->db->query('SELECT ID_ESPECIALIDAD, NOMBRE FROM especialidad WHERE ESTADO = "A"' );
+        $result = $this->db->query('SELECT ID_ESPECIALIDAD, NOMBRE FROM especialidad WHERE ESTADO = "A"');
         return $result->result();
     }
 
@@ -327,7 +327,37 @@ class AdministracionModel extends CI_Model {
     }
 
     public function saveHorario() {
-        $horarioExiste = $this->db->query('SELECT * FROM horario WHERE FECHAHORA =' . '"' . $this->input->post('fechahora') . '"  AND DESCRIPCION =' . '"' . $this->input->post('descripcion') . '"');
+        $fInicio = $this->input->post('fechahora') . ' ' . $this->input->post('hora_inicio');
+        $fFin = $this->input->post('fechahora') . ' ' . $this->input->post('hora_fin');
+        $descripcion  = $this->input->post('descripcion');
+
+        $fechaInicio = new DateTime($fInicio);
+        $fechaFin = new DateTime($fFin);
+
+        for ($i = 0; $i < 50; $i++) {
+            if ($fechaInicio != $fechaFin) {
+                /*$horarioExiste = $this->db->query('SELECT * FROM horario WHERE FECHAHORA =' . '"' . $this->input->post('fechahora') . '"  AND DESCRIPCION =' . '"' . $this->input->post('descripcion') . '"');
+                if ($horarioExiste->num_rows() > 0) {
+                    $result = 'El horario ya existe.';
+                    return $result;
+                } else {*/
+                    $data = array(
+                        'FECHAHORA' => $fechaInicio->format('Y-m-d H:i'),
+                        'DESCRIPCION' => $descripcion,
+                        'ESTADO' => 'A',
+                    );
+                    $result = $this->db->insert('horario', $data);
+                    
+                //}
+                $fechaInicio->modify('+30 minute');
+            } else {
+                $i = 55;
+            }
+        }
+        return $result;
+        //die();
+
+        /*$horarioExiste = $this->db->query('SELECT * FROM horario WHERE FECHAHORA =' . '"' . $this->input->post('fechahora') . '"  AND DESCRIPCION =' . '"' . $this->input->post('descripcion') . '"');
         if ($horarioExiste->num_rows() > 0) {
             $result = 'El horario ya existe.';
             return $result;
@@ -339,7 +369,7 @@ class AdministracionModel extends CI_Model {
             );
             $result = $this->db->insert('horario', $data);
             return $result;
-        }
+        }*/
     }
 
     public function updateHorario() {
@@ -397,30 +427,29 @@ class AdministracionModel extends CI_Model {
                 $datae = array(
                     'ID_USUARIO_MEDICO' => $id_usuario,
                     'ID_HORARIO' => $hor
-                    
+
                 );
                 $result = $this->db->insert('rel_horario_medico', $datae);
             }
         }
-        
+
         return $result;
     }
-//cita medica
-public function comboPaciente() {
-    $result = $this->db->query("SELECT ID_USUARIO, CONCAT (NOMBRE,' ',APELLIDO, ' ', IDENTIFICACION) AS NOMBRE FROM usuario WHERE ESTADO = 'A' AND ID_ROL = 3");
-    return $result->result();
-}
-public function comboMedico() {
-    $id_especialidad = $this->input->post('id_especialidad');
-    $sql = "SELECT us.ID_USUARIO, CONCAT (us.NOMBRE,' ',us.APELLIDO) AS NOMBRE FROM usuario us JOIN rel_medico_especialidad rel on us.ID_USUARIO = rel.ID_USUARIO WHERE us.ESTADO = 'A' AND us.ID_ROL = 2 AND rel.ID_ESPECIALIDAD = $id_especialidad";
-    $result = $this->db->query($sql);
-    return $result->result();
-}
-public function comboHorarioCita() {
-    $id_medico = $this->input->post('id_medico');
-    $sql = "SELECT hor.ID_HORARIO,hor.FECHAHORA FROM horario hor JOIN rel_horario_medico rel on hor.ID_HORARIO = rel.ID_HORARIO WHERE hor.ESTADO = 'A' AND rel.ID_USUARIO_MEDICO = $id_medico AND hor.ID_HORARIO NOT IN (SELECT ID_HORARIO FROM cita_medica WHERE ESTADO = 'A')";
-    $result = $this->db->query($sql);
-    return $result->result();
-}
-
+    //cita medica
+    public function comboPaciente() {
+        $result = $this->db->query("SELECT ID_USUARIO, CONCAT (NOMBRE,' ',APELLIDO, ' ', IDENTIFICACION) AS NOMBRE FROM usuario WHERE ESTADO = 'A' AND ID_ROL = 3");
+        return $result->result();
+    }
+    public function comboMedico() {
+        $id_especialidad = $this->input->post('id_especialidad');
+        $sql = "SELECT us.ID_USUARIO, CONCAT (us.NOMBRE,' ',us.APELLIDO) AS NOMBRE FROM usuario us JOIN rel_medico_especialidad rel on us.ID_USUARIO = rel.ID_USUARIO WHERE us.ESTADO = 'A' AND us.ID_ROL = 2 AND rel.ID_ESPECIALIDAD = $id_especialidad";
+        $result = $this->db->query($sql);
+        return $result->result();
+    }
+    public function comboHorarioCita() {
+        $id_medico = $this->input->post('id_medico');
+        $sql = "SELECT hor.ID_HORARIO,hor.FECHAHORA FROM horario hor JOIN rel_horario_medico rel on hor.ID_HORARIO = rel.ID_HORARIO WHERE hor.ESTADO = 'A' AND rel.ID_USUARIO_MEDICO = $id_medico AND hor.ID_HORARIO NOT IN (SELECT ID_HORARIO FROM cita_medica WHERE ESTADO = 'A')";
+        $result = $this->db->query($sql);
+        return $result->result();
+    }
 }

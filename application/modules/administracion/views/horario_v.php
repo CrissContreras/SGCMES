@@ -35,11 +35,11 @@
                     <div class="form-group row">
                         <div class="col">
                             Hora Inicio
-                            <input  id="hora_inicio" value="8:00 AM" />
+                            <input  id="hora_inicio" value="08:00" />
                         </div>
                         <div class="col">
                             Hora Fin
-                            <input id="hora_fin" value="6:00 PM" />
+                            <input id="hora_fin" value="18:00" />
                         </div>
                     </div><br>
                     <div class="form-group row">
