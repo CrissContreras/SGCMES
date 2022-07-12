@@ -31,7 +31,7 @@
                     <div class="form-group row">
                         <div class="col">
                             <label>Paciente</label>
-                            <select class="form-control" id="id_paciente" name="id_paciente">
+                            <select class="form-control" id="id_paciente" name="id_paciente" required>
                             </select>
                         </div>
                         <div class="col">
