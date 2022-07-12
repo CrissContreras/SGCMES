@@ -1,0 +1,8 @@
+ERROR - 00:07:47 12-07-2022 --> Severity: Notice --> Undefined index: ID_ROL C:\xampp\htdocs\application\modules\administracion\models\AdministracionModel.php 468
+ERROR - 00:07:47 12-07-2022 --> Severity: Notice --> Undefined index: ID_USUARIO C:\xampp\htdocs\application\modules\administracion\models\AdministracionModel.php 469
+ERROR - 00:08:14 12-07-2022 --> Severity: Notice --> Undefined index: ID_ROL C:\xampp\htdocs\application\modules\administracion\models\AdministracionModel.php 468
+ERROR - 00:08:14 12-07-2022 --> Severity: Notice --> Undefined index: ID_USUARIO C:\xampp\htdocs\application\modules\administracion\models\AdministracionModel.php 469
+ERROR - 00:09:29 12-07-2022 --> Severity: Notice --> Undefined index: ID_ROL C:\xampp\htdocs\application\modules\administracion\models\AdministracionModel.php 468
+ERROR - 00:09:29 12-07-2022 --> Severity: Notice --> Undefined index: ID_USUARIO C:\xampp\htdocs\application\modules\administracion\models\AdministracionModel.php 469
+ERROR - 00:18:16 12-07-2022 --> Query error: Unknown column '$usuarioLog' in 'where clause' - Invalid query: SELECT u.*, r.NOMBRE ROL_NOMBRE FROM usuario u JOIN rol r on u.ID_ROL=r.ID_ROL WHERE ID_USUARIO = $usuarioLog;
+ERROR - 00:18:16 12-07-2022 --> Severity: error --> Exception: Call to a member function result() on bool C:\xampp\htdocs\application\modules\administracion\models\AdministracionModel.php 34

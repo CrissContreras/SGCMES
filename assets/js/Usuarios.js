@@ -202,39 +202,39 @@ function fn_validarRol(deque) {
 }
 //Save
 $('#saveUserForm').submit('click', function () {
-	var $nombre = $('#nombre').val().trim();
-	var $apellido = $('#apellido').val().trim();
-	var $tipo_identificacion = $('input[name=tipoIdentificacion]:checked', '#saveUserForm').val();
-	var $identificacion = $('#identificacion').val().trim();
-	var $nombre_usuario = $('#nombre_usuario').val().trim();
-	var $contrasena = $('#contrasena').val().trim();
-	var $correo = $('#correo').val().trim();
-	var $telefono = $('#telefono').val().trim();
-	var $direccion = $('#direccion').val().trim();
-	var $ciudad_residencia = $('#ciudad_residencia').val().trim();
-	var $fecha_nacimiento = $('#fecha_nacimiento').val().trim();
-	var $genero = $('#genero').val().trim();
-	var $id_rol = $('#id_Rol').val().trim();
-	var $id_especialidad = $('#id_especialidad').val();
+	var nombre = $('#nombre').val().trim();
+	var apellido = $('#apellido').val().trim();
+	var tipo_identificacion = $('input[name=tipoIdentificacion]:checked', '#saveUserForm').val();
+	var identificacion = $('#identificacion').val().trim();
+	var nombre_usuario = $('#nombre_usuario').val().trim();
+	var contrasena = $('#contrasena').val().trim();
+	var correo = $('#correo').val().trim();
+	var telefono = $('#telefono').val().trim();
+	var direccion = $('#direccion').val().trim();
+	var ciudad_residencia = $('#ciudad_residencia').val().trim();
+	var fecha_nacimiento = $('#fecha_nacimiento').val().trim();
+	var genero = $('#genero').val().trim();
+	var id_rol = $('#id_Rol').val().trim();
+	var id_especialidad = $('#id_especialidad').val();
 	$.ajax({
 		type: "POST",
 		url: "administracion/saveUsuario",
 		dataType: "JSON",
 		data: {
-			nombre: $nombre,
-			apellido: $apellido,
-			tipo_identificacion: $tipo_identificacion,
-			identificacion: $identificacion,
-			nombre_usuario: $nombre_usuario,
-			contrasena: $contrasena,
-			correo: $correo,
-			telefono: $telefono,
-			direccion: $direccion,
-			ciudad_residencia: $ciudad_residencia,
-			fecha_nacimiento: $fecha_nacimiento,
-			genero: $genero,
-			id_rol: $id_rol,
-			id_especialidad: $id_especialidad
+			nombre: nombre,
+			apellido: apellido,
+			tipo_identificacion: tipo_identificacion,
+			identificacion: identificacion,
+			nombre_usuario: nombre_usuario,
+			contrasena: contrasena,
+			correo: correo,
+			telefono: telefono,
+			direccion: direccion,
+			ciudad_residencia: ciudad_residencia,
+			fecha_nacimiento: fecha_nacimiento,
+			genero: genero,
+			id_rol: id_rol,
+			id_especialidad: id_especialidad
 		},
 		success: function (data) {
 			if (data == true) {

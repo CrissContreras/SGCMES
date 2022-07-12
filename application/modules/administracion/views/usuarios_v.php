@@ -1,7 +1,13 @@
 <div id="infoMessage"><?php echo $this->session->flashdata('message'); ?></div>
 <input type="text" name="baseUrl" hidden id="baseUrl" value="<?php echo base_url() . 'administracion/Usuarios' ?>">
 <div class="table-responsive">
-    <button type="button" class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#addUserModal" data-whatever="@mdo"><span class="fa fa-plus"></span> Nuevo</button>
+    <?php $session_data = $this->session->userdata('logged_in');
+        $rolUsuarioLog = $session_data["ID_ROL"]; 
+        if($rolUsuarioLog == '3' || $rolUsuarioLog == '2' ){
+           echo "";
+        }else {
+           echo "<button type='button' class='btn btn-primary btn-sm float-right' data-toggle='modal' data-target='#addUserModal' data-whatever='@mdo'><span class='fa fa-plus'></span> Nuevo</button>";
+        } ?>
     <table class="table header-border table-hover table-custom spacing5 text-center" style="width:100%" id="tableListUsuarios">
         <thead>
             <tr>
@@ -410,16 +416,18 @@
                     <div class="form-group row">
                         <div class="col">
                             <label>Nombres</label>
-                            <input type="text" class="form-control" id="nombremedico" name="nombremedico" required>
+                            <input type="text" class="form-control" id="nombremedico" name="nombremedico" readonly>
                         </div>
                         <div class="col">
                             <label>Apellidos</label>
-                            <input type="text" class="form-control" id="apellidomedico" name="apellidomedico" required>
+                            <input type="text" class="form-control" id="apellidomedico" name="apellidomedico" readonly>
                         </div>
+                    </div>
+                    <div class="form-group row">
                         <div class="form-group row">
                             <div class="col">
                                 <label>Horario</label>
-                                <select class="form-control" id="editrel_horario_medico" name="editrel_horario_medico" multiple>
+                                <select size="30" style="height: 100%"; class="form-control" id="editrel_horario_medico" name="editrel_horario_medico" multiple>
                                 </select>
                             </div>
                         </div>

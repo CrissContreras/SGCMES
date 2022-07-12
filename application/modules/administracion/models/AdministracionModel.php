@@ -20,7 +20,17 @@ class AdministracionModel extends CI_Model
     //*****Usuarios*****
     public function showUsuario()
     {
-        $query = $this->db->query('SELECT u.*, r.NOMBRE ROL_NOMBRE FROM usuario u JOIN rol r on u.ID_ROL=r.ID_ROL;');
+        $session_data = $this->session->userdata('logged_in');
+        $rolUsuarioLog = $session_data["ID_ROL"];
+        $usuarioLog = $session_data["ID_USUARIO"];
+        if($rolUsuarioLog == 3){
+            $query = $this->db->query("SELECT u.*, r.NOMBRE ROL_NOMBRE FROM usuario u JOIN rol r on u.ID_ROL=r.ID_ROL WHERE ID_USUARIO = $usuarioLog");
+        }elseif($rolUsuarioLog == 2){
+            $query = $this->db->query("SELECT u.*, r.NOMBRE ROL_NOMBRE FROM usuario u JOIN rol r on u.ID_ROL=r.ID_ROL WHERE ID_USUARIO = $usuarioLog");
+        }else{
+            $query = $this->db->query('SELECT u.*, r.NOMBRE ROL_NOMBRE FROM usuario u JOIN rol r on u.ID_ROL=r.ID_ROL;');
+        }    
+        
         $lisDatos = $query->result();
         foreach ($lisDatos as $row) {
             $lisEspecialidades = array();
@@ -465,7 +475,17 @@ class AdministracionModel extends CI_Model
     //cita medica
     public function showCitaMedica()
     {
-        $query = $this->db->query("SELECT * FROM cita_medica WHERE ESTADO = 'A'");
+        $session_data = $this->session->userdata('logged_in');
+        $rolUsuarioLog = $session_data["ID_ROL"];
+        $usuarioLog = $session_data["ID_USUARIO"];
+        if($rolUsuarioLog == 3){
+            $query = $this->db->query("SELECT * FROM cita_medica WHERE ID_USUARIO_PACIENTE = $usuarioLog ORDER BY ID_HORARIO DESC");
+        }elseif($rolUsuarioLog == 2){
+            $query = $this->db->query("SELECT * FROM cita_medica WHERE ID_USUARIO_MEDICO = $usuarioLog ORDER BY ID_HORARIO DESC");
+        }else{
+            $query = $this->db->query("SELECT * FROM cita_medica ORDER BY ID_HORARIO DESC");
+        }
+        
         $lisDatos = $query->result();
         foreach ($lisDatos as $row) {
             $query1 = $this->db->query("SELECT CONCAT (NOMBRE,' ',APELLIDO) AS PACIENTE FROM usuario where ID_USUARIO = $row->ID_USUARIO_PACIENTE");
@@ -547,4 +567,13 @@ class AdministracionModel extends CI_Model
             }
         }
     }
+    public function deleteCitaMedica()
+    {
+        $id = $this->input->post('id');
+        $this->db->set('ESTADO', 'I');
+        $this->db->where('ID_CITA_MEDICA', $id);
+        $result = $this->db->update('cita_medica');
+        return $result;
+    }
+
 }

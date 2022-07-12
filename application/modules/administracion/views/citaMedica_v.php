@@ -152,7 +152,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
-                    <label class="label label-default" name="deleteCitaMedicaNombre" id="deleteCitaMedicaNombre"></label>
+                    <label class="label label-default" name="deleteFechahora" id="deleteFechahora"></label>
                 </div>
                 <div class="modal-footer">
                     <input type="hidden" name="deleteCitaMedicaId" id="deleteCitaMedicaId" class="form-control">

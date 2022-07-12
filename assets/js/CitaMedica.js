@@ -66,12 +66,12 @@ function listCitaMedica() {
 						  ad = '<a title="Eliminar" href="javascript:void(0);" style="color: red;" class="deleteCitaMedica" data-id="' + data[i].ID_CITA_MEDICA + '" data-paciente="' + data[i].ID_USUARIO_PACIENTE+'" ><i class="fas fa-minus-square"></i></a>';
 							
 					//}
-					/*if (data[i].ESTADO == 'A') {
+					if (data[i].ESTADO == 'A') {
 						st = '<td><span class="badge badge-pill badge-success"><strong>Activo</strong></span></td>'
-					} else {
+					} else if(data[i].ESTADO == 'I'){
 						st = '<td><span class="badge badge-pill badge-danger"><strong>Inactivo</strong></span></td>';
 						ad = '';
-					}*/
+					}
 					html += '<tr>' +
 						'<td>' + data[i].ID_CITA_MEDICA + '</td>' +
 						'<td>' + data[i].PACIENTE + '</td>' +
