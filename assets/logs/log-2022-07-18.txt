@@ -22,3 +22,24 @@ ERROR - 03:18:48 18-07-2022 --> Query error: Unknown column 'DIAGNOSITCO' in 'fi
 WHERE `ID_CITA_MEDICA` = '5'
 ERROR - 03:19:45 18-07-2022 --> Query error: Unknown column 'DIAGNOSITCO' in 'field list' - Invalid query: UPDATE `cita_medica` SET `SINTOMA` = 'sdfsdfs', `DIAGNOSITCO` = 'sdfsdfs', `RECETA` = 'fsdfsdf', `ESTADO` = 'T'
 WHERE `ID_CITA_MEDICA` = '5'
+ERROR - 14:04:03 18-07-2022 --> Query error: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '"'' at line 1 - Invalid query: SELECT * FROM rel_horario_medico WHERE ID_HORARIO ="'
+ERROR - 14:04:03 18-07-2022 --> Query error: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '"'' at line 1 - Invalid query: SELECT * FROM cita_medica WHERE ID_HORARIO ="'
+ERROR - 14:22:44 18-07-2022 --> Query error: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ')' at line 1 - Invalid query: SELECT * FROM PERMISO WHERE ID_PERMISO IN ()
+ERROR - 14:22:44 18-07-2022 --> Severity: error --> Exception: Call to a member function result() on bool C:\xampp\htdocs\application\modules\administracion\models\AdministracionModel.php 17
+ERROR - 14:23:06 18-07-2022 --> Query error: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ')' at line 1 - Invalid query: SELECT * FROM PERMISO WHERE ID_PERMISO IN ()
+ERROR - 14:23:06 18-07-2022 --> Severity: error --> Exception: Call to a member function result() on bool C:\xampp\htdocs\application\modules\administracion\models\AdministracionModel.php 17
+ERROR - 14:23:33 18-07-2022 --> Query error: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ')' at line 1 - Invalid query: SELECT * FROM PERMISO WHERE ID_PERMISO IN ()
+ERROR - 14:23:33 18-07-2022 --> Severity: error --> Exception: Call to a member function result() on bool C:\xampp\htdocs\application\modules\administracion\models\AdministracionModel.php 17
+ERROR - 14:25:48 18-07-2022 --> Query error: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ')' at line 1 - Invalid query: SELECT * FROM PERMISO WHERE ID_PERMISO IN ()
+ERROR - 14:25:48 18-07-2022 --> Severity: error --> Exception: Call to a member function result() on bool C:\xampp\htdocs\application\modules\administracion\models\AdministracionModel.php 17
+ERROR - 14:26:35 18-07-2022 --> Query error: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ')' at line 1 - Invalid query: SELECT * FROM PERMISO WHERE ID_PERMISO IN ()
+ERROR - 14:26:35 18-07-2022 --> Severity: error --> Exception: Call to a member function result() on bool C:\xampp\htdocs\application\modules\administracion\models\AdministracionModel.php 17
+ERROR - 14:27:52 18-07-2022 --> Query error: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ')' at line 1 - Invalid query: SELECT * FROM PERMISO WHERE ID_PERMISO IN ()
+ERROR - 14:27:52 18-07-2022 --> Severity: error --> Exception: Call to a member function result() on bool C:\xampp\htdocs\application\modules\administracion\models\AdministracionModel.php 17
+ERROR - 16:15:34 18-07-2022 --> 404 Page Not Found: ../modules/administracion/controllers/Administracion/administracion
+ERROR - 16:16:05 18-07-2022 --> 404 Page Not Found: ../modules/administracion/controllers/Administracion/administracion
+ERROR - 16:16:26 18-07-2022 --> 404 Page Not Found: ../modules/administracion/controllers/Administracion/administracion
+ERROR - 16:17:26 18-07-2022 --> Query error: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ')' at line 1 - Invalid query: SELECT * FROM PERMISO WHERE ID_PERMISO IN ()
+ERROR - 16:17:26 18-07-2022 --> Severity: error --> Exception: Call to a member function result() on bool C:\xampp\htdocs\application\modules\administracion\models\AdministracionModel.php 17
+ERROR - 16:17:47 18-07-2022 --> Query error: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ')' at line 1 - Invalid query: SELECT * FROM PERMISO WHERE ID_PERMISO IN ()
+ERROR - 16:17:47 18-07-2022 --> Severity: error --> Exception: Call to a member function result() on bool C:\xampp\htdocs\application\modules\administracion\models\AdministracionModel.php 17
