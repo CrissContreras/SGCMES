@@ -98,14 +98,7 @@
                     <div class="form-group row">
                         <div class="col">
                             <label>Ciudad de residencia</label>
-                            <select class="form-control" id="ciudad_residencia" name="ciudad_residencia">
-                                <option selected value="Quito">Quito</option>
-                                <option value="Guayaquil">Guayaquil</option>
-                                <option value="Cuenca">Cuenca</option>
-                                <option value="Machala">Machala</option>
-                                <option value="Ambato">Ambato</option>
-                                <option value="Manta">Manta</option>
-                                <option value="Santo Domingo">Santo Domingo</option>
+                            <select class="form-control" id="ciudad_residencia" name="ciudad_residencia" required>
                             </select>
                         </div>
                         <div class="col">
@@ -114,9 +107,7 @@
                         </div>
                         <div class="col">
                             <label>Género</label>
-                            <select class="form-control" id="genero" name="genero">
-                                <option selected value="M">Masculino</option>
-                                <option value="F">Femenino</option>
+                            <select class="form-control" id="genero" name="genero" required>
                             </select>
                         </div>
                     </div>
@@ -217,13 +208,6 @@
                         <div class="col">
                             <label>Ciudad de residencia</label>
                             <select class="form-control" id="showciudad_residencia" name="showciudad_residencia">
-                                <option selected value="Quito">Quito</option>
-                                <option value="Guayaquil">Guayaquil</option>
-                                <option value="Cuenca">Cuenca</option>
-                                <option value="Machala">Machala</option>
-                                <option value="Ambato">Ambato</option>
-                                <option value="Manta">Manta</option>
-                                <option value="Santo Domingo">Santo Domingo</option>
                             </select>
                         </div>
                         <div class="col">
@@ -334,14 +318,7 @@
                     <div class="form-group row">
                         <div class="col">
                             <label>Ciudad de residencia</label>
-                            <select class="form-control" id="editciudad_residencia" name="editciudad_residencia">
-                                <option selected value="Quito">Quito</option>
-                                <option value="Guayaquil">Guayaquil</option>
-                                <option value="Cuenca">Cuenca</option>
-                                <option value="Machala">Machala</option>
-                                <option value="Ambato">Ambato</option>
-                                <option value="Manta">Manta</option>
-                                <option value="Santo Domingo">Santo Domingo</option>
+                            <select class="form-control" id="editciudad_residencia" name="editciudad_residencia" required>
                             </select>
                         </div>
                         <div class="col">
@@ -350,7 +327,7 @@
                         </div>
                         <div class="col">
                             <label>Género</label>
-                            <select class="form-control" id="editgenero" name="editgenero">
+                            <select class="form-control" id="editgenero" name="editgenero" required>
                                 <option selected value="M">Masculino</option>
                                 <option value="F">Femenino</option>
                             </select>

@@ -3,6 +3,8 @@ $(document).ready(function () {
 	comboRol();
 	comboEspecialidad();
 	comboHorarioMedico();
+	comboGenero();
+	comboCiudad();
 
 	$('#tituloPagina').text("Usuarios");
 	$('#divEspecialidad').hide(true);
@@ -66,7 +68,7 @@ function listUsuarios() {
 			if (data != true) {
 				for (i = 0; i < data.length; i++) {
 					if (data[i].ID_USUARIO != 1) {
-						ad = '<a title="Editar" href="javascript:void(0);"  class="editUser" data-id="' + data[i].ID_USUARIO + '" data-nombre="' + data[i].NOMBRE + '" data-apellido="' + data[i].APELLIDO + '" data-tipo_identificacion="' + data[i].TIPO_IDENTIFICACION + '" data-identificacion="' + data[i].IDENTIFICACION + '" data-nombre_usuario="' + data[i].NOMBRE_USUARIO + '" data-correo="' + data[i].CORREO + '" data-telefono="' + data[i].TELEFONO + '" data-direccion="' + data[i].DIRECCION + '" data-ciudad_residencia="' + data[i].CIUDAD_RESIDENCIA + '" data-fecha_nacimiento="' + data[i].FECHA_NACIMIENTO + '" data-genero="' + data[i].GENERO + '" data-id_rol="' + data[i].ID_ROL + '" data-id_especialidad="' + data[i].ID_ESPECIALIDAD + '" ><i class="fas fa-edit"></i></a>&nbsp' +
+						ad = '<a title="Editar" href="javascript:void(0);"  class="editUser" data-id="' + data[i].ID_USUARIO + '" data-nombre="' + data[i].NOMBRE + '" data-apellido="' + data[i].APELLIDO + '" data-tipo_identificacion="' + data[i].TIPO_IDENTIFICACION + '" data-identificacion="' + data[i].IDENTIFICACION + '" data-nombre_usuario="' + data[i].NOMBRE_USUARIO + '" data-correo="' + data[i].CORREO + '" data-telefono="' + data[i].TELEFONO + '" data-direccion="' + data[i].DIRECCION + '" data-ciudad_residencia="' + data[i].ID_CAT_CIUDAD_RESIDENCIA  + '" data-fecha_nacimiento="' + data[i].FECHA_NACIMIENTO + '" data-genero="' + data[i].ID_CATALOGO_GENERO + '" data-id_rol="' + data[i].ID_ROL + '" data-id_especialidad="' + data[i].ID_ESPECIALIDAD + '" ><i class="fas fa-edit"></i></a>&nbsp' +
 							'<a title="Eliminar" href="javascript:void(0);" style="color: red;" class="deleteUser" data-id="' + data[i].ID_USUARIO + '" data-nombre="' + data[i].NOMBRE +' '+data[i].APELLIDO +'" ><i class="fas fa-minus-square"></i></a>';
 						if(data[i].ID_ROL == 2){
 						    ad += '&nbsp<a title="Horarios" href="javascript:void(0);"  class="editrel_horario_medico" data-id="' + data[i].ID_USUARIO + '" data-nombre="' + data[i].NOMBRE + '" data-apellido="' + data[i].APELLIDO + '" data-horario_medico="' + data[i].ID_HORARIO_MEDICO +'"><i class="fas fa-clock"></i></a>&nbsp';	
@@ -88,7 +90,7 @@ function listUsuarios() {
 						'<td>' + data[i].ROL_NOMBRE + '</td>' +
 						st +
 						'<td>' +
-						'<a title="Mostrar" href="javascript:void(0);"  style="color: green;" class="showUser" data-id="' + data[i].ID_USUARIO + '" data-nombre="' + data[i].NOMBRE + '" data-apellido="' + data[i].APELLIDO + '" data-tipo_identificacion="' + data[i].TIPO_IDENTIFICACION + '" data-identificacion="' + data[i].IDENTIFICACION + '" data-nombre_usuario="' + data[i].NOMBRE_USUARIO + '" data-correo="' + data[i].CORREO + '" data-telefono="' + data[i].TELEFONO + '" data-direccion="' + data[i].DIRECCION + '" data-ciudad_residencia="' + data[i].CIUDAD_RESIDENCIA + '" data-fecha_nacimiento="' + data[i].FECHA_NACIMIENTO + '" data-genero="' + data[i].GENERO + '" data-id_rol="' + data[i].ID_ROL + '" data-id_especialidad="' + data[i].ID_ESPECIALIDAD + '" ><i class="fas fa-eye"></i></a>&nbsp' +
+						'<a title="Mostrar" href="javascript:void(0);"  style="color: green;" class="showUser" data-id="' + data[i].ID_USUARIO + '" data-nombre="' + data[i].NOMBRE + '" data-apellido="' + data[i].APELLIDO + '" data-tipo_identificacion="' + data[i].TIPO_IDENTIFICACION + '" data-identificacion="' + data[i].IDENTIFICACION + '" data-nombre_usuario="' + data[i].NOMBRE_USUARIO + '" data-correo="' + data[i].CORREO + '" data-telefono="' + data[i].TELEFONO + '" data-direccion="' + data[i].DIRECCION + '" data-ciudad_residencia="' + data[i].ID_CAT_CIUDAD_RESIDENCIA + '" data-fecha_nacimiento="' + data[i].FECHA_NACIMIENTO + '" data-genero="' + data[i].ID_CATALOGO_GENERO + '" data-id_rol="' + data[i].ID_ROL + '" data-id_especialidad="' + data[i].ID_ESPECIALIDAD + '" ><i class="fas fa-eye"></i></a>&nbsp' +
 						ad +
 						'</td>' +
 						'</tr>';
@@ -122,6 +124,48 @@ function comboRol() {
 		}
 	});
 }
+function comboGenero() {
+	$.ajax({
+		type: 'ajax',
+		url: 'administracion/comboGenero',
+		async: false,
+		dataType: 'json',
+		success: function (data) {
+			var html = '';
+			if (data != true) {
+				html += "<option value=''>Seleccione</option>";
+				for (i = 0; i < data.length; i++) {
+					html += '<option value="' + data[i].ID_CATALOGO + '">' + data[i].NOMBRE + '</option>';
+				}
+			} else {
+				toastr.warning(data);
+			}
+			$('#genero, #editgenero , #showgenero').html(html);
+		}
+	});
+}
+
+function comboCiudad() {
+	$.ajax({
+		type: 'ajax',
+		url: 'administracion/comboCiudad',
+		async: false,
+		dataType: 'json',
+		success: function (data) {
+			var html = '';
+			if (data != true) {
+				html += "<option value=''>Seleccione</option>";
+				for (i = 0; i < data.length; i++) {
+					html += '<option value="' + data[i].ID_CATALOGO + '">' + data[i].NOMBRE + '</option>';
+				}
+			} else {
+				toastr.warning(data);
+			}
+			$('#ciudad_residencia, #editciudad_residencia , #showciudad_residencia').html(html);
+		}
+	});
+}
+
 
 function comboEspecialidad() {
 	$.ajax({

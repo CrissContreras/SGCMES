@@ -117,6 +117,17 @@ class Administracion extends MY_Controller
 		echo json_encode($data);
 	}
 
+	public function comboGenero()
+	{
+		$data = $this->administracionModel->comboGenero();
+		echo json_encode($data);
+	}
+	public function comboCiudad()
+	{
+		$data = $this->administracionModel->comboCiudad();
+		echo json_encode($data);
+	}
+
 	//Especialidad
 	function Especialidad(){
 		$data['contenido'] = 'administracion/especialidad_v';

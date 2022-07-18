@@ -59,6 +59,19 @@ class AdministracionModel extends CI_Model
         return $lisDatos;
     }
 
+    public function comboGenero()
+    {
+        $result = $this->db->query("SELECT ID_CATALOGO, NOMBRE FROM catalogo WHERE TIPO = 'G'");
+        return $result->result();
+    }
+
+    public function comboCiudad()
+    {
+        $result = $this->db->query("SELECT ID_CATALOGO, NOMBRE FROM catalogo WHERE TIPO = 'C'");
+        return $result->result();
+    }
+
+
     public function saveUsuario()
     {
         //log_message('error', '>>>Error');
@@ -89,9 +102,9 @@ class AdministracionModel extends CI_Model
             'CORREO' => $this->input->post('correo'),
             'TELEFONO' => $this->input->post('telefono'),
             'DIRECCION' => $this->input->post('direccion'),
-            'CIUDAD_RESIDENCIA' => $this->input->post('ciudad_residencia'),
+            'ID_CAT_CIUDAD_RESIDENCIA' => $this->input->post('ciudad_residencia'),
             'FECHA_NACIMIENTO' => $this->input->post('fecha_nacimiento'),
-            'GENERO' => $this->input->post('genero'),
+            'ID_CATALOGO_GENERO' => $this->input->post('genero'),
             'ID_ROL' => $this->input->post('id_rol'),
             'ESTADO' => 'A',
         );
@@ -127,9 +140,9 @@ class AdministracionModel extends CI_Model
             $this->db->set('CORREO', $this->input->post('correo'));
             $this->db->set('TELEFONO', $this->input->post('telefono'));
             $this->db->set('DIRECCION', $this->input->post('direccion'));
-            $this->db->set('CIUDAD_RESIDENCIA', $this->input->post('ciudad_residencia'));
+            $this->db->set('ID_CAT_CIUDAD_RESIDENCIA', $this->input->post('ciudad_residencia'));
             $this->db->set('FECHA_NACIMIENTO', $this->input->post('fecha_nacimiento'));
-            $this->db->set('GENERO', $this->input->post('genero'));
+            $this->db->set('ID_CATALOGO_GENERO', $this->input->post('genero'));
             $this->db->set('ID_ROL', $this->input->post('id_rol'));
             $contrasena = $this->input->post('contrasena');
             $id = $this->input->post('id');
