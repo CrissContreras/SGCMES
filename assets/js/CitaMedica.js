@@ -2,7 +2,6 @@ $(document).ready(function () {
 	listCitaMedica();
 	comboPaciente();
 	comboEspecialidad();
-	comboHorarioMedico();
 
 	$('#tituloPagina').text("Cita Medica");
 	$('#tableListCitaMedica').DataTable({
@@ -47,9 +46,11 @@ $(document).ready(function () {
 //-----------Cita Medica----------------
 //List
 function listCitaMedica() {
+	var rolLogueado = $('#rolLogueado').val();
+
 	$.ajax({
 		type: 'ajax',
-		url: 'administracion/showCitaMedica',
+		url: '/gestionCitasMedicas/CitaMedica/showCitaMedica',
 		async: false,
 		dataType: 'json',
 		success: function (data) {
@@ -58,27 +59,37 @@ function listCitaMedica() {
 			var st = '';
 			var ad = '';
 			if (data != true) {
+
 				for (i = 0; i < data.length; i++) {
-					//if (data[i].ID_USUARIO != 1) {
-						//ad = '<a title="Editar" href="javascript:void(0);"  class="editCitaMedica" data-id="' + data[i].ID_CITA_MEDICA  + '" data-id_paciente="' + data[i].ID_USUARIO_PACIENTE + '" data-id_medico="' + data[i].ID_USUARIO_MEDICO + '" data-id_especialidad="' + data[i].ID_ESPECIALIDAD + '" data-id_horario="' + data[i].ID_HORARIO + '" data-estado="' + data[i].ESTADO + '" ><i class="fas fa-edit"></i></a>&nbsp' +
-						//	'<a title="Eliminar" href="javascript:void(0);" style="color: red;" class="deleteUser" data-id="' + data[i].ID_CITA_MEDICA + '" data-paciente="' + data[i].ID_USUARIO_PACIENTE+'" ><i class="fas fa-minus-square"></i></a>';
-						if(data[i].ESTADO == 'A')
-						  ad = '<a title="Eliminar" href="javascript:void(0);" style="color: red;" class="deleteCitaMedica" data-id="' + data[i].ID_CITA_MEDICA + '" data-paciente="' + data[i].ID_USUARIO_PACIENTE+'" ><i class="fas fa-minus-square"></i></a>';
-							
-					//}
+					ad = '';
+					if (rolLogueado == '2' && data[i].ESTADO == 'A') {
+						ad = '<a title="Datos de la cita" href="javascript:void(0);"  class="editDatosCitaMedica" data-id="' + data[i].ID_CITA_MEDICA + '" data-sintoma="' + data[i].SINTOMA + '" data-diagnostico="' + data[i].DIAGNOSTICO + '" data-receta="' + data[i].RECETA + '" ><i class="fas fa-edit"></i>Datos</a>&nbsp';
+					}
+					if (data[i].ESTADO == 'A') {
+
+						ad = ad + '<a title="Eliminar" href="javascript:void(0);" style="color: red;" class="deleteCitaMedica" data-id="' + data[i].ID_CITA_MEDICA + '" data-paciente="' + data[i].ID_USUARIO_PACIENTE + '" data-fechahora="' + data[i].HORARIO + '" ><i class="fas fa-minus-square"></i>Eliminar&nbsp</a>';
+
+					}
+					if (data[i].ESTADO == 'T') {
+						ad = '<a title="Datos de la cita" href="javascript:void(0);"  class="showDatosCitaMedica" data-sintoma="' + data[i].SINTOMA + '" data-diagnostico="' + data[i].DIAGNOSTICO + '" data-receta="' + data[i].RECETA + '" data-historial="' + data[i].HISTORIAL + '" ><i class="fas fa-show"></i>Datos</a>&nbsp';
+
+
+					}
 					if (data[i].ESTADO == 'A') {
 						st = '<td><span class="badge badge-pill badge-success"><strong>Activo</strong></span></td>'
-					} else if(data[i].ESTADO == 'I'){
+					} else if (data[i].ESTADO == 'I') {
 						st = '<td><span class="badge badge-pill badge-danger"><strong>Inactivo</strong></span></td>';
 						ad = '';
+					} else if (data[i].ESTADO == 'T') {
+						st = '<td><span class="badge badge-pill badge-success"><strong>Atendido</strong></span></td>';
+						
 					}
 					html += '<tr>' +
 						'<td>' + data[i].ID_CITA_MEDICA + '</td>' +
 						'<td>' + data[i].PACIENTE + '</td>' +
 						'<td>' + data[i].MEDICO + '</td>' +
 						'<td>' + data[i].ESPECIALIDAD + '</td>' +
-						'<td>' + data[i].HORARIO  + '</td>' +
-						'<td>' + data[i].ESTADONOMBRE + '</td>' +
+						'<td>' + data[i].HORARIO + '</td>' +
 						st +
 						'<td>' +
 						ad +
@@ -96,15 +107,17 @@ function listCitaMedica() {
 
 
 function comboPaciente() {
+	var rolLogueado = $('#rolLogueado').val();
 	$.ajax({
 		type: 'ajax',
-		url: 'administracion/comboPaciente',
+		url: '/gestionCitasMedicas/CitaMedica/comboPaciente',
 		async: false,
 		dataType: 'json',
 		success: function (data) {
 			var html = '';
 			if (data != true) {
-				html += "<option value=''>Seleccione</option>";
+				if (rolLogueado != '3')
+					html += "<option value=''>Seleccione</option>";
 				for (i = 0; i < data.length; i++) {
 					html += '<option value="' + data[i].ID_USUARIO + '">' + data[i].NOMBRE + '</option>';
 				}
@@ -119,7 +132,7 @@ function comboPaciente() {
 function comboEspecialidad() {
 	$.ajax({
 		type: 'ajax',
-		url: 'administracion/comboEspecialidad',
+		url: '/gestionCitasMedicas/CitaMedica/comboEspecialidad',
 		async: false,
 		dataType: 'json',
 		success: function (data) {
@@ -141,22 +154,22 @@ function comboMedico() {
 	var id_especialidad = $('#id_especialidad').val();
 	$.ajax({
 		type: "POST",
-		url: 'administracion/comboMedico',
+		url: '/gestionCitasMedicas/CitaMedica/comboMedico',
 		async: false,
 		dataType: 'json',
-		data:{"id_especialidad":id_especialidad},
+		data: { "id_especialidad": id_especialidad },
 		success: function (data) {
 			var html = '';
 			if (data != true) {
-				if(data.length > 0){
+				if (data.length > 0) {
 					html += "<option value=''>Seleccione</option>";
 					for (i = 0; i < data.length; i++) {
 						html += '<option value="' + data[i].ID_USUARIO + '">' + data[i].NOMBRE + '</option>';
 					}
-				}else{
+				} else {
 					html += '<option value="" > Sin Medicos para la especialidad</option>';
 				}
-				
+
 			} else {
 				toastr.warning(data);
 			}
@@ -168,45 +181,26 @@ function comboHorario() {
 	var id_medico = $('#id_medico').val();
 	$.ajax({
 		type: "POST",
-		url: 'administracion/comboHorarioCita',
+		url: '/gestionCitasMedicas/CitaMedica/comboHorarioCita',
 		async: false,
 		dataType: 'json',
-		data:{"id_medico":id_medico},
+		data: { "id_medico": id_medico },
 		success: function (data) {
 			var html = '';
 			if (data != true) {
-				if(data.length > 0){
+				if (data.length > 0) {
 					html += "<option value=''>Seleccione</option>";
 					for (i = 0; i < data.length; i++) {
-						html += '<option value="' + data[i].ID_HORARIO+ '">' + data[i].FECHAHORA + '</option>';
+						html += '<option value="' + data[i].ID_HORARIO + '">' + data[i].FECHAHORA + '</option>';
 					}
-				}else{
+				} else {
 					html += '<option value="" > Sin hoarios para el médico</option>';
 				}
-				
+
 			} else {
 				toastr.warning(data);
 			}
 			$('#editid_horario, #id_horario').html(html);
-		}
-	});
-}
-function comboHorarioMedico() {
-	$.ajax({
-		type: 'ajax',
-		url: 'administracion/comboHorario',
-		async: false,
-		dataType: 'json',
-		success: function (data) {
-			var html = '';
-			if (data != true) {
-				for (i = 0; i < data.length; i++) {
-					html += '<option value="' + data[i].ID_HORARIO + '">' + data[i].FECHAHORA + '</option>';
-				}
-			} else {
-				toastr.warning(data);
-			}
-			$('#editrel_horario_medico').html(html);
 		}
 	});
 }
@@ -218,7 +212,7 @@ $('#saveCitaMedicaForm').submit('click', function () {
 	var horario = $('#id_horario').val();
 	$.ajax({
 		type: "POST",
-		url: "administracion/saveCitaMedica",
+		url: "/gestionCitasMedicas/CitaMedica/saveCitaMedica",
 		dataType: "JSON",
 		data: {
 			paciente: paciente,
@@ -232,7 +226,7 @@ $('#saveCitaMedicaForm').submit('click', function () {
 					$('#id_especialidad').val(""),
 					$('#id_medico').val(""),
 					$('#id_horario').val("")
-					
+
 				toastr.success('Datos de la cita medica guardado.');
 				$('#addCitaMedicaModal').modal('hide');
 				window.location.href = $('#baseUrl').val();
@@ -269,7 +263,7 @@ $('#editCitaMedicaForm').on('submit', function () {
 
 	$.ajax({
 		type: "POST",
-		url: "administracion/updateCitaMedica",
+		url: "/gestionCitasMedicas/CitaMedica/updateCitaMedica",
 		dataType: "JSON",
 		data: {
 			id: id,
@@ -294,7 +288,58 @@ $('#editCitaMedicaForm').on('submit', function () {
 		}
 	});
 	return false;
-	
+
+});
+
+$('#listCitaMedica').on('click', '.editDatosCitaMedica', function () {
+	$('#editDatosCitaMedicaModal').modal('show');
+	$("#editDatosIdCitaMedica").val($(this).data('id'));
+	$("#sintoma").val($(this).data('sintoma'));
+	$('#diagnostico').val($(this).data('diagnostico'));
+	$('#receta').val($(this).data('receta'));
+
+});
+$('#editDatosCitaMedicaForm').on('submit', function () {
+	var id = $("#editDatosIdCitaMedica").val().trim();
+	var sintoma = $("#sintoma").val();
+	var diagnostico = $("#diagnostico").val();
+	var receta = $("#receta").val();
+	$.ajax({
+		type: "POST",
+		url: "/gestionCitasMedicas/CitaMedica/updateDatosCitaMedica",
+		dataType: "JSON",
+		data: {
+			id: id,
+			sintoma: sintoma,
+			diagnostico: diagnostico,
+			receta: receta
+
+		},
+		success: function (data) {
+			$("#editDdatosIdCitaMedica").val("");
+			$("#sintoma").val("");
+			$('#diagnostico').val("");
+			$('#receta').val("");
+			if (data == true) {
+				toastr.success('Datos de la Cita Medica actualizado.');
+				$('#editDatosCitaMedicaModal').modal('hide');
+				window.location.href = $('#baseUrl').val();
+				listCitaMedica();
+			} else {
+				toastr.warning(data);
+			}
+		}
+	});
+	return false;
+
+});
+$('#listCitaMedica').on('click', '.showDatosCitaMedica', function () {
+	$('#showDatosCitaMedicaModal').modal('show');
+	$("#showsintoma").val($(this).data('sintoma'));
+	$('#showdiagnostico').val($(this).data('diagnostico'));
+	$('#showreceta').val($(this).data('receta'));
+	$('#showhistorial').val($(this).data('historial'));
+
 });
 
 //Delete
@@ -309,7 +354,7 @@ $('#deleteCitaMedicaForm').on('submit', function () {
 	var citaMedicaId = $('#deleteCitaMedicaId').val().trim();
 	$.ajax({
 		type: "POST",
-		url: "administracion/deleteCitaMedica",
+		url: "/gestionCitasMedicas/CitaMedica/deleteCitaMedica",
 		dataType: "JSON",
 		data: { id: citaMedicaId },
 		success: function (data) {

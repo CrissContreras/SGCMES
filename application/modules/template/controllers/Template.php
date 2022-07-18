@@ -16,9 +16,10 @@ class Template extends MX_Controller
     {
         if ($this->session->userdata('logged_in')) {
             $session_data = $this->session->userdata('logged_in');
-
+            
             $data['USUARIO_LOG_ID'] = $session_data['ID_USUARIO'];
             $data['USUARIO_LOGUEADO'] = $session_data['NOMBRE'];
+            $data['ROL_LOGUEADO'] = $session_data['ID_ROL'];
             $this->load->view('template/tamplate_v', $data);
             
         } else {

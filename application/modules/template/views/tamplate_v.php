@@ -35,7 +35,7 @@
     
 </head>
 <body id="bodyTema" class="theme-cyan light_version " onload="listMenu()">
-
+<input type="text" name="rolLogueado" id="rolLogueado" value='<?php echo $ROL_LOGUEADO; ?>'>
     <!--Page Loader -->
     <div id="page-loader" class="page-loader-wrapper">
         <div class="loader">
@@ -125,7 +125,7 @@
             </div>
         </div>
     </div>
- 
+    
     <!-- Javascript -->
 
     <script type="text/javascript" src="<?php echo base_url() . 'assets/vendor/bootstrap-colorpicker/js/bootstrap-colorpicker.js' ?>"></script>

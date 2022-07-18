@@ -1,5 +1,5 @@
 <div id="infoMessage"><?php echo $this->session->flashdata('message'); ?></div>
-<input type="text" name="baseUrl" hidden id="baseUrl" value="<?php echo base_url() . 'administracion/CitaMedica' ?>">
+<input type="text" name="baseUrl" hidden id="baseUrl" value="<?php echo base_url() . 'gestionCitasMedicas/CitaMedica' ?>">
 <div class="table-responsive">
     <button type="button" class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#addCitaMedicaModal" data-whatever="@mdo"><span class="fa fa-plus"></span> Nuevo</button>
     <table class="table header-border table-hover table-custom spacing5 text-center" style="width:100%" id="tableListCitaMedica">
@@ -60,47 +60,6 @@
     </div>
 </form>
 
-<form id="showUserForm" method="post">
-    <div class="modal fade" id="showUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog  modal-lg " role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">Datos del Usuario</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group row">
-                    <div class="col">
-                            <label>Paciente</label>
-                            <select class="form-control" id="editid_paciente" name="editid_paciente">
-                            </select>
-                        </div>
-                        <div class="col">
-                            <label>Especialidad</label>
-                            <select class="form-control" id="editid_especialidad" name="editid_especialidad" onchange="comboMedico()">
-                            </select>
-                        </div>
-                        <div class="col">
-                            <label>Médico</label>
-                            <select class="form-control" id="editid_medico" name="editid_medico" required>
-                            </select>
-                        </div>
-                        <div class="col">
-                            <label>Horario</label>
-                            <select class="form-control" id="editid_horario" name="editid_horario">
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-
-                    <button type="button" class="btn btn-info btn-sm" data-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</form>
-
 <form id="editCitaMedicaForm" method="post">
     <div class="modal fade" id="editCitaMedicaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog  modal-lg " role="document">
@@ -111,7 +70,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group row">
-                    <div class="col">
+                        <div class="col">
                             <label>Paciente</label>
                             <select class="form-control" id="editid_paciente" name="editid_paciente">
                             </select>
@@ -148,7 +107,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="editModalLabel">Está seguro que desea eliminar?</h4>
+                    <h4 class="modal-title" id="editModalLabel">Está seguro que desea eliminar la cita para esta fecha y hora?</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
@@ -161,6 +120,80 @@
                 </div>
             </div>
         </div>
+    </div>
+</form>
+
+<form id="editDatosCitaMedicaForm" method="post">
+    <div class="modal fade" id="editDatosCitaMedicaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog  modal-lg " role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel">Datos de la Cita Medica</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <div class="col">
+                            <label>Síntoma</label>
+                            <textarea type="text" row="100" id="sintoma" name="sintoma" class="form-control" placeholder="Síntoma del paciente..." required></textarea>
+                        </div>
+                        <div class="col">
+                            <label>Diagnónstico</label>
+                            <textarea type="text" row="100" id="diagnostico" name="diagnostico" class="form-control" placeholder="Diagnóstico del paciente..." required></textarea>
+                        </div>
+                        <div class="col">
+                            <label>Receta</label>
+                            <textarea type="text" row="100" id="receta" name="receta" class="form-control" placeholder="Receta..." required></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" name="editDatosIdCitaMedica" id="editDatosIdCitaMedica" class="form-control">
+                    <button type="button" class="btn btn-info btn-sm" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-success btn-sm">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<form id="showDatosCitaMedicaForm" method="post">
+    <div class="modal fade" id="showDatosCitaMedicaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog  modal-lg " role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel">Datos de la Cita Medica</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <div class="col">
+                            <label>Síntoma</label>
+                            <textarea type="text" row="10" id="showsintoma" name="showsintoma" class="form-control" placeholder="Síntoma del paciente..." readonly></textarea>
+                        </div>
+                        <div class="col">
+                            <label>Diagnónstico</label>
+                            <textarea type="text" row="10" id="showdiagnostico" name="showdiagnostico" class="form-control" placeholder="Diagnóstico del paciente..." readonly></textarea>
+                        </div>
+                        <div class="col">
+                            <label>Receta</label>
+                            <textarea type="text" row="10" id="showrecete" name="showreceta" class="form-control" placeholder="Receta..." readonly></textarea>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col">
+                        <label>Historial</label>
+                        <textarea type="text" row="10" id="showhistorial" name="showhistorial" class="form-control" placeholder="historial...." readonly></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info btn-sm" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
     </div>
 </form>
 

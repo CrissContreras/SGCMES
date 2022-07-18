@@ -4515,9 +4515,14 @@ function push() {
 }
 
 function listMenu() {
+  var rolLogueado = $('#rolLogueado').val();
+  if(rolLogueado == '3')
+     var url = '/gestionCitasMedicas/CitaMedica/listMenuSistema';
+  else
+     var url ='/administracion/listMenuSistema';    
   $.ajax({
     type: 'ajax',
-    url: 'administracion/listMenuSistema',
+    url: url,
     async: false,
     dataType: 'json',
     success: function (data) {
@@ -4537,7 +4542,7 @@ function listMenu() {
     if ($(this).attr('id').substring(3) == dir) { con++; }
   });
 
-  if (con == 0) { location.href = "../error404" }
+//  if (con == 0) { location.href = "../error404" }
 
   var element1 = document.getElementById('tab' + dir);
   element1.classList.add("active");

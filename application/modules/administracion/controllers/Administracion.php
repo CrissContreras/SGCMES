@@ -195,54 +195,6 @@ class Administracion extends MY_Controller
 		echo json_encode($data);
 	}
 
-    // citas medicas
-
-	public function CitaMedica()
-    {
-        $data['contenido'] = 'administracion/citaMedica_v';
-		$this->template->template($data);
-	}
-	
-	public function showCitaMedica()
-	{
-		$data = $this->administracionModel->showCitaMedica();
-		echo json_encode($data);
-	}
-
-	public function updateCitaMedica()
-	{
-		$data = $this->administracionModel->updateCitaMedica();
-		echo json_encode($data);
-	}
-
-	public function saveCitaMedica()
-	{
-		$data = $this->administracionModel->saveCitaMedica();
-		echo json_encode($data);
-	}
-
-	public function deleteCitaMedica()
-	{
-		$data = $this->administracionModel->deleteCitaMedica();
-		echo json_encode($data);
-	}
-	
-	public function comboPaciente()
-	{
-		$data = $this->administracionModel->comboPaciente();
-		echo json_encode($data);
-	}
-	public function comboMedico()
-	{
-		$data = $this->administracionModel->comboMedico();
-		echo json_encode($data);
-	}
-    public function comboHorarioCita()
-	{
-		$data = $this->administracionModel->comboHorarioCita();
-		echo json_encode($data);
-	}
-
 	
 
 	public function listMenuSistema()

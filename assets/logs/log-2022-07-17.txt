@@ -1,0 +1,4 @@
+ERROR - 21:21:05 17-07-2022 --> Severity: error --> Exception: Unable to locate the model you have specified: CitaMedicaModel C:\xampp\htdocs\system\core\Loader.php 348
+ERROR - 21:21:53 17-07-2022 --> Severity: error --> Exception: Unable to locate the model you have specified: CitaMedicaModel C:\xampp\htdocs\system\core\Loader.php 348
+ERROR - 21:22:27 17-07-2022 --> Severity: error --> Exception: Unable to locate the model you have specified: CitaMedicaModel C:\xampp\htdocs\system\core\Loader.php 348
+ERROR - 21:22:29 17-07-2022 --> Severity: error --> Exception: Unable to locate the model you have specified: CitaMedicaModel C:\xampp\htdocs\system\core\Loader.php 348
