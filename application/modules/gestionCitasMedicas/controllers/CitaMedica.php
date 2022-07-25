@@ -67,6 +67,22 @@ class CitaMedica extends MY_Controller
 		echo json_encode($data);
 	}
 
+	public function archivosAlmacenar()
+	{
+		$data = $this->citaMedicaModel->archivosAlmacenar();
+		echo json_encode($data);
+	}
+	public function archivosVer()
+	{
+		$data = $this->citaMedicaModel->archivosVer();
+		echo json_encode($data);
+	}
+
+	public function archivosDescargar() {
+        echo $this->citaMedicaModel->archivosDescargar();
+		
+    }
+
 	public function listMenuSistema()
 	{
 		$data = $this->citaMedicaModel->listMenuSistema();

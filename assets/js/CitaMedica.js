@@ -63,15 +63,20 @@ function listCitaMedica() {
 				for (i = 0; i < data.length; i++) {
 					ad = '';
 					if (rolLogueado == '2' && data[i].ESTADO == 'A') {
-						ad = '<a title="Datos de la cita" href="javascript:void(0);"  class="editDatosCitaMedica" data-id="' + data[i].ID_CITA_MEDICA + '" data-sintoma="' + data[i].SINTOMA + '" data-diagnostico="' + data[i].DIAGNOSTICO + '" data-receta="' + data[i].RECETA + '" ><i class="fas fa-edit"></i>Datos</a>&nbsp';
+						ad = '<a title="Datos de la cita" href="javascript:void(0);"  class="editDatosCitaMedica" data-id="' + data[i].ID_CITA_MEDICA + '" data-sintoma="' + data[i].SINTOMA + '" data-diagnostico="' + data[i].DIAGNOSTICO + '" data-receta="' + data[i].RECETA  + '" data-receta="' + data[i].EXAMEN + '" ><i class="fas fa-edit"></i>Datos</a>&nbsp';
 					}
+					if (rolLogueado == '3' && data[i].ESTADO == 'A') {
+					    ad = ad + '<a title="Archivos" href="javascript:void(0);" style="color: green;" class="archivosCitaMedica" data-id="' + data[i].ID_CITA_MEDICA + '" ><i class="fas fa-minus-square"></i>Archivos&nbsp</a>';	
+					}
+					if (rolLogueado == '2') {
+						ad = ad + '<a title="Archivos" href="javascript:void(0);" style="color: green;" class="verarchivosCitaMedica" data-id="' + data[i].ID_CITA_MEDICA + '" ><i class="fas fa-minus-square"></i>Archivos&nbsp</a>';
+					}
+
 					if (data[i].ESTADO == 'A') {
-
-						ad = ad + '<a title="Eliminar" href="javascript:void(0);" style="color: red;" class="deleteCitaMedica" data-id="' + data[i].ID_CITA_MEDICA + '" data-paciente="' + data[i].ID_USUARIO_PACIENTE + '" data-fechahora="' + data[i].HORARIO + '" ><i class="fas fa-minus-square"></i>Eliminar&nbsp</a>';
-
+                        ad = ad + '<a title="Eliminar" href="javascript:void(0);" style="color: red;" class="deleteCitaMedica" data-id="' + data[i].ID_CITA_MEDICA + '" data-paciente="' + data[i].ID_USUARIO_PACIENTE + '" data-fechahora="' + data[i].HORARIO + '" ><i class="fas fa-minus-square"></i>Eliminar&nbsp</a>';
 					}
-					if (data[i].ESTADO == 'T') {
-						ad = '<a title="Datos de la cita" href="javascript:void(0);"  class="showDatosCitaMedica" data-sintoma="' + data[i].SINTOMA + '" data-diagnostico="' + data[i].DIAGNOSTICO + '" data-receta="' + data[i].RECETA + '" data-historial="' + data[i].HISTORIAL + '" ><i class="fas fa-show"></i>Datos</a>&nbsp';
+					if (rolLogueado == '2' || rolLogueado == '3' && data[i].ESTADO == 'T') {
+						ad = '<a title="Datos de la cita" href="javascript:void(0);"  class="showDatosCitaMedica" data-sintoma="' + data[i].SINTOMA + '" data-diagnostico="' + data[i].DIAGNOSTICO + '" data-receta="' + data[i].RECETA + '" data-examen="' + data[i].EXAMEN + '" data-historial="' + data[i].HISTORIAL + '" ><i class="fas fa-show"></i>Datos</a>&nbsp';
 
 
 					}
@@ -206,7 +211,6 @@ function comboHorario() {
 }
 $('#saveCitaMedicaForm').submit('click', function () {
 	var paciente = $('#id_paciente').val();
-	alert(paciente);
 	var especialidad = $('#id_especialidad').val();
 	var medico = $('#id_medico').val();
 	var horario = $('#id_horario').val();
@@ -304,6 +308,7 @@ $('#editDatosCitaMedicaForm').on('submit', function () {
 	var sintoma = $("#sintoma").val();
 	var diagnostico = $("#diagnostico").val();
 	var receta = $("#receta").val();
+	var examen = $("#examen").val();
 	$.ajax({
 		type: "POST",
 		url: "/gestionCitasMedicas/CitaMedica/updateDatosCitaMedica",
@@ -312,7 +317,8 @@ $('#editDatosCitaMedicaForm').on('submit', function () {
 			id: id,
 			sintoma: sintoma,
 			diagnostico: diagnostico,
-			receta: receta
+			receta: receta,
+			examen: examen
 
 		},
 		success: function (data) {
@@ -320,6 +326,7 @@ $('#editDatosCitaMedicaForm').on('submit', function () {
 			$("#sintoma").val("");
 			$('#diagnostico').val("");
 			$('#receta').val("");
+			$('#examen').val("");
 			if (data == true) {
 				toastr.success('Datos de la Cita Medica actualizado.');
 				$('#editDatosCitaMedicaModal').modal('hide');
@@ -338,6 +345,7 @@ $('#listCitaMedica').on('click', '.showDatosCitaMedica', function () {
 	$("#showsintoma").val($(this).data('sintoma'));
 	$('#showdiagnostico').val($(this).data('diagnostico'));
 	$('#showreceta').val($(this).data('receta'));
+	$('#showexamen').val($(this).data('examen'));
 	$('#showhistorial').val($(this).data('historial'));
 
 });
@@ -371,4 +379,96 @@ $('#deleteCitaMedicaForm').on('submit', function () {
 	});
 	return false;
 });
+//archivos
+$('#listCitaMedica').on('click', '.archivosCitaMedica', function () {
+	$('#archivosCitaMedicaModal').modal('show');
+	$("#archivosIdCitaMedica").val($(this).data('id'));
+	$.ajax({
+		type: "POST",
+		url: '/gestionCitasMedicas/CitaMedica/archivosVer',
+		async: false,
+		dataType: 'json',
+		data: { "id_cita_medica": $(this).data('id') },
+		success: function (data) {
+			var html = '';
+			if (data != true) {
+				if (data.length > 0) {
+					for (i = 0; i < data.length; i++) {
+						html += data[i].NOMBRE + ' <label style="color: green;cursor: pointer;" onclick="archivoDescargar('+data[i].ID_ARCHIVO+')"> Descargar</label>'+'<i class="fas fa-file-export"></i>'+'<br/>';
+					}
+				}
+
+			} else {
+				toastr.warning(data);
+			}
+			$('#mostrarArchivos').html(html);
+		}
+	});
+});
+$('#listCitaMedica').on('click', '.verarchivosCitaMedica', function () {
+	$('#verarchivosCitaMedicaModal').modal('show');
+	$.ajax({
+		type: "POST",
+		url: '/gestionCitasMedicas/CitaMedica/archivosVer',
+		async: false,
+		dataType: 'json',
+		data: { "id_cita_medica": $(this).data('id') },
+		success: function (data) {
+			var html = '<div class="table-responsive"><table class="table header-border table-hover table-custom spacing5 text-center" style="width:100%"><thead><tr><td><strong>Nonmbre</strong></td><td><strong>Descipción</strong></td><td><strong>Acción</strong></td></tr></thead><tbody>';
+			if (data != true) {
+				if (data.length > 0) {
+					for (i = 0; i < data.length; i++) {
+						html += "<tr><td>" +data[i].NOMBRE + "</td><td>"+data[i].DESCRIPCION + "</td><td>"+  "</td><td>"+ ' <label style="color: green;cursor: pointer;" onclick="archivoDescargar('+data[i].ID_ARCHIVO+')"> Descargar</label>'+'<i class="fas fa-file-export"></i>'+'</td></tr>';
+					}
+				}
+
+			} else {
+				toastr.warning(data);
+			}
+			html += '</tbody></table></div>';
+			$('#vermostrarArchivos').html(html);
+		}
+	});
+});
+$("#userfile").change(function () {
+	var ext = $('#userfile').val().split('.').pop().toLowerCase();
+	if ($.inArray(ext, ['exe', 'com', 'dll', 'bat', 'jar', 'bin', 'sys']) != -1) {
+		alert('Formato no permitido!');
+	} else
+		subirArchivos();
+});
+
+
+function subirArchivos() {
+	var files = document.getElementById('userfile').files;
+	var len = files.length;
+	for (i = 0; i < len; i++) {
+		var file = document.getElementById('userfile').files[i];
+		uploadFile(file, i);
+	}
+
+}
+
+function uploadFile(archivo, arcIdTemp) {
+	var fd = new FormData();
+	fd.append("userfile", archivo);
+	var id_cita_medica = $("#archivosIdCitaMedica").val();
+	fd.append("id_cita_medica", id_cita_medica);
+	var descripcion = $("#descripcion").val();
+	fd.append("descripcion", descripcion);
+	var base_url = $("#baseUrl").val();
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", base_url + "/archivosAlmacenar", true);
+	xhr.send(fd);
+
+	
+}
+function archivoDescargar(id_archivo) {
+	var base_url = $("#baseUrl").val();
+	var url = base_url + "/archivosDescargar/" + id_archivo;
+	$('<form action="' + url + '" method="post">' + '</form>').appendTo('body').submit().remove();
+	
+	
+}
+
 

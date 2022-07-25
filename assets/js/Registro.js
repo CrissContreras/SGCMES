@@ -3,6 +3,10 @@ $(document).ready(function () {
 	function limpiarNumero(obj) {
 		obj.value = obj.value.replace(/\D/g, '');
 	}
+
+	comboGenero();
+	comboCiudad();
+
 });
 
 $('#registro_nuevo_paciente').submit('click', function () {
@@ -18,8 +22,6 @@ $('#registro_nuevo_paciente').submit('click', function () {
 	var fecha_nacimiento = $('#fecha_nacimiento').val().trim();
 	var genero = $('#genero').val();
 	var tipo_identificacion = $('input[name=tipoIdentificacion]:checked', '#registro_nuevo_paciente').val();
-
-	alert(tipo_identificacion);
 
 	$.ajax({
 		type: "POST",
@@ -59,3 +61,45 @@ $('#registro_nuevo_paciente').submit('click', function () {
 	});
 	return false;
 });
+function comboGenero() {
+	$.ajax({
+		type: 'ajax',
+		url: 'administracion/comboGenero',
+		async: false,
+		dataType: 'json',
+		success: function (data) {
+			var html = '';
+			if (data != true) {
+				html += "<option value=''>Seleccione</option>";
+				for (i = 0; i < data.length; i++) {
+					html += '<option value="' + data[i].ID_CATALOGO + '">' + data[i].NOMBRE + '</option>';
+				}
+			} else {
+				toastr.warning(data);
+			}
+			$('#genero').html(html);
+		}
+	});
+}
+
+function comboCiudad() {
+	$.ajax({
+		type: 'ajax',
+		url: 'administracion/comboCiudad',
+		async: false,
+		dataType: 'json',
+		success: function (data) {
+			var html = '';
+			if (data != true) {
+				html += "<option value=''>Seleccione</option>";
+				for (i = 0; i < data.length; i++) {
+					html += '<option value="' + data[i].ID_CATALOGO + '">' + data[i].NOMBRE + '</option>';
+				}
+			} else {
+				toastr.warning(data);
+			}
+			$('#ciudad_residencia').html(html);
+		}
+	});
+}
+

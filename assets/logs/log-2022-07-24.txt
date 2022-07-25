@@ -1,0 +1,10 @@
+ERROR - 21:39:55 24-07-2022 --> Severity: Notice --> Undefined property: CI::$upload C:\xampp\htdocs\system\core\Model.php 73
+ERROR - 21:39:55 24-07-2022 --> Severity: error --> Exception: Call to a member function initialize() on null C:\xampp\htdocs\application\modules\gestionCitasMedicas\models\CitaMedicaModel.php 184
+ERROR - 21:41:17 24-07-2022 --> Severity: Notice --> Undefined property: CI::$upload C:\xampp\htdocs\system\core\Model.php 73
+ERROR - 21:41:17 24-07-2022 --> Severity: error --> Exception: Call to a member function initialize() on null C:\xampp\htdocs\application\modules\gestionCitasMedicas\models\CitaMedicaModel.php 184
+ERROR - 22:50:04 24-07-2022 --> 404 Page Not Found: ../modules/gestionCitasMedicas/controllers/CitaMedica/archivosDescargar3
+ERROR - 22:50:28 24-07-2022 --> Query error: Unknown column 'archivosDescargar' in 'where clause' - Invalid query: SELECT NOMBRE FROM archivo where ID_ARCHIVO = archivosDescargar
+ERROR - 22:50:55 24-07-2022 --> Query error: Unknown column 'archivosDescargar' in 'where clause' - Invalid query: SELECT NOMBRE FROM archivo where ID_ARCHIVO = archivosDescargar
+ERROR - 22:51:04 24-07-2022 --> Query error: Unknown column 'archivosDescargar' in 'where clause' - Invalid query: SELECT NOMBRE FROM archivo where ID_ARCHIVO = archivosDescargar
+ERROR - 22:52:59 24-07-2022 --> Query error: Unknown column 'archivosDescargar' in 'where clause' - Invalid query: SELECT NOMBRE FROM archivo where ID_ARCHIVO = archivosDescargar
+ERROR - 22:53:04 24-07-2022 --> Query error: Unknown column 'archivosDescargar' in 'where clause' - Invalid query: SELECT NOMBRE FROM archivo where ID_ARCHIVO = archivosDescargar

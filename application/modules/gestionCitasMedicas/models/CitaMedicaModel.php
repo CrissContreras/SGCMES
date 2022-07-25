@@ -20,20 +20,21 @@ class CitaMedicaModel extends CI_Model
     //cita medica
     public function showCitaMedica()
     {
-        $sintoma='';
-        $diagnostico='';
-        $receta='';
+        $sintoma = '';
+        $diagnostico = '';
+        $receta = '';
+        $examen = '';
         $session_data = $this->session->userdata('logged_in');
         $rolUsuarioLog = $session_data["ID_ROL"];
         $usuarioLog = $session_data["ID_USUARIO"];
-        if($rolUsuarioLog == 3){
+        if ($rolUsuarioLog == 3) {
             $query = $this->db->query("SELECT * FROM cita_medica WHERE ID_USUARIO_PACIENTE = $usuarioLog ORDER BY ESTADO ASC");
-        }elseif($rolUsuarioLog == 2){
+        } elseif ($rolUsuarioLog == 2) {
             $query = $this->db->query("SELECT * FROM cita_medica WHERE ID_USUARIO_MEDICO = $usuarioLog ORDER BY ESTADO ASC");
-        }else{
+        } else {
             $query = $this->db->query("SELECT * FROM cita_medica ORDER BY ESTADO DESC");
         }
-        
+
         $lisDatos = $query->result();
         foreach ($lisDatos as $row) {
             $query1 = $this->db->query("SELECT CONCAT (NOMBRE,' ',APELLIDO) AS PACIENTE FROM usuario where ID_USUARIO = $row->ID_USUARIO_PACIENTE");
@@ -57,26 +58,33 @@ class CitaMedicaModel extends CI_Model
             }
             $row->HORARIO = $horario;
 
-            $query5 = $this->db->query("SELECT SINTOMA,DIAGNOSTICO,RECETA FROM cita_medica where ID_USUARIO_PACIENTE = $row->ID_USUARIO_PACIENTE");
-            if($query5){
+            $query5 = $this->db->query("SELECT SINTOMA,DIAGNOSTICO,RECETA, EXAMEN FROM cita_medica where ID_USUARIO_PACIENTE = $row->ID_USUARIO_PACIENTE");
+            if ($query5) {
                 foreach ($query5->result() as $row5) {
                     $sintoma = $sintoma . $row5->SINTOMA;
                     $diagnostico = $diagnostico . $row5->DIAGNOSTICO;
                     $receta = $receta . $row5->RECETA;
+                    $examen = $examen . $row5->EXAMEN;
                 }
-                $row->HISTORIAL = "SINTOMAS: $sintoma / DIAGNOSTICO:$diagnostico / RECETA:$receta";    
-            }else{
-                $row->HISTORIAL = '';    
+                $row->HISTORIAL = "SINTOMAS: $sintoma / DIAGNOSTICO:$diagnostico / RECETA:$receta  / EXAMEN:$examen";
+            } else {
+                $row->HISTORIAL = '';
             }
-            
-            switch($row->ESTADO){
-                case 'A': $row->ESTADONOMBRE = "Activo";break;
-                case 'I': $row->ESTADONOMBRE = "Inactivo";break;
-                case 'T': $row->ESTADONOMBRE = "Atendido";break;
-                case 'N': $row->ESTADONOMBRE = "No Atendido";break;
 
+            switch ($row->ESTADO) {
+                case 'A':
+                    $row->ESTADONOMBRE = "Activo";
+                    break;
+                case 'I':
+                    $row->ESTADONOMBRE = "Inactivo";
+                    break;
+                case 'T':
+                    $row->ESTADONOMBRE = "Atendido";
+                    break;
+                case 'N':
+                    $row->ESTADONOMBRE = "No Atendido";
+                    break;
             }
-            
         }
         return $lisDatos;
     }
@@ -86,7 +94,7 @@ class CitaMedicaModel extends CI_Model
         $session_data = $this->session->userdata('logged_in');
         $rolUsuarioLog = $session_data["ID_ROL"];
         $usuarioLog = $session_data["ID_USUARIO"];
-        if($rolUsuarioLog == 3)
+        if ($rolUsuarioLog == 3)
             $result = $this->db->query("SELECT ID_USUARIO, CONCAT (NOMBRE,' ',APELLIDO, ' ', IDENTIFICACION) AS NOMBRE FROM usuario WHERE ESTADO = 'A' AND ID_ROL = 3 AND ID_USUARIO = $usuarioLog");
         else
             $result = $this->db->query("SELECT ID_USUARIO, CONCAT (NOMBRE,' ',APELLIDO, ' ', IDENTIFICACION) AS NOMBRE FROM usuario WHERE ESTADO = 'A' AND ID_ROL = 3");
@@ -155,13 +163,69 @@ class CitaMedicaModel extends CI_Model
         $sintoma = $this->input->post('sintoma');
         $diagnostico = $this->input->post('diagnostico');
         $receta = $this->input->post('receta');
+        $examen = $this->input->post('examen');
         $this->db->set('SINTOMA', $sintoma);
         $this->db->set('DIAGNOSTICO ', $diagnostico);
         $this->db->set('RECETA ', $receta);
+        $this->db->set('EXAMEN ', $examen);
         $this->db->set('ESTADO', 'T');
         $this->db->where('ID_CITA_MEDICA', $id);
         $result = $this->db->update('cita_medica');
         return $result;
     }
+    public function archivosAlmacenar()
+    {
+        $id_cita_medica = $this->input->post('id_cita_medica');
+        $descripcion = $this->input->post('descripcion');
+        $carpeta = "files/examenes";
+        $config['upload_path'] = $carpeta;
+        $config['allowed_types'] = '*';
+        $config['remove_spaces'] = false;
+        $this->upload->initialize($config);
+        if (!$this->upload->do_upload()) {
+            $result = $this->upload->display_errors();
+            return $result;
+        } else {
+            $arr = $this->upload->data();
+            $file_name = $arr["file_name"];
+            $file_path = $arr["file_path"];
+            $full_path = $arr["full_path"];
+            $hoy = date("Y-m-d H:i:s");
+            $arreglo = array(
+                "ID_CITA_MEDICA" => $id_cita_medica,
+                "NOMBRE" => $file_name,
+                "DESCRIPCION" => $descripcion,
+                "FECHA" => $hoy,
+            );
+            $this->db->insert('archivo', $arreglo);
+            $id = $this->db->insert_id();
+            rename($full_path, $file_path . "$id");
+            return $id;
+        }
+    }
+    public function archivosVer()
+    {
+        $id_cita_medica = $this->input->post('id_cita_medica');
+        $result = $this->db->query("SELECT ID_ARCHIVO, NOMBRE, DESCRIPCION FROM archivo WHERE ID_CITA_MEDICA = $id_cita_medica");
+        return $result->result();
+    }
 
+    public function archivosDescargar() {
+        $id = $this->uri->segment(4);
+        $carpeta = "files/examenes";
+        $this->load->helper('download');
+        $query = $this->db->query("SELECT NOMBRE FROM archivo where ID_ARCHIVO = $id");
+        foreach ($query->result() as $row) {
+            $nombre = $row->NOMBRE;
+        }
+        $datos = file_get_contents("$carpeta/$id"); // Leer el contenido del archivo
+        if ($datos == FALSE)
+            force_download("archivo_no_existe.txt", "Archivo eliminado, no existe");
+        else
+            force_download(trim($nombre), $datos);
+            
+        
+        
+        
+    }
 }

@@ -35,7 +35,7 @@
     
 </head>
 <body id="bodyTema" class="theme-cyan light_version " onload="listMenu()">
-<input type="text" name="rolLogueado" id="rolLogueado" value='<?php echo $ROL_LOGUEADO; ?>'>
+<input type="hidden" name="rolLogueado" id="rolLogueado" value='<?php echo $ROL_LOGUEADO; ?>'>
     <!--Page Loader -->
     <div id="page-loader" class="page-loader-wrapper">
         <div class="loader">

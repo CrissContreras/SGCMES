@@ -217,8 +217,6 @@
                         <div class="col">
                             <label>Género</label>
                             <select class="form-control" id="showgenero" name="showgenero">
-                                <option selected value="M">Masculino</option>
-                                <option value="F">Femenino</option>
                             </select>
                         </div>
                     </div>

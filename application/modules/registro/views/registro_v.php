@@ -128,7 +128,7 @@
                 </div>
                 <div class="col">
                     <label>Contraseña</label>
-                    <input type="text" class="form-control" id="contrasena" name="contrasena" required>
+                    <input type="password" class="form-control" id="contrasena" name="contrasena" required>
                 </div>
             </div><br>
             <div class="row">
@@ -149,13 +149,6 @@
                 <div class="col">
                     <label>Ciudad de residencia</label>
                     <select class="form-control" id="ciudad_residencia" name="ciudad_residencia">
-                        <option selected value="Quito">Quito</option>
-                        <option value="Guayaquil">Guayaquil</option>
-                        <option value="Cuenca">Cuenca</option>
-                        <option value="Machala">Machala</option>
-                        <option value="Ambato">Ambato</option>
-                        <option value="Manta">Manta</option>
-                        <option value="Santo Domingo">Santo Domingo</option>
                     </select>
                 </div>
                 <div class="col">
@@ -164,9 +157,7 @@
                 </div>
                 <div class="col">
                     <label>Género</label>
-                    <select class="form-control" id="genero" name="genero">
-                        <option selected value="M" >Masculino</option>
-                        <option value="F" >Femenino</option>
+                    <select class="form-control" id="genero" name="genero" required>
                     </select>
                 </div>
             </div><br>

@@ -141,9 +141,15 @@
                             <label>Diagnónstico</label>
                             <textarea type="text" row="100" id="diagnostico" name="diagnostico" class="form-control" placeholder="Diagnóstico del paciente..." required></textarea>
                         </div>
+                    </div>
+                    <div class="form-group row">
                         <div class="col">
                             <label>Receta</label>
                             <textarea type="text" row="100" id="receta" name="receta" class="form-control" placeholder="Receta..." required></textarea>
+                        </div>
+                        <div class="col">
+                            <label>Exámenes Solicitados</label>
+                            <textarea type="text" row="100" id="examen" name="examen" class="form-control" placeholder="Exámenes Solicitados..." required></textarea>
                         </div>
                     </div>
                 </div>
@@ -175,9 +181,16 @@
                             <label>Diagnónstico</label>
                             <textarea type="text" row="10" id="showdiagnostico" name="showdiagnostico" class="form-control" placeholder="Diagnóstico del paciente..." readonly></textarea>
                         </div>
+                        
+                    </div>
+                    <div class="form-group row">
                         <div class="col">
                             <label>Receta</label>
-                            <textarea type="text" row="10" id="showrecete" name="showreceta" class="form-control" placeholder="Receta..." readonly></textarea>
+                            <textarea type="text" row="10" id="showreceta" name="showreceta" class="form-control" placeholder="Receta..." readonly></textarea>
+                        </div> 
+                        <div class="col">
+                            <label>Exámenes Solicitados</label>
+                            <textarea type="text" row="10" id="showexamen" name="showexamen" class="form-control" placeholder="Exámenes Solicitados.." readonly></textarea>
                         </div>
 
                     </div>
@@ -194,6 +207,64 @@
             </div>
         </div>
     </div>
+    </div>
+</form>
+<form id="archivosCitaMedicaForm" method="post">
+    <div class="modal fade" id="archivosCitaMedicaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog  modal-lg " role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel">Archivos de la Cita Medica</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <div class="col">
+                            <label>Descripción</label>
+                            <textarea type="text" row="100" id="descripcion" name="descripcion" class="form-control" placeholder="Descripción de los archivos..."></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label>Subir Archivos</label>
+                            <input type="file" name="userfile[]" id="userfile" multiple />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label>Archivos</label>
+                            <div id="mostrarArchivos"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" name="archivosIdCitaMedica" id="archivosIdCitaMedica" class="form-control">
+                    <button type="submit" class="btn btn-success btn-sm">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<form id="verarchivosCitaMedicaForm" method="post">
+    <div class="modal fade" id="verarchivosCitaMedicaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog  modal-lg " role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel">Archivos de la Cita Medica</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <div class="col">
+                            <div id="vermostrarArchivos"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info btn-sm" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
     </div>
 </form>
 

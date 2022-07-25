@@ -7,14 +7,18 @@ class RegistroModel extends CI_Model {
     }
 
     public function registro_nuevo_paciente() {
-        $identificacion = $this->db->query('SELECT * FROM USUARIO WHERE IDENTIFICACION =' . '"' . $this->input->post('identificacion') . '"');
-        $nombre_usuario = $this->db->query('SELECT * FROM USUARIO WHERE NOMBRE_USUARIO=' . '"' . $this->input->post('nombre_usuario') . '"');
+        $identificacion = $this->db->query('SELECT * FROM usuario WHERE IDENTIFICACION =' . '"' . $this->input->post('identificacion') . '"');
+        $nombre_usuario = $this->db->query('SELECT * FROM usuario WHERE NOMBRE_USUARIO=' . '"' . $this->input->post('nombre_usuario') . '"');
+        $correo = $this->db->query('SELECT * FROM usuario WHERE CORREO=' . '"' . $this->input->post('correo') . '"');
 
         if ($identificacion->num_rows() > 0 ) {
             $result = 'Usuario con la identificación ' . $this->input->post('identificacion') . ' ya existe.';
             return $result;
         } else if ($nombre_usuario->num_rows() > 0) {
             $result = 'Nombre de usuario ' . $this->input->post('nombre_usuario') . ' ya existe.';
+            return $result;
+        } else if ($correo->num_rows() > 0) {
+            $result = 'Correo ' . $this->input->post('correo') . ' ya existe.';
             return $result;
         } 
          
@@ -28,9 +32,9 @@ class RegistroModel extends CI_Model {
             'CORREO' => $this->input->post('correo'),
             'TELEFONO' => $this->input->post('telefono'),
             'DIRECCION' => $this->input->post('direccion'),
-            'CIUDAD_RESIDENCIA' => $this->input->post('ciudad_residencia'),
+            'ID_CAT_CIUDAD_RESIDENCIA' => $this->input->post('ciudad_residencia'),
             'FECHA_NACIMIENTO' => $this->input->post('fecha_nacimiento'),
-            'GENERO' => $this->input->post('genero'),
+            'ID_CATALOGO_GENERO' => $this->input->post('genero'),
             'ID_ROL' => 3
         );
         $result = $this->db->insert('usuario', $data);

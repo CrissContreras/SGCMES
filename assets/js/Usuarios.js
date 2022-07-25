@@ -65,20 +65,24 @@ function listUsuarios() {
 			var i;
 			var st = '';
 			var ad = '';
+			var ver = '';
 			if (data != true) {
 				for (i = 0; i < data.length; i++) {
 					if (data[i].ID_USUARIO != 1) {
-						ad = '<a title="Editar" href="javascript:void(0);"  class="editUser" data-id="' + data[i].ID_USUARIO + '" data-nombre="' + data[i].NOMBRE + '" data-apellido="' + data[i].APELLIDO + '" data-tipo_identificacion="' + data[i].TIPO_IDENTIFICACION + '" data-identificacion="' + data[i].IDENTIFICACION + '" data-nombre_usuario="' + data[i].NOMBRE_USUARIO + '" data-correo="' + data[i].CORREO + '" data-telefono="' + data[i].TELEFONO + '" data-direccion="' + data[i].DIRECCION + '" data-ciudad_residencia="' + data[i].ID_CAT_CIUDAD_RESIDENCIA  + '" data-fecha_nacimiento="' + data[i].FECHA_NACIMIENTO + '" data-genero="' + data[i].ID_CATALOGO_GENERO + '" data-id_rol="' + data[i].ID_ROL + '" data-id_especialidad="' + data[i].ID_ESPECIALIDAD + '" ><i class="fas fa-edit"></i></a>&nbsp' +
-							'<a title="Eliminar" href="javascript:void(0);" style="color: red;" class="deleteUser" data-id="' + data[i].ID_USUARIO + '" data-nombre="' + data[i].NOMBRE +' '+data[i].APELLIDO +'" ><i class="fas fa-minus-square"></i></a>';
-						if(data[i].ID_ROL == 2){
-						    ad += '&nbsp<a title="Horarios" href="javascript:void(0);"  class="editrel_horario_medico" data-id="' + data[i].ID_USUARIO + '" data-nombre="' + data[i].NOMBRE + '" data-apellido="' + data[i].APELLIDO + '" data-horario_medico="' + data[i].ID_HORARIO_MEDICO +'"><i class="fas fa-clock"></i></a>&nbsp';	
-						}	
+						ad = '<a title="Editar" href="javascript:void(0);"  class="editUser" data-id="' + data[i].ID_USUARIO + '" data-nombre="' + data[i].NOMBRE + '" data-apellido="' + data[i].APELLIDO + '" data-tipo_identificacion="' + data[i].TIPO_IDENTIFICACION + '" data-identificacion="' + data[i].IDENTIFICACION + '" data-nombre_usuario="' + data[i].NOMBRE_USUARIO + '" data-correo="' + data[i].CORREO + '" data-telefono="' + data[i].TELEFONO + '" data-direccion="' + data[i].DIRECCION + '" data-ciudad_residencia="' + data[i].ID_CAT_CIUDAD_RESIDENCIA + '" data-fecha_nacimiento="' + data[i].FECHA_NACIMIENTO + '" data-genero="' + data[i].ID_CATALOGO_GENERO + '" data-id_rol="' + data[i].ID_ROL + '" data-id_especialidad="' + data[i].ID_ESPECIALIDAD + '" ><i class="fas fa-edit"></i></a>&nbsp' +
+							'<a title="Eliminar" href="javascript:void(0);" style="color: red;" class="deleteUser" data-id="' + data[i].ID_USUARIO + '" data-nombre="' + data[i].NOMBRE + ' ' + data[i].APELLIDO + '" ><i class="fas fa-minus-square"></i></a>';
+						if (data[i].ID_ROL == 2) {
+							ad += '&nbsp<a title="Horarios" href="javascript:void(0);"  class="editrel_horario_medico" data-id="' + data[i].ID_USUARIO + '" data-nombre="' + data[i].NOMBRE + '" data-apellido="' + data[i].APELLIDO + '" data-horario_medico="' + data[i].ID_HORARIO_MEDICO + '"><i class="fas fa-clock"></i></a>&nbsp';
+						}
 					}
 					if (data[i].ESTADO == 'A') {
 						st = '<td><span class="badge badge-pill badge-success"><strong>Activo</strong></span></td>'
 					} else {
 						st = '<td><span class="badge badge-pill badge-danger"><strong>Inactivo</strong></span></td>';
 						ad = '';
+					}
+					if (data[i].ID_ROL == 1 || data[i].ID_ROL == 2) {
+						ver = '&nbsp' + '<a title="Mostrar" href="javascript:void(0);"  style="color: green;" class="showUser" data-id="' + data[i].ID_USUARIO + '" data-nombre="' + data[i].NOMBRE + '" data-apellido="' + data[i].APELLIDO + '" data-tipo_identificacion="' + data[i].TIPO_IDENTIFICACION + '" data-identificacion="' + data[i].IDENTIFICACION + '" data-nombre_usuario="' + data[i].NOMBRE_USUARIO + '" data-correo="' + data[i].CORREO + '" data-telefono="' + data[i].TELEFONO + '" data-direccion="' + data[i].DIRECCION + '" data-ciudad_residencia="' + data[i].ID_CAT_CIUDAD_RESIDENCIA + '" data-fecha_nacimiento="' + data[i].FECHA_NACIMIENTO + '" data-genero="' + data[i].ID_CATALOGO_GENERO + '" data-id_rol="' + data[i].ID_ROL + '" data-id_especialidad="' + data[i].ID_ESPECIALIDAD + '" ><i class="fas fa-eye"></i></a>&nbsp';
 					}
 					html += '<tr>' +
 						'<td>' + data[i].ID_USUARIO + '</td>' +
@@ -90,7 +94,7 @@ function listUsuarios() {
 						'<td>' + data[i].ROL_NOMBRE + '</td>' +
 						st +
 						'<td>' +
-						'<a title="Mostrar" href="javascript:void(0);"  style="color: green;" class="showUser" data-id="' + data[i].ID_USUARIO + '" data-nombre="' + data[i].NOMBRE + '" data-apellido="' + data[i].APELLIDO + '" data-tipo_identificacion="' + data[i].TIPO_IDENTIFICACION + '" data-identificacion="' + data[i].IDENTIFICACION + '" data-nombre_usuario="' + data[i].NOMBRE_USUARIO + '" data-correo="' + data[i].CORREO + '" data-telefono="' + data[i].TELEFONO + '" data-direccion="' + data[i].DIRECCION + '" data-ciudad_residencia="' + data[i].ID_CAT_CIUDAD_RESIDENCIA + '" data-fecha_nacimiento="' + data[i].FECHA_NACIMIENTO + '" data-genero="' + data[i].ID_CATALOGO_GENERO + '" data-id_rol="' + data[i].ID_ROL + '" data-id_especialidad="' + data[i].ID_ESPECIALIDAD + '" ><i class="fas fa-eye"></i></a>&nbsp' +
+						ver +
 						ad +
 						'</td>' +
 						'</tr>';
@@ -363,6 +367,11 @@ $('#listUsuarios').on('click', '.editUser', function () {
 			}
 		}
 	});
+
+	if ($(this).data('id_rol') == '3' || $(this).data('id_rol') == '2') {
+		$('#editid_rol').prop('disabled', true);
+	}
+
 	fn_validarRol('m');
 
 
@@ -500,7 +509,7 @@ $('#listUsuarios').on('click', '.editrel_horario_medico', function () {
 	$('#editrel_horario_medicoModal').modal('show');
 	$("#IdUsuarioHorario").val($(this).data('id'));
 	$("#nombremedico").val($(this).data('nombre'));
-	$('#apellidomedico').val($(this).data('apellido')); 
+	$('#apellidomedico').val($(this).data('apellido'));
 	var str = $(this).data('horario_medico');
 	alert(str);
 	if (str.toString().length == 1) { var substr = str.toString(); } else { var substr = str.split(','); }
@@ -528,9 +537,9 @@ $('#saverel_horario_medicoForm').submit('click', function () {
 		success: function (data) {
 			if (data == true) {
 				$('#IdUsuarioHorario').val(""),
-				$('#editrel_horario_medico').val(""),
-				
-				toastr.success('Datos del horario de médico guardados.');
+					$('#editrel_horario_medico').val(""),
+
+					toastr.success('Datos del horario de médico guardados.');
 				$('#editrel_horario_medicoModal').modal('hide');
 				window.location.href = $('#baseUrl').val();
 				//listUsuarios();
