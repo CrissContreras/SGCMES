@@ -461,7 +461,8 @@ class AdministracionModel extends CI_Model
 
     public function comboHorario()
     {
-        $result = $this->db->query('SELECT ID_HORARIO, FECHAHORA FROM horario');
+        $hoy = date("Y-m-d H:i:s");
+        $result = $this->db->query("SELECT ID_HORARIO, FECHAHORA FROM horario WHERE FECHAHORA >= '$hoy' AND ESTADO = 'A'");
         return $result->result();
     }
 

@@ -511,7 +511,6 @@ $('#listUsuarios').on('click', '.editrel_horario_medico', function () {
 	$("#nombremedico").val($(this).data('nombre'));
 	$('#apellidomedico').val($(this).data('apellido'));
 	var str = $(this).data('horario_medico');
-	alert(str);
 	if (str.toString().length == 1) { var substr = str.toString(); } else { var substr = str.split(','); }
 	$('#editrel_horario_medico option').each(function (index) {
 		for (var i = 0; i < substr.length; i++) {

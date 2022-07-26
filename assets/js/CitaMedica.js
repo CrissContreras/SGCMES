@@ -58,27 +58,32 @@ function listCitaMedica() {
 			var i;
 			var st = '';
 			var ad = '';
+			var ar = '';
+			var arp = '';
 			if (data != true) {
 
 				for (i = 0; i < data.length; i++) {
 					ad = '';
+					ar = '';
+			        arp = '';
 					if (rolLogueado == '2' && data[i].ESTADO == 'A') {
-						ad = '<a title="Datos de la cita" href="javascript:void(0);"  class="editDatosCitaMedica" data-id="' + data[i].ID_CITA_MEDICA + '" data-sintoma="' + data[i].SINTOMA + '" data-diagnostico="' + data[i].DIAGNOSTICO + '" data-receta="' + data[i].RECETA  + '" data-receta="' + data[i].EXAMEN + '" ><i class="fas fa-edit"></i>Datos</a>&nbsp';
+						ad = '<a title="Datos de la cita" href="javascript:void(0);"  class="editDatosCitaMedica" data-id="' + data[i].ID_CITA_MEDICA + '" data-sintoma="' + data[i].SINTOMA + '" data-diagnostico="' + data[i].DIAGNOSTICO + '" data-receta="' + data[i].RECETA + '" data-receta="' + data[i].EXAMEN + '" ><i class="fas fa-edit"></i>Datos</a>&nbsp';
 					}
 					if (rolLogueado == '3' && data[i].ESTADO == 'A') {
-					    ad = ad + '<a title="Archivos" href="javascript:void(0);" style="color: green;" class="archivosCitaMedica" data-id="' + data[i].ID_CITA_MEDICA + '" ><i class="fas fa-minus-square"></i>Archivos&nbsp</a>';	
+						arp = '<a title="Subir Archivos" href="javascript:void(0);" style="color: green;" class="archivosCitaMedica" data-id="' + data[i].ID_CITA_MEDICA + '" ><i class="fas fa-minus-square"></i>Subir Archivos&nbsp</a>';
 					}
-					if (rolLogueado == '2') {
-						ad = ad + '<a title="Archivos" href="javascript:void(0);" style="color: green;" class="verarchivosCitaMedica" data-id="' + data[i].ID_CITA_MEDICA + '" ><i class="fas fa-minus-square"></i>Archivos&nbsp</a>';
+					if (rolLogueado == '2' && data[i].ESTADO == 'A') {
+						ar = '<a title="Ver Archivos" href="javascript:void(0);" style="color: green;" class="verarchivosCitaMedica" data-id="' + data[i].ID_CITA_MEDICA + '" ><i class="fas fa-minus-square"></i>Ver Archivos&nbsp</a>';
 					}
 
 					if (data[i].ESTADO == 'A') {
-                        ad = ad + '<a title="Eliminar" href="javascript:void(0);" style="color: red;" class="deleteCitaMedica" data-id="' + data[i].ID_CITA_MEDICA + '" data-paciente="' + data[i].ID_USUARIO_PACIENTE + '" data-fechahora="' + data[i].HORARIO + '" ><i class="fas fa-minus-square"></i>Eliminar&nbsp</a>';
+						ad = ad + '<a title="Eliminar" href="javascript:void(0);" style="color: red;" class="deleteCitaMedica" data-id="' + data[i].ID_CITA_MEDICA + '" data-paciente="' + data[i].ID_USUARIO_PACIENTE + '" data-fechahora="' + data[i].HORARIO + '" ><i class="fas fa-minus-square"></i>Eliminar&nbsp</a>';
 					}
-					if (rolLogueado == '2' || rolLogueado == '3' && data[i].ESTADO == 'T') {
-						ad = '<a title="Datos de la cita" href="javascript:void(0);"  class="showDatosCitaMedica" data-sintoma="' + data[i].SINTOMA + '" data-diagnostico="' + data[i].DIAGNOSTICO + '" data-receta="' + data[i].RECETA + '" data-examen="' + data[i].EXAMEN + '" data-historial="' + data[i].HISTORIAL + '" ><i class="fas fa-show"></i>Datos</a>&nbsp';
+					if (data[i].ESTADO == 'T') {
+						if (rolLogueado == '2' || rolLogueado == '3') {
+							ad = '<a title="Datos de la cita" href="javascript:void(0);"  class="showDatosCitaMedica" data-sintoma="' + data[i].SINTOMA + '" data-diagnostico="' + data[i].DIAGNOSTICO + '" data-receta="' + data[i].RECETA + '" data-examen="' + data[i].EXAMEN + '" data-historial="' + data[i].HISTORIAL + '" ><i class="fas fa-show"></i>Datos</a>&nbsp';
 
-
+						}
 					}
 					if (data[i].ESTADO == 'A') {
 						st = '<td><span class="badge badge-pill badge-success"><strong>Activo</strong></span></td>'
@@ -87,7 +92,7 @@ function listCitaMedica() {
 						ad = '';
 					} else if (data[i].ESTADO == 'T') {
 						st = '<td><span class="badge badge-pill badge-success"><strong>Atendido</strong></span></td>';
-						
+
 					}
 					html += '<tr>' +
 						'<td>' + data[i].ID_CITA_MEDICA + '</td>' +
@@ -97,6 +102,8 @@ function listCitaMedica() {
 						'<td>' + data[i].HORARIO + '</td>' +
 						st +
 						'<td>' +
+						ar +
+						arp +
 						ad +
 						'</td>' +
 						'</tr>';
@@ -394,7 +401,7 @@ $('#listCitaMedica').on('click', '.archivosCitaMedica', function () {
 			if (data != true) {
 				if (data.length > 0) {
 					for (i = 0; i < data.length; i++) {
-						html += data[i].NOMBRE + ' <label style="color: green;cursor: pointer;" onclick="archivoDescargar('+data[i].ID_ARCHIVO+')"> Descargar</label>'+'<i class="fas fa-file-export"></i>'+'<br/>';
+						html += data[i].NOMBRE + ' <label style="color: green;cursor: pointer;" onclick="archivoDescargar(' + data[i].ID_ARCHIVO + ')"> Descargar</label>' + '<i class="fas fa-file-export"></i>' + '<br/>';
 					}
 				}
 
@@ -418,7 +425,7 @@ $('#listCitaMedica').on('click', '.verarchivosCitaMedica', function () {
 			if (data != true) {
 				if (data.length > 0) {
 					for (i = 0; i < data.length; i++) {
-						html += "<tr><td>" +data[i].NOMBRE + "</td><td>"+data[i].DESCRIPCION + "</td><td>"+  "</td><td>"+ ' <label style="color: green;cursor: pointer;" onclick="archivoDescargar('+data[i].ID_ARCHIVO+')"> Descargar</label>'+'<i class="fas fa-file-export"></i>'+'</td></tr>';
+						html += "<tr><td>" + data[i].NOMBRE + "</td><td>" + data[i].DESCRIPCION + "</td><td>" + "</td><td>" + ' <label style="color: green;cursor: pointer;" onclick="archivoDescargar(' + data[i].ID_ARCHIVO + ')"> Descargar</label>' + '<i class="fas fa-file-export"></i>' + '</td></tr>';
 					}
 				}
 
@@ -461,14 +468,14 @@ function uploadFile(archivo, arcIdTemp) {
 	xhr.open("POST", base_url + "/archivosAlmacenar", true);
 	xhr.send(fd);
 
-	
+
 }
 function archivoDescargar(id_archivo) {
 	var base_url = $("#baseUrl").val();
 	var url = base_url + "/archivosDescargar/" + id_archivo;
 	$('<form action="' + url + '" method="post">' + '</form>').appendTo('body').submit().remove();
-	
-	
+
+
 }
 
 
